@@ -25,7 +25,7 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *
+ * Pruebas para la persistencia de la entidad contrato.
  * @author Nicolas Potes Garcia
  */
 

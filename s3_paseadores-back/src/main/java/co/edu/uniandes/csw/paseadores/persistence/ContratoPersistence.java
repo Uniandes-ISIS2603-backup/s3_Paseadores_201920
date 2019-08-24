@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Métodos CRUD asociados a la entidad Contrato y su parte de persistencia.
  * @author Nicolas Potes Garcia
  */
 

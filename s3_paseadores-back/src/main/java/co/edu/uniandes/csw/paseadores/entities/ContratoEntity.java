@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.paseadores.entities;
 /**
- *
+ * Entidad contrato que se quiere persistir.
  * @author Nicolas Potes Garcia
  */
 import java.io.Serializable;
