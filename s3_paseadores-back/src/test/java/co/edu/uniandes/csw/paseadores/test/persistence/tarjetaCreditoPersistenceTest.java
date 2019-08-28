@@ -7,14 +7,18 @@ package co.edu.uniandes.csw.paseadores.test.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.TarjetaCreditoEntity;
 import co.edu.uniandes.csw.paseadores.persistence.TarjetaCreditoPersistence;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -40,6 +44,44 @@ public class tarjetaCreditoPersistenceTest {
     @PersistenceContext
     protected EntityManager em;
     
+    @Inject
+    UserTransaction utx;
+    
+    private List<TarjetaCreditoEntity> data = new ArrayList<>();
+    
+    private void clearData(){
+        em.createQuery("borrar de tarjetaCreditoEntity").executeUpdate();
+    }
+    
+    private void insertData(){
+        PodamFactory factory = new PodamFactoryImpl();
+        for (int i=0;i<3;i++){
+            TarjetaCreditoEntity entity = factory.manufacturePojo(TarjetaCreditoEntity.class);
+            
+            em.persist(entity);
+            data.add(entity);
+        }
+    }
+    
+    @Before
+    public void configTest(){
+        try{
+            utx.begin();
+            em.joinTransaction();
+            clearData();
+            insertData();
+            utx.commit();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            try{
+                utx.rollback();
+            }
+            catch(Exception e1){
+                e1.printStackTrace();
+            }
+        }
+    }
     @Test
     public void createTest(){
         PodamFactory factory = new PodamFactoryImpl();
@@ -51,7 +93,19 @@ public class tarjetaCreditoPersistenceTest {
         
         Assert.assertEquals(tarjetaCredito.getCCV(), entity.getCCV());
     }
-    
+    @Test void findTarjetasCreditoTest(){
+        List<TarjetaCreditoEntity> list = ep.findAll();
+        Assert.assertEquals(data.size(), list.size());
+        for(TarjetaCreditoEntity ent : list){
+            boolean found = false;
+            for (TarjetaCreditoEntity entity : data){
+                if (ent.getId().equals(entity.getId())){
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
     
     
 }
