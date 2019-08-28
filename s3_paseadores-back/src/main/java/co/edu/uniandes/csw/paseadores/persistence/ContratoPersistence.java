@@ -6,7 +6,8 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+//import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
@@ -51,7 +52,7 @@ public class ContratoPersistence {
     
     
     public ContratoEntity update(ContratoEntity contratoEntity) {
-        LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratoEntity.getId());
+       // LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratoEntity.getId());
         /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
         la author con los cambios, esto es similar a 
         "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
@@ -62,7 +63,7 @@ public class ContratoPersistence {
     
     public void delete(Long contratoId) {
 
-        LOGGER.log(Level.INFO, "Borrando el author con id={0}", contratoId);
+//        LOGGER.log(Level.INFO, "Borrando el author con id={0}", contratoId);
       
         ContratoEntity authorEntity = em.find(ContratoEntity.class, contratoId);
         /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
