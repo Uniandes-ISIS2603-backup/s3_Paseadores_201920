@@ -5,9 +5,8 @@
  */
 package co.edu.uniandes.csw.paseadores.test.persistence;
 
-
-import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
-import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
+import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
+import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -30,20 +29,20 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Daniel Felipe Garcia Vargas
  */
 @RunWith(Arquillian.class)
-public class PaseadorPersistenceTest 
+public class MascotaPersistenceTest 
 {
     @Deployment
     public static JavaArchive createDeployment()
     {
         return ShrinkWrap.create(JavaArchive.class)
-              .addClass(PaseadorEntity.class)
-              .addClass(PaseadorPersistence.class)
+              .addClass(MascotaEntity.class)
+              .addClass(MascotaPersistence.class)
               .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
               .addAsManifestResource("META-INF/beans.xml", "beans.xml" );
     }
     
     @Inject
-    PaseadorPersistence pp;
+    MascotaPersistence mp;
     
     @PersistenceContext(unitName = "paseadoresPU")
     protected EntityManager em;
@@ -51,14 +50,14 @@ public class PaseadorPersistenceTest
     @Inject
     UserTransaction utx;
    
-    private List<PaseadorEntity> data = new ArrayList<>();
+    private List<MascotaEntity> data = new ArrayList<>();
     
      /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() 
     {
-        em.createQuery("delete from PaseadorEntity").executeUpdate();
+        em.createQuery("delete from MascotaEntity").executeUpdate();
     }
     
     /**
@@ -69,14 +68,14 @@ public class PaseadorPersistenceTest
     {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            PaseadorEntity entity = factory.manufacturePojo(PaseadorEntity.class);
+            MascotaEntity entity = factory.manufacturePojo(MascotaEntity.class);
 
             em.persist(entity);
             data.add(entity);
         }
     }
     
-     /**
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -101,24 +100,24 @@ public class PaseadorPersistenceTest
     public void createTest() 
     {
         PodamFactory factory = new PodamFactoryImpl();
-        PaseadorEntity paseador = factory.manufacturePojo(PaseadorEntity.class);
-        PaseadorEntity result = pp.create(paseador);
+        MascotaEntity mascota = factory.manufacturePojo(MascotaEntity.class);
+        MascotaEntity result = mp.create(mascota);
         Assert.assertNotNull(result);
         
-        PaseadorEntity entity = em.find(PaseadorEntity.class, result.getId());
+        MascotaEntity entity = em.find(MascotaEntity.class, result.getId());
 
-        Assert.assertEquals(paseador.getId(),entity.getId());
+        Assert.assertEquals(mascota.getNombre(),entity.getNombre());
 
     }
     
     @Test
-    public void findPaseadoresTest() 
+    public void findMascotasTest() 
     {
-        List<PaseadorEntity> list = pp.findAll();
+        List<MascotaEntity> list = mp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (PaseadorEntity ent : list) {
+        for (MascotaEntity ent : list) {
             boolean found = false;
-            for (PaseadorEntity entity : data) {
+            for (MascotaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -128,34 +127,34 @@ public class PaseadorPersistenceTest
     }
     
     @Test
-    public void getPaseadorTest() {
-        PaseadorEntity entity = data.get(0);
-        PaseadorEntity newEntity = pp.find(entity.getId());
+    public void getMascotaTest() {
+        MascotaEntity entity = data.get(0);
+        MascotaEntity newEntity = mp.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }
     
      @Test
-    public void updatePaseadorTest() 
+    public void updateMascotaTest() 
     {
-        PaseadorEntity entity = data.get(0);
+        MascotaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        PaseadorEntity newEntity = factory.manufacturePojo(PaseadorEntity.class);
+        MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
 
         newEntity.setId(entity.getId());
 
-        pp.update(newEntity);
+        mp.update(newEntity);
 
-        PaseadorEntity resp = em.find(PaseadorEntity.class, entity.getId());
+        MascotaEntity resp = em.find(MascotaEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
     
     @Test
-    public void deletePaseadorTest() {
-        PaseadorEntity entity = data.get(0);
-        pp.delete(entity.getId());
-        PaseadorEntity deleted = em.find(PaseadorEntity.class, entity.getId());
+    public void deleteMascotaTest() {
+        MascotaEntity entity = data.get(0);
+        mp.delete(entity.getId());
+        MascotaEntity deleted = em.find(MascotaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 }
