@@ -6,12 +6,10 @@
 package co.edu.uniandes.csw.paseadores.test.persistence;
 
 
-import co.edu.uniandes.csw.paseadores.entities.TarjetaCreditoEntity;
-import co.edu.uniandes.csw.paseadores.persistence.TarjetaCreditoPersistence;
-
+import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
+import co.edu.uniandes.csw.paseadores.persistence.CalificacionPersistence;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,20 +27,20 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Juan Vergara
+ * @author Estudiante
  */
 @RunWith(Arquillian.class)
-public class tarjetaCreditoPersistenceTest {
+public class CalificacionPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment(){
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(TarjetaCreditoEntity.class.getPackage())
-                .addPackage(TarjetaCreditoPersistence.class.getPackage())
+                .addPackage(CalificacionEntity.class.getPackage())
+                .addPackage(CalificacionPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
               .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
     }
     @Inject
-    private TarjetaCreditoPersistence cp;
+    private CalificacionPersistence cp;
     
     @PersistenceContext
     private EntityManager em;
@@ -50,7 +48,7 @@ public class tarjetaCreditoPersistenceTest {
      @Inject
     UserTransaction utx;
    
-     private List<TarjetaCreditoEntity> data = new ArrayList<>();
+     private List<CalificacionEntity> data = new ArrayList<>();
      
      
      
@@ -58,7 +56,7 @@ public class tarjetaCreditoPersistenceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from TarjetaCreditoEntity").executeUpdate();
+        em.createQuery("delete from CalificacionEntity").executeUpdate();
     }
 
     /**
@@ -68,7 +66,7 @@ public class tarjetaCreditoPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            TarjetaCreditoEntity entity = factory.manufacturePojo(TarjetaCreditoEntity.class);
+            CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
 
             em.persist(entity);
             data.add(entity);
@@ -101,24 +99,24 @@ public class tarjetaCreditoPersistenceTest {
         //Falta crear contrato
         
         PodamFactory factory = new PodamFactoryImpl();
-        TarjetaCreditoEntity tarjetaCredito = factory.manufacturePojo(TarjetaCreditoEntity.class);
-        TarjetaCreditoEntity result = cp.create(tarjetaCredito);
+        CalificacionEntity Calificacion = factory.manufacturePojo(CalificacionEntity.class);
+        CalificacionEntity result = cp.create(Calificacion);
         Assert.assertNotNull(result);
         
-        TarjetaCreditoEntity entity = 
-           em.find(TarjetaCreditoEntity.class, result.getId());
-        Assert.assertEquals(tarjetaCredito.getNumero(), entity.getNumero());
+        CalificacionEntity entity = 
+           em.find(CalificacionEntity.class, result.getId());
+        Assert.assertEquals(Calificacion.getCalificacion(), entity.getCalificacion());
         
     }
     
     
     @Test
-    public void findTarjetaCreditosTest() {
-        List<TarjetaCreditoEntity> list = cp.findAll();
+    public void findCalificacionsTest() {
+        List<CalificacionEntity> list = cp.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (TarjetaCreditoEntity ent : list) {
+        for (CalificacionEntity ent : list) {
             boolean found = false;
-            for (TarjetaCreditoEntity entity : data) {
+            for (CalificacionEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -128,35 +126,36 @@ public class tarjetaCreditoPersistenceTest {
     }
     
     @Test
-    public void getContratoTest() {
-        TarjetaCreditoEntity entity = data.get(0);
-        TarjetaCreditoEntity newEntity = cp.find(entity.getId());
+    public void getCalificacionTest() {
+        CalificacionEntity entity = data.get(0);
+        CalificacionEntity newEntity = cp.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNumero(), newEntity.getNumero());
+        Assert.assertEquals(entity.getCalificacion(), newEntity.getCalificacion());
         
     }
     
     
      @Test
-    public void updateTarjetaCreditoTest() {
-       TarjetaCreditoEntity entity = data.get(0);
+    public void updateCalificacionTest() {
+       CalificacionEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        TarjetaCreditoEntity newEntity = factory.manufacturePojo(TarjetaCreditoEntity.class);
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
 
         newEntity.setId(entity.getId());
 
         cp.update(newEntity);
 
-        TarjetaCreditoEntity resp = em.find(TarjetaCreditoEntity.class, entity.getId());
+        CalificacionEntity resp = em.find(CalificacionEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
     
     @Test
-    public void deleteTarjetaCreditoTest() {
-        TarjetaCreditoEntity entity = data.get(0);
+    public void deleteCalificacionTest() {
+        CalificacionEntity entity = data.get(0);
         cp.delete(entity.getId());
-        TarjetaCreditoEntity deleted = em.find(TarjetaCreditoEntity.class, entity.getId());
+        CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
+    
 }
