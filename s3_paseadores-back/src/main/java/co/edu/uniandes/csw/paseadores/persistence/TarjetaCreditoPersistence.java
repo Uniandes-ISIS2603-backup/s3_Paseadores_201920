@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+
 /**
  *
  * @author Juan Vergara
@@ -30,7 +31,7 @@ public class TarjetaCreditoPersistence {
          return em.find(TarjetaCreditoEntity.class, idTarjetaCredito);
     }
     public List<TarjetaCreditoEntity> findAll(){
-        TypedQuery query = em.createQuery("selecciona u de tarjetaCreditoEntity u", TarjetaCreditoEntity.class);
+        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u", TarjetaCreditoEntity.class);
         return query.getResultList();
     }
     
