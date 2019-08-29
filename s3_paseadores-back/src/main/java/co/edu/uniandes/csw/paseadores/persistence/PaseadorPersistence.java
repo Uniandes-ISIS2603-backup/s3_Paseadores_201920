@@ -39,7 +39,7 @@ public class PaseadorPersistence
     public List<PaseadorEntity> findAll()
     {
         
-        TypedQuery query = em.createQuery("select u from ContratoEntity u", PaseadorEntity.class);
+        TypedQuery query = em.createQuery("select u from PaseadorEntity u", PaseadorEntity.class);
         return query.getResultList();
         
     }

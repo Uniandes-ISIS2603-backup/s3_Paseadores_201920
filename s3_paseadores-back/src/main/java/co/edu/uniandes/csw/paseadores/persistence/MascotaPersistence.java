@@ -39,7 +39,7 @@ public class MascotaPersistence
     public List<MascotaEntity> findAll()
     {
         
-        TypedQuery query = em.createQuery("select u from ContratoEntity u", MascotaEntity.class);
+        TypedQuery query = em.createQuery("select u from MascotaEntity u", MascotaEntity.class);
         return query.getResultList();
         
     }
