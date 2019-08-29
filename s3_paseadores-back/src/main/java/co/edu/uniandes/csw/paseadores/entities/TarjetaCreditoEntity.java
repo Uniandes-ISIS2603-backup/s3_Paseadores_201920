@@ -35,10 +35,10 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable{
         ccv=p;
     }
     public int getNumero(){
-        return ccv;
+        return numero;
     }
     public void setNumero(int p){
-        ccv=p;
+        numero=p;
     }
     public Date getVencimiento(){
         return vencimiento;
