@@ -32,10 +32,14 @@ public class ClienteEntity extends BaseEntity implements Serializable{
      * Relaciones
      */
     
-   
 //    @OneToMany(mappedBy =  "cliente")
-//    private ArrayList<String> contratos;
+//    private ArrayList<ContratoEntity> contratos;
 
+    
+    /**
+     * Getters
+     */
+    
     /**
      * Retorna el nombre del cliente
      * 
@@ -72,11 +76,19 @@ public class ClienteEntity extends BaseEntity implements Serializable{
         return infoContacto;
     }
 
-//   //Not yet
-//    public ArrayList<String> getContratos() {
+//    /**
+//     * Retorna la lista de contratos que ha hecho el cliente.
+//     * 
+//     * @return lista de contratos.
+//     */
+//    public ArrayList<ContratoEntity> getContratos() {
 //        return contratos;
 //    }
 
+    /**
+     * Setters
+     */
+    
     /**
      * Modifica el nombre del cliente
      * 
@@ -113,8 +125,12 @@ public class ClienteEntity extends BaseEntity implements Serializable{
         this.infoContacto = infoContacto;
     }
 
-//    //Not yet
-//    public void setContratos(ArrayList<String> contratos) {
+//    /**
+//     * Modifica la lista de contratos que ha hecho el cliente.
+//     * 
+//     * @param lista de contratos.
+//     */
+//    public void setContratos(ArrayList<ContratoEntity> contratos) {
 //        this.contratos = contratos;
 //    }
   

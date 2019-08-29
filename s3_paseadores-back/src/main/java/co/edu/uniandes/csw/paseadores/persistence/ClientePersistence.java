@@ -38,7 +38,7 @@ public class ClientePersistence {
      * Retorna todos los clientes de la base de datos.
      * 
      * @return una lista con todos los clientes de la base de datos.
-     * "select u from BookEntity u" es como un "select * from BookEntity;" -
+     * "select u from ClienteEntity u" es como un "select * from ClienteEntity;" -
      * "SELECT * FROM table_name" en SQL
      */
     public List<ClienteEntity> findAll(){
