@@ -9,10 +9,13 @@ import co.edu.uniandes.csw.paseadores.podam.DateStrategy;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -45,7 +48,8 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
 //    @OneToOne( mappedBy = "contrato")
 //    private ContratoEntity contrato;
     
-//    @OneToOne( mappedBy = "paseador")
+//    @PodamExclude
+//    @ManyToOne()
 //    private PaseadorEntity paseador;
 
     /**

@@ -7,7 +7,12 @@ package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -17,18 +22,32 @@ import javax.persistence.Entity;
 public class PaseadorEntity extends BaseEntity implements Serializable
 {
     //Atributos propios de la clase
+    
     private String foto;
+    
     private Double precio;
+    
     private Double ganancias;
+    
     //private ArrayList listContactos;
+    
     private String infoAdicional;
     
     //Atributos Heredados
     private String idUsuario;
+    
     private String nombre;
+    
     private String correo;
+    
     private String contraseña;
+    
     private String infoContacto;
+//    
+//    @PodamExclude
+//    @OneToMany()
+//    private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
+    
     //Get ListContactos
    /* public ArrayList getListContactos() 
     {
