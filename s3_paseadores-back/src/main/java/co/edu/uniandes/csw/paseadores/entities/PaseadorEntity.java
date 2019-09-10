@@ -28,12 +28,11 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     private Double precio;
     
     private Double ganancias;
-    
-    //private ArrayList listContactos;
-    
+        
     private String infoAdicional;
     
     //Atributos Heredados
+    
     private String idUsuario;
     
     private String nombre;
@@ -43,21 +42,11 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     private String contraseña;
     
     private String infoContacto;
-//    
-//    @PodamExclude
-//    @OneToMany()
-//    private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
     
-    //Get ListContactos
-   /* public ArrayList getListContactos() 
-    {
-        return listContactos;
-    }
-    //Set ListContactos
-    public void setListContactos(ArrayList listContactos) 
-    {
-        this.listContactos = listContactos;
-    }*/
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
+    
     //Get InfoAdicional
     public String getInfoAdicional() 
     {
@@ -137,5 +126,13 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     //Set infoContacto
     public void setInfoContacto(String infoContacto) {
         this.infoContacto = infoContacto;
-    }  
+    }
+    
+    public List<FranjaHorariaEntity> getFranjas(){
+        return franjas;
+    }
+    
+    public void setFranjas(List<FranjaHorariaEntity> franjas ){
+        this.franjas = franjas;
+    }
 }

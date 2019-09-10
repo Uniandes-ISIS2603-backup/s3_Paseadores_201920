@@ -36,8 +36,8 @@ public class PaseadorPersistenceTest
     public static JavaArchive createDeployment()
     {
         return ShrinkWrap.create(JavaArchive.class)
-              .addClass(PaseadorEntity.class)
-              .addClass(PaseadorPersistence.class)
+              .addPackage(PaseadorEntity.class.getPackage())
+              .addPackage(PaseadorPersistence.class.getPackage())
               .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
               .addAsManifestResource("META-INF/beans.xml", "beans.xml" );
     }
@@ -51,7 +51,7 @@ public class PaseadorPersistenceTest
     @Inject
     UserTransaction utx;
    
-    private List<PaseadorEntity> data = new ArrayList<>();
+    private List<PaseadorEntity> data = new ArrayList<PaseadorEntity>();
     
      /**
      * Limpia las tablas que están implicadas en la prueba.

@@ -45,12 +45,9 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
      * Relaciones
      */
     
-//    @OneToOne( mappedBy = "contrato")
-//    private ContratoEntity contrato;
-    
-//    @PodamExclude
-//    @ManyToOne()
-//    private PaseadorEntity paseador;
+    @PodamExclude
+    @ManyToOne
+    private PaseadorEntity paseador;
 
     /**
      * Getters
@@ -72,13 +69,9 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
         return fin;
     }
 
-//    public ContratoEntity getContrato() {
-//        return contrato;
-//    }
-
-//    public PaseadorEntity getPaseador() {
-//        return paseador;
-//    }
+    public PaseadorEntity getPaseador() {
+        return paseador;
+    }
     
     /**
      * Setters
@@ -100,12 +93,8 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
         this.fin = fin;
     }
 
-//    public void setContrato(ContratoEntity contrato) {
-//        this.contrato = contrato;
-//    }
-
-//    public void setPaseador(PaseadorEntity paseador) {
-//        this.paseador = paseador;
-//    }
+    public void setPaseador(PaseadorEntity paseador) {
+        this.paseador = paseador;
+    }
     
 }
