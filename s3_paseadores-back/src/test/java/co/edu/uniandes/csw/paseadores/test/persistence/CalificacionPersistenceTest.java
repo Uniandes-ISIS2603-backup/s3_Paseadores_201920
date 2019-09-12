@@ -27,7 +27,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Estudiante
+ * @author Juan Vergara
  */
 @RunWith(Arquillian.class)
 public class CalificacionPersistenceTest {

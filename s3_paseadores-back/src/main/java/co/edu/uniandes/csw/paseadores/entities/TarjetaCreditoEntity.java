@@ -20,24 +20,24 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class TarjetaCreditoEntity extends BaseEntity implements Serializable{
     
-    private int ccv;
+    private int cvv;
     
-    private int numero;
+    private long numero;
     
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date vencimiento; 
     
     public int getCCV(){
-        return ccv;
+        return cvv;
     }
     public void setCCV(int p){
-        ccv=p;
+        cvv=p;
     }
-    public int getNumero(){
+    public long getNumero(){
         return numero;
     }
-    public void setNumero(int p){
+    public void setNumero(long p){
         numero=p;
     }
     public Date getVencimiento(){

@@ -20,7 +20,7 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class TarjetaCreditoPersistence {
     
-    @PersistenceContext (unitName = "paseadoresPU")
+    @PersistenceContext (unitName = "paseadoresPU") 
     protected EntityManager em;
     
     public TarjetaCreditoEntity create(TarjetaCreditoEntity p){
