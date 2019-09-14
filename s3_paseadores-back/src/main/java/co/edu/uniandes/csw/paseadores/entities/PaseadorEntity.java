@@ -8,9 +8,7 @@ package co.edu.uniandes.csw.paseadores.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -37,7 +35,7 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     
     private String correo;
     
-    private String contraseña;
+    private String contrasena;
     
     private String infoContacto;
     
@@ -148,12 +146,12 @@ public class PaseadorEntity extends BaseEntity implements Serializable
         this.correo = correo;
     }
     //Get Contraseña
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
     //Set Contraseña
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
     //Get infoContacto
     public String getInfoContacto() {
