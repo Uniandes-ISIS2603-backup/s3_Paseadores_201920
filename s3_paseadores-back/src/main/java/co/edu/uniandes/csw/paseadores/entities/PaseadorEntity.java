@@ -33,8 +33,6 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     
     //Atributos Heredados
     
-    private String idUsuario;
-    
     private String nombre;
     
     private String correo;
@@ -43,9 +41,55 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     
     private String infoContacto;
     
+    
+    //Relaciones
+            
+    //Relacion Paseadores - FranjasHorarias
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
     private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
+    
+    //Relacion Paseadores - Comentarios
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();
+    
+    //Relacion Paseadores - Calificaciones
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+
+    //Relacion Paseadores - Zonas
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<ZonaEntity> zonas = new ArrayList<ZonaEntity>();
+
+    //Get Zonas
+    public List<ZonaEntity> getZonas() {
+        return zonas;
+    }
+    //Set Zonas
+    public void setZonas(List<ZonaEntity> zonas) {
+        this.zonas = zonas;
+    }
+    
+    //Get Calificaciones
+    public List<CalificacionEntity> getCalificaciones() {
+        return calificaciones;
+    }
+    //Set Calificaciones
+    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    //Get Comentarios
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+    //Set Comentarios
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
+    }
     
     //Get InfoAdicional
     public String getInfoAdicional() 
@@ -87,14 +131,6 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     {
         return ganancias;
     }    
-    //Get idUsuario
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-    //Set idUsuario
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
     //Get nombre
     public String getNombre() {
         return nombre;
