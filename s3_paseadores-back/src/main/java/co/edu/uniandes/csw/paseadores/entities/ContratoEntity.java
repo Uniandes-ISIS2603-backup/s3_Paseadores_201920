@@ -11,9 +11,44 @@ package co.edu.uniandes.csw.paseadores.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 @Entity
 public class ContratoEntity extends BaseEntity implements Serializable{
+    
+    
+    
+        //Relaciones
+        
+            @PodamExclude
+            @OneToOne
+            private ClienteEntity cliente;
+        
+//            @PodamExclude
+//            @OneToOne
+//            private PaseadorEntity paseador;
+//        
+//            @PodamExclude
+//            @OneToOne
+//            private PagoEntity pago;
+//        
+            @PodamExclude
+            @OneToOne
+            private ZonaEntity zona;
+//    
+//            @PodamExclude
+//            @OneToOne
+//            private ComentarioEntity comentario;
+//    
+//            @PodamExclude
+//            @OneToMany
+//            private FranjaHorariaEntity franja;
+//    
+//            @PodamExclude
+//            @OneToOne
+//            private CalificacionEntity calificacion;
 
 	
 	//Atributos:
@@ -31,6 +66,8 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	private Boolean satisfactorio;
         
         private String name;
+        
+        private Boolean finalizado = false;
 	
 	
 	//Metodos
@@ -48,23 +85,21 @@ public class ContratoEntity extends BaseEntity implements Serializable{
             
         }
 	
-	public void calificarServicio(Integer pCalificacion) {
-		
-		
-	}
-	
-	public void realizarComentario(String pComentario) {
-		
-		
-	}
-	
-	public void realizarPago() {
-		
-		
-	}
-	
 	
 	//Setters y getters
+        
+        
+        public Boolean getFinalizado() {
+            
+            return finalizado;
+            
+        }
+        
+        public void setFinalizado(Boolean pFinalizado){
+    
+            finalizado = pFinalizado;
+    
+        }
 	
 	
 	public Double getValorServicio() {
@@ -108,6 +143,25 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 		return idUsuario;
 		
 	}
+        
+        public void setIdPaseador(String pIdPaseador) {
+
+		idPaseador = pIdPaseador;
+
+	}
+
+
+	public void setIdCliente(String pIdCliente) {
+
+		idUsuario = pIdCliente;
+
+	}
+	
+	public void setIdMascota(String pIdMascota) {
+
+		idMascota = pIdMascota;
+
+	}
 	
 	public Boolean getSatisfactorio() {
 		
@@ -121,5 +175,98 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 		satisfactorio = pSatisfactorio;
 		
 	}
+        
+        
+//        public ClienteEntity getCliente() {
+//            
+//            return cliente;
+//            
+//        }
+//        
+//        
+//        public void setCliente(ClienteEntity pCliente) {
+//            
+//            cliente = pCliente;
+//            
+//        }
+//        
+//        public PaseadorEntity getPaseador() {
+//            
+//            return paseador;
+//            
+//        }
+//        
+//        
+//        public void setPaseador(PaseadorEntity pPaseador) {
+//            
+//            paseador = pPaseador;
+//            
+//        }
+//        
+//        
+//        public PagoEntity getPago() {
+//            
+//            return pago;
+//            
+//        }
+//        
+//        
+//        public void setPago(PagoEntity pPago) {
+//            
+//            pago = pPago;
+//            
+//        }
+//        
+        public ZonaEntity getZona() {
+            
+            return zona;
+            
+        }
+//        
+        
+        public void setZona(ZonaEntity pZona) {
+            
+            zona = pZona;
+            
+        } 
+//        
+//        public ComentarioEntity getComentario() {
+//            
+//            return comentario;
+//            
+//        }
+//        
+//        
+//        public void setComentario(ComentarioEntity pComentario) {
+//            
+//            comentario = pComentario;
+//            
+//        }
+//        
+//        public FranjaHorariaEntity getFranja() {
+//            
+//            return franja;
+//            
+//        }
+//        
+//        
+//        public void setFranja(FranjaHorariaEntity pFranja) {
+//            
+//            franja = pFranja;
+//            
+//        }
+//        
+//        public CalificacionEntity getCalificacion() {
+//            
+//            return calificacion;
+//            
+//        }
+        
+        
+//        public void setCalificacion(CalificacionEntity pCalificacion) {
+//            
+//            calificacion = pCalificacion;
+//            
+//        }
 
 }
