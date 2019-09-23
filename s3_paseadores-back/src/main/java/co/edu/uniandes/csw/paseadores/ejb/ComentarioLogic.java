@@ -8,10 +8,10 @@ package co.edu.uniandes.csw.paseadores.ejb;
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ComentarioPersistence;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+//import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.sql.Time;
 import java.util.List;
-import java.util.logging.Level;
+//import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -55,12 +55,12 @@ public class ComentarioLogic {
      */
     public ComentarioEntity getComentario(Long comentarioId) 
     {
-        LOGGER.log(Level.SEVERE, "Inicia el proceso de consultar el comentario con el id = {0}", comentarioId);
+       // LOGGER.log(Level.SEVERE, "Inicia el proceso de consultar el comentario con el id = {0}", comentarioId);
         ComentarioEntity comentarioEntity = persistence.find(comentarioId);
         if (comentarioEntity == null) {
-            LOGGER.log(Level.SEVERE, "El contrato con el id = {0} no existe", comentarioId);
+            //LOGGER.log(Level.SEVERE, "El contrato con el id = {0} no existe", comentarioId);
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el contrato con id = {0}", comentarioId);
+        //LOGGER.log(Level.INFO, "Termina proceso de consultar el contrato con id = {0}", comentarioId);
         return comentarioEntity;
     }
     
@@ -70,9 +70,9 @@ public class ComentarioLogic {
      * @return Colección de objetos de ComentarioEntity.
      */
     public List<ComentarioEntity> getComentarios() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los comentarios");
+        //LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los comentarios");
         List<ComentarioEntity> lista = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los comentarios");
+        //LOGGER.log(Level.INFO, "Termina proceso de consultar todos los comentarios");
         return lista;
     }
     
@@ -86,7 +86,7 @@ public class ComentarioLogic {
     public ComentarioEntity updateComentario(Long comentarioId, ComentarioEntity comentarioEntity) throws BusinessLogicException
     {
         
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el comentario con id = {0}", comentarioId);
+        //LOGGER.log(Level.INFO, "Inicia proceso de actualizar el comentario con id = {0}", comentarioId);
         if(comentarioEntity.getName()==null || comentarioEntity.getName().equals("") || NumberUtils.isCreatable(comentarioEntity.getName()))
         {
             throw new BusinessLogicException("El nombre del comentario es nulo o tiene un formato incorrecto");
@@ -97,7 +97,7 @@ public class ComentarioLogic {
         }
         
         ComentarioEntity newComentarioEntity = persistence.update(comentarioEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el comentario con id = {0}", comentarioId);
+        //LOGGER.log(Level.INFO, "Termina proceso de actualizar el comentario con id = {0}", comentarioId);
         return newComentarioEntity;
         
     }
@@ -112,9 +112,9 @@ public class ComentarioLogic {
      */
     public void deleteComentario(Long comentarioId) throws BusinessLogicException 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el comentario con id = {0}", comentarioId);
+        //LOGGER.log(Level.INFO, "Inicia proceso de borrar el comentario con id = {0}", comentarioId);
         persistence.delete(comentarioId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el comentario con id = {0}", comentarioId);
+        //LOGGER.log(Level.INFO, "Termina proceso de borrar el comentario con id = {0}", comentarioId);
     }
     
     

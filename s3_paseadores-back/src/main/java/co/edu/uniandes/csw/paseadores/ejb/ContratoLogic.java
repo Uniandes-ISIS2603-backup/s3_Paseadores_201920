@@ -8,10 +8,10 @@ package co.edu.uniandes.csw.paseadores.ejb;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+//import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.sql.Time;
 import java.util.List;
-import java.util.logging.Level;
+//import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -99,12 +99,12 @@ public class ContratoLogic {
      */
     public ContratoEntity getContrato(Long contratoId) 
     {
-        LOGGER.log(Level.SEVERE, "Inicia el proceso de consultar el contrato con el id = {0}", contratoId);
+       // LOGGER.log(Level.SEVERE, "Inicia el proceso de consultar el contrato con el id = {0}", contratoId);
         ContratoEntity contratoEntity = persistence.find(contratoId);
         if (contratoEntity == null) {
-            LOGGER.log(Level.SEVERE, "El contrato con el id = {0} no existe", contratoId);
+            //LOGGER.log(Level.SEVERE, "El contrato con el id = {0} no existe", contratoId);
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el contrato con id = {0}", contratoId);
+       // LOGGER.log(Level.INFO, "Termina proceso de consultar el contrato con id = {0}", contratoId);
         return contratoEntity;
     }
     
@@ -114,9 +114,9 @@ public class ContratoLogic {
      * @return Colección de objetos de ContratoEntity.
      */
     public List<ContratoEntity> getContratos() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los contratos");
+       // LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los contratos");
         List<ContratoEntity> lista = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los contratos");
+        //LOGGER.log(Level.INFO, "Termina proceso de consultar todos los contratos");
         return lista;
     }
     
@@ -130,7 +130,7 @@ public class ContratoLogic {
     public ContratoEntity updateContrato(Long contratoId, ContratoEntity contratoEntity) throws BusinessLogicException
     {
         
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el contrato con id = {0}", contratoId);
+        //LOGGER.log(Level.INFO, "Inicia proceso de actualizar el contrato con id = {0}", contratoId);
         if(contratoEntity.getName()==null || contratoEntity.getName().equals("") || NumberUtils.isCreatable(contratoEntity.getName()))
         {
             throw new BusinessLogicException("El nombre del contrato es nulo o tiene un formato incorrecto");
@@ -153,7 +153,7 @@ public class ContratoLogic {
         }
         
         ContratoEntity newContratoEntity = persistence.update(contratoEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el contrato con id = {0}", contratoId);
+       // LOGGER.log(Level.INFO, "Termina proceso de actualizar el contrato con id = {0}", contratoId);
         return newContratoEntity;
         
     }
@@ -181,9 +181,9 @@ public class ContratoLogic {
      */
     public void deleteContrato(Long contratoId) throws BusinessLogicException 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el paseador con id = {0}", contratoId);
+        //LOGGER.log(Level.INFO, "Inicia proceso de borrar el paseador con id = {0}", contratoId);
         persistence.delete(contratoId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el paseador con id = {0}", contratoId);
+        //LOGGER.log(Level.INFO, "Termina proceso de borrar el paseador con id = {0}", contratoId);
     }
     
     
