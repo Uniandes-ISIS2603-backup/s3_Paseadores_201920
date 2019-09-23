@@ -8,9 +8,7 @@ package co.edu.uniandes.csw.paseadores.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -33,19 +31,63 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     
     //Atributos Heredados
     
-    private String idUsuario;
-    
     private String nombre;
     
     private String correo;
     
-    private String contraseña;
+    private String contrasena;
     
     private String infoContacto;
     
+    
+    //Relaciones
+            
+    //Relacion Paseadores - FranjasHorarias
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
     private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
+    
+    //Relacion Paseadores - Comentarios
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();
+    
+    //Relacion Paseadores - Calificaciones
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+
+    //Relacion Paseadores - Zonas
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<ZonaEntity> zonas = new ArrayList<ZonaEntity>();
+
+    //Get Zonas
+    public List<ZonaEntity> getZonas() {
+        return zonas;
+    }
+    //Set Zonas
+    public void setZonas(List<ZonaEntity> zonas) {
+        this.zonas = zonas;
+    }
+    
+    //Get Calificaciones
+    public List<CalificacionEntity> getCalificaciones() {
+        return calificaciones;
+    }
+    //Set Calificaciones
+    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    //Get Comentarios
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+    //Set Comentarios
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
+    }
     
     //Get InfoAdicional
     public String getInfoAdicional() 
@@ -87,14 +129,6 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     {
         return ganancias;
     }    
-    //Get idUsuario
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-    //Set idUsuario
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
     //Get nombre
     public String getNombre() {
         return nombre;
@@ -112,12 +146,12 @@ public class PaseadorEntity extends BaseEntity implements Serializable
         this.correo = correo;
     }
     //Get Contraseña
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
     //Set Contraseña
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
     //Get infoContacto
     public String getInfoContacto() {
