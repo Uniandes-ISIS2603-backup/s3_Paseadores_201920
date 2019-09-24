@@ -87,7 +87,6 @@ public class FranjaHorariaPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             FranjaHorariaEntity entity = factory.manufacturePojo(FranjaHorariaEntity.class);
-
             em.persist(entity);
             data.add(entity);
         }
@@ -104,7 +103,7 @@ public class FranjaHorariaPersistenceTest {
         Assert.assertNotNull(result);
         
         FranjaHorariaEntity entity = em.find( FranjaHorariaEntity.class , result.getId());
-        Assert.assertEquals(franja.getFecha(), entity.getFecha());
+        Assert.assertEquals(franja.getInicio(), entity.getInicio());
     }
     
     /**
@@ -134,7 +133,7 @@ public class FranjaHorariaPersistenceTest {
         FranjaHorariaEntity franja = data.get(0);
         FranjaHorariaEntity newFranja = fhp.find(franja.getId());
         Assert.assertNotNull(newFranja);
-        Assert.assertEquals(franja.getFecha(), newFranja.getFecha());
+        Assert.assertEquals(franja.getFin(), newFranja.getFin());
         Assert.assertEquals(franja.getInicio(), newFranja.getInicio());
     }
     
@@ -149,7 +148,7 @@ public class FranjaHorariaPersistenceTest {
         entity.setId(franja.getId());
         fhp.update(entity);
         FranjaHorariaEntity resp = em.find(FranjaHorariaEntity.class , franja.getId());
-        Assert.assertEquals(resp.getFecha(), entity.getFecha());
+        Assert.assertEquals(resp.getInicio(), entity.getInicio());
     }
     
     /**

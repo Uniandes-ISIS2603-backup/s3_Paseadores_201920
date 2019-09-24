@@ -28,10 +28,7 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
     /**
      * Atributos
      */
-    
-    @Temporal(TemporalType.DATE)
-    @PodamStrategyValue(DateStrategy.class)
-    private Date fecha;
+
     
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
@@ -52,14 +49,7 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
     /**
      * Getters
      */
-    
-    /**
-     * 
-     * @return 
-     */
-    public Date getFecha() {
-        return fecha;
-    }
+
 
     public Date getInicio() {
         return inicio;
@@ -81,9 +71,6 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
      * 
      * @param fecha 
      */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 
     public void setInicio(Date inicio) {
         this.inicio = inicio;

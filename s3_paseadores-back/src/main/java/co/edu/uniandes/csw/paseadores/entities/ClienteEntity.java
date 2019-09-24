@@ -24,17 +24,13 @@ public class ClienteEntity extends BaseEntity implements Serializable{
     
     private String correo;
     
-    private String contraseña;
+    private String contrasena;
     
     private String infoContacto;
     
     /**
      * Relaciones
      */
-    
-//    @OneToMany(mappedBy =  "cliente")
-//    private ArrayList<ContratoEntity> contratos;
-
     
     /**
      * Getters
@@ -63,8 +59,8 @@ public class ClienteEntity extends BaseEntity implements Serializable{
      * 
      * @return contraseña del cliente.
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
@@ -75,15 +71,6 @@ public class ClienteEntity extends BaseEntity implements Serializable{
     public String getInfoContacto() {
         return infoContacto;
     }
-
-//    /**
-//     * Retorna la lista de contratos que ha hecho el cliente.
-//     * 
-//     * @return lista de contratos.
-//     */
-//    public ArrayList<ContratoEntity> getContratos() {
-//        return contratos;
-//    }
 
     /**
      * Setters
@@ -112,8 +99,8 @@ public class ClienteEntity extends BaseEntity implements Serializable{
      * 
      * @param contraseña . Contraseña del cliente
      */
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     /**
@@ -124,14 +111,4 @@ public class ClienteEntity extends BaseEntity implements Serializable{
     public void setInfoContacto(String infoContacto) {
         this.infoContacto = infoContacto;
     }
-
-//    /**
-//     * Modifica la lista de contratos que ha hecho el cliente.
-//     * 
-//     * @param lista de contratos.
-//     */
-//    public void setContratos(ArrayList<ContratoEntity> contratos) {
-//        this.contratos = contratos;
-//    }
-  
 }
