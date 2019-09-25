@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.MascotaLogic;
+import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
@@ -44,6 +45,8 @@ public class MascotaLogicTest {
     UserTransaction utx;
     
     private ArrayList<MascotaEntity> data = new ArrayList<MascotaEntity>();
+    
+    private ClienteEntity clienteTest;
     
     @Deployment
     public static JavaArchive createDeployment(){
@@ -85,9 +88,13 @@ public class MascotaLogicTest {
      * pruebas.
      */
     private void insertData() {
+        
+        ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
+        clienteTest = cliente;
+        em.persist(cliente);
         for( int i = 0; i < 3 ; ++i ){
             MascotaEntity entity = factory.manufacturePojo(MascotaEntity.class);
-
+            entity.setCliente(cliente);
             em.persist(entity);
             data.add(entity);
         }
@@ -96,6 +103,7 @@ public class MascotaLogicTest {
     @Test
     public void createMascota() throws BusinessLogicException {
         MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
+        newEntity.setCliente(clienteTest);
         MascotaEntity result = mascotaLogic.createMascota(newEntity);
         Assert.assertNotNull(result);     
         
