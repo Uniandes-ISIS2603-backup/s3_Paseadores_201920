@@ -26,7 +26,7 @@ public class MascotaEntity extends BaseEntity implements Serializable
     private String infoMascota;
     
     //Relaciones
-     //Relacion Paseadores - FranjasHorarias
+     //Relacion Clientes - Mascotas
     @PodamExclude
     @ManyToOne
     private ClienteEntity cliente;

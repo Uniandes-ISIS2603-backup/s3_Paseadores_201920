@@ -118,4 +118,18 @@ public class MascotaLogicTest {
         MascotaEntity result = mascotaLogic.createMascota(newEntity);
     }
     
+    @Test( expected = BusinessLogicException.class)
+    public void createMascotaInformacionNull() throws BusinessLogicException{
+        MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
+        newEntity.setInfoMascota(null);
+        MascotaEntity result = mascotaLogic.createMascota(newEntity);
+    }
+    
+    @Test( expected = BusinessLogicException.class)
+    public void createMascotaClienteNull() throws BusinessLogicException{
+        MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
+        newEntity.setCliente(null);
+        MascotaEntity result = mascotaLogic.createMascota(newEntity);
+    }
+    
 }

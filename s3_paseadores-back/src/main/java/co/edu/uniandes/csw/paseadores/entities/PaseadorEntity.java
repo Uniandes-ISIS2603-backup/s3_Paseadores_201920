@@ -61,7 +61,20 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
     private List<ZonaEntity> zonas = new ArrayList<ZonaEntity>();
+    
+    //Relacion Paseadores - Contratos
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
 
+    public List<ContratoEntity> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(List<ContratoEntity> contratos) {
+        this.contratos = contratos;
+    }
+ 
     //Get Zonas
     public List<ZonaEntity> getZonas() {
         return zonas;
