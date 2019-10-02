@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -60,14 +61,13 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	@OneToMany
 	private List<MascotaEntity> mascotas = new ArrayList<MascotaEntity>();
 
-
+    
+    
 	//Atributos:
 
 	private Double valorServicio;
 
 	private String idPaseador;
-
-	//	private String idMascota;
 
 	private String idUsuario;
 

@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * @author Santiago Bolaños
@@ -31,7 +33,18 @@ public class ClienteEntity extends BaseEntity implements Serializable{
     /**
      * Relaciones
      */
-    
+     //Relacion Clientes - Mascotas
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente")
+    private List<MascotaEntity> mascotas = new ArrayList<MascotaEntity>();
+
+    public List<MascotaEntity> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<MascotaEntity> mascotas) {
+        this.mascotas = mascotas;
+    }
     /**
      * Getters
      */

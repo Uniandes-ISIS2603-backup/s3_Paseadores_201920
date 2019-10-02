@@ -12,8 +12,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
- * @author Estudiante
+ * @author Nicolas Potes Garcia 
  */
+
 public class ComentarioDTO implements Serializable {
     
      //Atributos
@@ -85,3 +86,4 @@ public class ComentarioDTO implements Serializable {
     
         
  }
+

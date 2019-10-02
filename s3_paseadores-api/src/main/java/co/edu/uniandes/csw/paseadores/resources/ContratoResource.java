@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.paseadores.resources;
 
+
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
@@ -70,5 +71,4 @@ public class ContratoResource {
 //    }
     
     
-    
-}
+    }

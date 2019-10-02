@@ -7,7 +7,11 @@ package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -21,7 +25,19 @@ public class MascotaEntity extends BaseEntity implements Serializable
     private String nombre;
     private String infoMascota;
     
-    
+    //Relaciones
+     //Relacion Clientes - Mascotas
+    @PodamExclude
+    @ManyToOne
+    private ClienteEntity cliente;
+
+    public ClienteEntity getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteEntity cliente) {
+        this.cliente = cliente;
+    }
     
     //Get nombre
     public String getNombre() 

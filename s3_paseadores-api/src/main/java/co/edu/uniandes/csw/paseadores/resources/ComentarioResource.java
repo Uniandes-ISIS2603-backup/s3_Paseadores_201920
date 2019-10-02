@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.paseadores.resources;
-
 import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.ejb.ComentarioLogic;
@@ -76,3 +75,4 @@ public class ComentarioResource {
     
     
 }
+
