@@ -24,7 +24,7 @@ public class ContratoEntity extends BaseEntity implements Serializable{
         //Relaciones
         
             @PodamExclude
-            @OneToOne
+            @ManyToOne
             private ClienteEntity cliente;
         
             @PodamExclude
@@ -43,9 +43,9 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 //            @OneToOne
 //            private ComentarioEntity comentario;
 //    
-//            @PodamExclude
-//            @OneToMany
-//            private FranjaHorariaEntity franja;
+            @PodamExclude
+            @OneToOne
+            private FranjaHorariaEntity franja;
 //    
 //            @PodamExclude
 //            @OneToOne
@@ -178,18 +178,18 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	}
         
         
-//        public ClienteEntity getCliente() {
-//            
-//            return cliente;
-//            
-//        }
-//        
-//        
-//        public void setCliente(ClienteEntity pCliente) {
-//            
-//            cliente = pCliente;
-//            
-//        }
+        public ClienteEntity getCliente() {
+            
+            return cliente;
+            
+        }
+        
+        
+        public void setCliente(ClienteEntity pCliente) {
+            
+            cliente = pCliente;
+            
+        }
 //        
 //        public PaseadorEntity getPaseador() {
 //            
@@ -244,18 +244,18 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 //            
 //        }
 //        
-//        public FranjaHorariaEntity getFranja() {
-//            
-//            return franja;
-//            
-//        }
-//        
-//        
-//        public void setFranja(FranjaHorariaEntity pFranja) {
-//            
-//            franja = pFranja;
-//            
-//        }
+        public FranjaHorariaEntity getFranja() {
+            
+            return franja;
+            
+        }
+        
+        
+        public void setFranja(FranjaHorariaEntity pFranja) {
+            
+            franja = pFranja;
+            
+        }
 //        
 //        public CalificacionEntity getCalificacion() {
 //            
