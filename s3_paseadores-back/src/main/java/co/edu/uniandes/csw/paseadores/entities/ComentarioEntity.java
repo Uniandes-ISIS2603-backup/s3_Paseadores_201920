@@ -34,6 +34,14 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     @ManyToOne
     private PaseadorEntity paseador;
     
+    @PodamExclude
+    @ManyToOne
+    private ClienteEntity cliente;
+    
+    @PodamExclude
+    @ManyToOne
+    private ContratoEntity contrato;
+    
     //Setters y getters
 
     public PaseadorEntity getPaseador() {
@@ -42,6 +50,22 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
 
     public void setPaseador(PaseadorEntity paseador) {
         this.paseador = paseador;
+    }
+    
+    public ClienteEntity getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteEntity cliente) {
+        this.cliente = cliente;
+    }
+    
+    public ContratoEntity getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(ContratoEntity contrato) {
+        this.contrato = contrato;
     }
     
     
