@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -34,7 +35,7 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	private FranjaHorariaEntity franja;
 
 	@PodamExclude
-	@OneToOne
+	@ManyToOne
 	private ClienteEntity cliente;
 
 	@PodamExclude
@@ -42,7 +43,7 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	private ZonaEntity zona;
 
 	@PodamExclude
-	@OneToOne
+	@ManyToOne
 	private PaseadorEntity paseador;
 
 	@PodamExclude
@@ -58,7 +59,7 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	private CalificacionEntity calificacion;
 
 	@PodamExclude
-	@OneToMany
+	@ManyToMany
 	private List<MascotaEntity> mascotas = new ArrayList<MascotaEntity>();
 
     
