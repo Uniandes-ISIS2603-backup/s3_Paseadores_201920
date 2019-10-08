@@ -13,41 +13,65 @@ import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
+ * Entidad que representa un cliente
  * @author Santiago Bolaños
  */
 @Entity
 public class ClienteEntity extends BaseEntity implements Serializable{
     
-    /**
-     * Atributos
-     */
+    //===================================================
+    // Atributos
+    //===================================================
     
+    /**
+     * Nombre del cliente
+     */
     private String nombre;
     
+    /**
+     * Correo del cliente
+     */
     private String correo;
     
+    /**
+     * Contraseña del cliente
+     */
     private String contrasena;
     
+    /**
+     * Información de contacto del cliente.
+     */
     private String infoContacto;
     
+    //===================================================
+    // Relaciones
+    //===================================================
+    
     /**
-     * Relaciones
+     * Mascotas del cliente.
      */
-     //Relacion Clientes - Mascotas
     @PodamExclude
     @OneToMany(mappedBy = "cliente")
     private List<MascotaEntity> mascotas = new ArrayList<MascotaEntity>();
-
-    public List<MascotaEntity> getMascotas() {
-        return mascotas;
-    }
-
-    public void setMascotas(List<MascotaEntity> mascotas) {
-        this.mascotas = mascotas;
-    }
+    
     /**
-     * Getters
+     * Contratos del cliente
      */
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente")
+    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    
+    /**
+     * Formas de pago del cliente
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente")
+    private List<FormaPagoEntity> formasPago = new ArrayList<FormaPagoEntity>();
+
+    
+    ///===================================================
+    // GETTERS
+    //===================================================
     
     /**
      * Retorna el nombre del cliente
@@ -84,10 +108,37 @@ public class ClienteEntity extends BaseEntity implements Serializable{
     public String getInfoContacto() {
         return infoContacto;
     }
-
+    
     /**
-     * Setters
+     * Retorna las mascotas del cliente 
+     * 
+     * @return Mascotas del cliente
      */
+    public List<MascotaEntity> getMascotas() {
+        return mascotas;
+    }
+    
+    /**
+     * Retorna los contratos del cliente
+     * 
+     * @return Contratos del cliente
+     */
+    public List<ContratoEntity> getContratos(){
+        return contratos;
+    }
+    
+    /**
+     * Retorna las formas de pago del cliente
+     * 
+     * @return Formas de pago del cliente
+     */
+    public List<FormaPagoEntity> getFormasPago(){
+        return formasPago;
+    }
+
+    //===================================================
+    // SETTERS
+    //===================================================
     
     /**
      * Modifica el nombre del cliente
@@ -110,7 +161,7 @@ public class ClienteEntity extends BaseEntity implements Serializable{
     /**
      * Modifica la contraseña del cliente.
      * 
-     * @param contraseña . Contraseña del cliente
+     * @param contrasena . Contraseña del cliente
      */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
@@ -123,5 +174,32 @@ public class ClienteEntity extends BaseEntity implements Serializable{
      */
     public void setInfoContacto(String infoContacto) {
         this.infoContacto = infoContacto;
+    }
+    
+    /**
+     * Modifica las mascotas del cliente
+     * 
+     * @param mascotas Lista de mascotas.
+     */
+    public void setMascotas(List<MascotaEntity> mascotas) {
+        this.mascotas = mascotas;
+    }
+    
+    /**
+     * Modifica los contratos del cliente
+     * 
+     * @param contratos Lista de Contratos
+     */
+    public void setContratos(List<ContratoEntity> contratos) {
+        this.contratos = contratos;
+    }
+    
+    /**
+     * Modifica las formas de pago del cliente
+     * 
+     * @param formasPago Lista de formas de pago
+     */
+    public void setFormasPago(List<FormaPagoEntity> formasPago) {
+        this.formasPago = formasPago;
     }
 }
