@@ -91,6 +91,12 @@ public class ContratoLogic {
 			throw new BusinessLogicException("El contrato no tiene creado un pago y su metodo de pago");
 
 		}
+                
+                if(contrato.getValorServicio() <= 0) {
+                    
+                    throw new BusinessLogicException("El valor del contrato no es valido");
+                    
+                }
 
 
 		contrato = persistence.create(contrato);
@@ -170,6 +176,12 @@ public class ContratoLogic {
 		{
 			throw new BusinessLogicException("El pago del contrato no existe");
 		}
+                
+                if(contratoEntity.getValorServicio() < 0) {
+                    
+                    throw new BusinessLogicException("El valor del contrato no es valido");
+                    
+                }
 	
 		ContratoEntity newContratoEntity = persistence.update(contratoEntity);
 

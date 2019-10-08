@@ -250,6 +250,20 @@ public class ContratoLogicTest {
 		newEntity.setPago(null);
 		ContratoEntity result = contratoLogic.createContrato(newEntity);
 	}
+        
+        @Test( expected = BusinessLogicException.class)
+	public void createContratoValorNegativo() throws BusinessLogicException{
+		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+		newEntity.setValorServicio(-10.0);
+		ContratoEntity result = contratoLogic.createContrato(newEntity);
+	}
+        
+        @Test( expected = BusinessLogicException.class)
+	public void createContratoValorCero() throws BusinessLogicException{
+		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+		newEntity.setValorServicio(0.0);
+		ContratoEntity result = contratoLogic.createContrato(newEntity);
+	}
 	
 
 	//ELIMINAR CONTRATO
@@ -351,6 +365,13 @@ public class ContratoLogicTest {
 		Assert.assertEquals(pojoEntity.getId(), resp.getId());
 
 
+	}
+        
+        @Test( expected = BusinessLogicException.class)
+	public void updateContratoValorNegativo() throws BusinessLogicException{
+		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+		newEntity.setValorServicio(-10.0);
+		contratoLogic.updateContrato(newEntity.getId(), newEntity);
 	}
 
 

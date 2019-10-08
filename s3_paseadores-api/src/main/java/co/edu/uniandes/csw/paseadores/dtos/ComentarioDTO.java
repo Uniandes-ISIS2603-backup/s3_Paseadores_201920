@@ -14,13 +14,20 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author Nicolas Potes Garcia 
  */
-
 public class ComentarioDTO implements Serializable {
     
      //Atributos
     
      private String infoComentario;
      private String name;
+     private String idComentario;
+     
+     //Relaciones
+     private ClienteDTO cliente;
+     private PaseadorDTO paseador;
+     private ContratoDTO contrato;
+     
+     
      
      public ComentarioDTO() {
          
@@ -51,6 +58,18 @@ public class ComentarioDTO implements Serializable {
             
         }
         
+         public String getIdComentario() {
+        	
+        	return idComentario;
+        	
+        }
+        
+        public void setIdComentario(String pIdComentario) {
+        	
+        	idComentario = pIdComentario;
+        	
+        }
+        
          /**
      * Crea un objeto ComentarioDTO a partir de un objeto ComentarioEntity.
      *
@@ -62,6 +81,28 @@ public class ComentarioDTO implements Serializable {
         if (comentarioEntity != null) {
             this.infoComentario = comentarioEntity.getInfoComentario();
             this.name = comentarioEntity.getName();
+            this.infoComentario = comentarioEntity.getInfoComentario();
+            
+            
+            if (comentarioEntity.getContrato() != null) {
+                this.contrato = new ContratoDTO(comentarioEntity.getContrato());
+            } else {
+                this.contrato = null;
+            }
+            
+            if (comentarioEntity.getPaseador() != null) {
+                this.paseador = new PaseadorDTO(comentarioEntity.getPaseador());
+            } else {
+                this.paseador = null;
+            }
+            
+            if (comentarioEntity.getCliente() != null) {
+                this.cliente = new ClienteDTO(comentarioEntity.getCliente());
+            } else {
+                this.cliente = null;
+            }
+            
+            
         }
     
      }
@@ -76,6 +117,20 @@ public class ComentarioDTO implements Serializable {
         ComentarioEntity comentarioEntity = new ComentarioEntity();
         comentarioEntity.setInfoComentario(this.getInfoComentario());
         comentarioEntity.setName(this.getName());
+        comentarioEntity.setInfoComentario(this.getInfoComentario());
+        
+        if (this.paseador != null) {
+            comentarioEntity.setPaseador(this.paseador.toEntity());
+        }
+        
+        if (this.contrato != null) {
+            comentarioEntity.setContrato(this.contrato.toEntity());
+        }
+        
+        if (this.cliente != null) {
+            comentarioEntity.setCliente(this.cliente.toEntity());
+        }
+        
         return comentarioEntity;
     }
    
@@ -86,4 +141,3 @@ public class ComentarioDTO implements Serializable {
     
         
  }
-

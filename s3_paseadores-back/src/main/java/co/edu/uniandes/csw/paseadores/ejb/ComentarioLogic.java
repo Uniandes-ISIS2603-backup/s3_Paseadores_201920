@@ -1,8 +1,10 @@
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ComentarioPersistence;
+import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
 import java.sql.Time;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,6 +21,9 @@ public class ComentarioLogic {
 
 	@Inject
 	private ComentarioPersistence persistence;
+        
+         @Inject
+        private PaseadorPersistence paseadorPersistence;
 
 
 	public ComentarioEntity createComentario(ComentarioEntity comentario) throws BusinessLogicException {
@@ -95,15 +100,19 @@ public class ComentarioLogic {
 		return comentarioEntity;
 	}
 
-	/**
-	 * Obtiene la lista de los registros del Comentario.
-	 *
-	 * @return Colección de objetos de ComentarioEntity.
-	 */
-	public List<ComentarioEntity> getComentarios() {
-		List<ComentarioEntity> lista = persistence.findAll();
-		return lista;
-	}
+	  /**
+     * Obtiene la lista de los registros de Comentario que pertenecen a un Paseador.
+     *
+     * @param paseadorId id del Paseador el cual es padre de los Comentarios.
+     * @return Colección de objetos de ComentarioEntity.
+     */
+    public List<ComentarioEntity> getComentarios(Long paseadorId) {
+    	
+        PaseadorEntity paseadorEntity = paseadorPersistence.find(paseadorId);
+
+        return paseadorEntity.getComentarios();
+        
+    }
 
 	/**
 	 * Actualiza la información de una instancia de Comentario.

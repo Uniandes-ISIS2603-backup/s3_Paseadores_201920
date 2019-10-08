@@ -76,9 +76,23 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	private String name;
 
 	private Boolean finalizado = false;
+        
+        private String idContrato;
 
 
 	//Metodos
+        
+        public String getIdContrato() {
+            
+            return idContrato;
+            
+        }
+        
+        public void setIdContrato(String pIdContrato) {
+            
+            idContrato = pIdContrato;
+            
+        }
 
 	//Mirar si se deja o elimina
 	public String getName() {

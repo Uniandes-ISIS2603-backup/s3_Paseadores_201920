@@ -24,17 +24,17 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  */
 public class ContratoDTO implements Serializable{
 
-	
+
 	//Atributos:
 
 	private Double valorServicio;
 
 
 	//private FranjaHorariaEntity horarios;
+        
+        private String idContrato;
 
 	private String idPaseador;
-
-	private String idMascota;
 
 	private String idUsuario;
 
@@ -43,7 +43,20 @@ public class ContratoDTO implements Serializable{
 	private String name;
 
 	private Boolean finalizado = false;
-	
+
+	private PaseadorDTO paseador;
+
+	private ClienteDTO cliente;
+
+	private FranjaHorariaDTO franja;
+
+	private ZonaDTO zona;
+
+	private PagoDTO pago;
+
+	private ComentarioDTO comentario;
+
+	private CalificacionDTO calificacion;
 
 	//Constructor de contrato vacío
 	public ContratoDTO() {
@@ -65,6 +78,49 @@ public class ContratoDTO implements Serializable{
 			this.idUsuario = contratoEntity.getIdUsuario();
 			this.satisfactorio = contratoEntity.getSatisfactorio();
 			this.finalizado = contratoEntity.getFinalizado();
+                        this.idContrato = contratoEntity.getIdContrato();
+
+			if (contratoEntity.getPaseador() != null) {
+				this.paseador = new PaseadorDTO(contratoEntity.getPaseador());
+			} else {
+				this.paseador = null;
+			}
+
+			if (contratoEntity.getCliente() != null) {
+				this.cliente = new ClienteDTO(contratoEntity.getCliente());
+			} else {
+				this.cliente = null;
+			}
+
+			if (contratoEntity.getHorarios() != null) {
+				this.franja = new FranjaHorariaDTO(contratoEntity.getHorarios());
+			} else {
+				this.franja = null;
+			}
+
+			if (contratoEntity.getZona() != null) {
+				this.zona = new ZonaDTO(contratoEntity.getZona());
+			} else {
+				this.zona = null;
+			}
+
+			if (contratoEntity.getPago() != null) {
+				this.pago = new PagoDTO(contratoEntity.getPago());
+			} else {
+				this.pago = null;
+			}
+
+			if (contratoEntity.getComentario() != null) {
+				this.comentario = new ComentarioDTO(contratoEntity.getComentario());
+			} else {
+				this.comentario = null;
+			}
+
+			if (contratoEntity.getCalificacion() != null) {
+				this.calificacion = new CalificacionDTO(contratoEntity.getCalificacion());
+			} else {
+				this.calificacion = null;
+			}
 
 		}
 	}
@@ -85,12 +141,54 @@ public class ContratoDTO implements Serializable{
 		contratoEntity.setIdUsuario(this.idUsuario);
 		contratoEntity.setSatisfactorio(this.satisfactorio);
 		contratoEntity.setFinalizado(this.finalizado);
+                contratoEntity.setIdContrato(this.idContrato);
+
+		if (this.cliente != null) {
+			contratoEntity.setCliente(this.cliente.toEntity());
+		}
+
+		if (this.paseador != null) {
+			contratoEntity.setPaseador(this.paseador.toEntity());
+		}
+
+		if (this.franja != null) {
+			contratoEntity.setHorarios(this.franja.toEntity());
+		}
+
+		if (this.zona != null) {
+			contratoEntity.setZona(this.zona.toEntity());
+		}
+
+		if (this.pago != null) {
+			contratoEntity.setPago(this.pago.toEntity());
+		}
+
+		if (this.comentario != null) {
+			contratoEntity.setComentario(this.comentario.toEntity());
+		}
+
+		if (this.calificacion != null) {
+			contratoEntity.setCalificacion(this.calificacion.toEntity());
+		}
+
 		return contratoEntity;
 	}
 
 
 
 	//Metodos
+        
+        public String getIdContrato() {
+            
+            return idContrato;
+            
+        }
+        
+        public void setIdContrato(String pIdContrato) {
+            
+            idContrato = pIdContrato;
+            
+        }
 
 	//Mirar si se deja o elimina
 	public String getName() {
@@ -141,11 +239,6 @@ public class ContratoDTO implements Serializable{
 
 	}
 
-	public String getIdMascota() {
-
-		return idMascota;
-
-	}
 
 	public String getIdUsuario() {
 
@@ -166,11 +259,6 @@ public class ContratoDTO implements Serializable{
 
 	}
 
-	public void setIdMascota(String pIdMascota) {
-
-		idMascota = pIdMascota;
-
-	}
 
 	public Boolean getSatisfactorio() {
 
@@ -185,10 +273,45 @@ public class ContratoDTO implements Serializable{
 
 	}
 
+	public ClienteDTO getCliente() {
+
+		return cliente;
+
+	}
+
+	public PaseadorDTO getPaseador() {
+
+		return paseador;
+
+	}
+
+	public ZonaDTO getZona() {
+
+		return zona;
+
+	}
+
+	public PagoDTO getPago() {
+
+		return pago;
+
+	}
+
+	public ComentarioDTO getComentario() {
+
+		return comentario;
+
+	}
+
+	public CalificacionDTO getCalificacion() {
+
+		return calificacion;
+
+	}
+
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
-
 
 }
