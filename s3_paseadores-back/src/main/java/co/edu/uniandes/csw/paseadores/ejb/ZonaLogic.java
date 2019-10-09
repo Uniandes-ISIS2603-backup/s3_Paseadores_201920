@@ -23,11 +23,11 @@ public class ZonaLogic {
         if(zona.getInfoZona()!=null){
             String info = zona.getInfoZona().replace(" ", "");
             if(info.isEmpty()){
-                throw new BusinessLogicException("LA información de la zona esta vacia");
+                throw new BusinessLogicException("La información de la zona esta vacia");
             }
         }
         else{
-            throw new BusinessLogicException("LA información de la zona esta vacia");
+            throw new BusinessLogicException("Lai información de la zona esta vacia");
         }
         zona = persistence.create(zona);
         return zona;

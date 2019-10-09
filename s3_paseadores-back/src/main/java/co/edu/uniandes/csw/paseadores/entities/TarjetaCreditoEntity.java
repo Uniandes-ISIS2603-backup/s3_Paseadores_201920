@@ -22,7 +22,28 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable{
     
     private int cvv;
     
-    private long numero;
+    private int numero1;
+    
+    private int numero2;
+    
+    private int numero3;
+
+    private int numero4;
+
+    public int getNumero2() {
+        return numero2;
+    }
+
+    public int getNumero3() {
+        return numero3;
+    }
+
+    public int getNumero4() {
+        return numero4;
+    }
+    
+    
+    
     
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
@@ -34,11 +55,23 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable{
     public void setCCV(int p){
         cvv=p;
     }
-    public long getNumero(){
-        return numero;
+    public int getNumero1(){
+        return numero1;
     }
-    public void setNumero(long p){
-        numero=p;
+
+    public void setNumero2(int numero2) {
+        this.numero2 = numero2;
+    }
+
+    public void setNumero3(int numero3) {
+        this.numero3 = numero3;
+    }
+
+    public void setNumero4(int numero4) {
+        this.numero4 = numero4;
+    }
+    public void setNumero1(int p){
+        numero1=p;
     }
     public Date getVencimiento(){
         return vencimiento;
