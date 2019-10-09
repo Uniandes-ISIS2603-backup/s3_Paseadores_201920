@@ -41,7 +41,7 @@ public class MascotaLogic
     public MascotaEntity createMascota(Long clienteId, MascotaEntity mascota) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de crear mascota");
-        ClienteEntity cliente = null;
+        ClienteEntity cliente;
         if(mascota.getNombre()==null)
         {
             throw new BusinessLogicException("El nombre de la mascota es nulo");
@@ -57,8 +57,8 @@ public class MascotaLogic
         else
         {
             cliente = clientePersistence.find(clienteId);
+            mascota.setCliente(cliente);
         }
-        mascota.setCliente(cliente);
         mascota=persistence.create(mascota);
         LOGGER.log(Level.INFO, "Termina proceso de creación de mascota");
         return mascota;
@@ -67,6 +67,7 @@ public class MascotaLogic
      /**
      * Retorna todos las mascotas en la base de datos.
      * 
+     * @param clienteId id del cliente
      * @return Lista de entidades tipo Mascota.
      */
     public List<MascotaEntity> getMascotas(Long clienteId)
@@ -82,6 +83,7 @@ public class MascotaLogic
      * @param clienteId el id del cliente
      * @param mascotaId El Id de la mascota a buscar.
      * @return mascota buscada. null si no lo encuentra.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     public MascotaEntity getMascota(Long clienteId, Long mascotaId ) throws BusinessLogicException
     {
@@ -99,11 +101,12 @@ public class MascotaLogic
      * @param idCliente id del cliente asociado a la mascota
      * @param mascotaEntity Instancia de MascotaEntity con los nuevos datos.
      * @return Instancia de PaseadorEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     public MascotaEntity updateMascota(Long idCliente, MascotaEntity mascotaEntity) throws BusinessLogicException
     {
         
-        ClienteEntity clienteEntity = null;
+        ClienteEntity clienteEntity;
        
         if(mascotaEntity.getNombre()==null)
         {
@@ -119,7 +122,7 @@ public class MascotaLogic
         }
         else
         {
-            clientePersistence.find(idCliente);
+            clienteEntity = clientePersistence.find(idCliente);
             mascotaEntity.setCliente(clienteEntity);
         }
         mascotaEntity=persistence.update(mascotaEntity);
@@ -131,6 +134,7 @@ public class MascotaLogic
      * 
      * @param idCliente id del cliente asociado
      * @param mascotaId Id de la mascota a eliminar
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     public void deleteMascota(Long idCliente, Long mascotaId ) throws BusinessLogicException
     {
