@@ -11,7 +11,7 @@ import co.edu.uniandes.csw.paseadores.entities.TarjetaCreditoEntity;
  *
  * @author Juan Vergara
  */
-public class TarjetaCreditDTO {
+public class TarjetaCreditoDTO {
     private int cvv;
     
     private int numero1;
@@ -24,10 +24,10 @@ public class TarjetaCreditDTO {
     
     private Long id;
     
-    public TarjetaCreditDTO(){
+    public TarjetaCreditoDTO(){
         
     }
-    public TarjetaCreditDTO(TarjetaCreditoEntity tarjeta){
+    public TarjetaCreditoDTO(TarjetaCreditoEntity tarjeta){
         this.cvv=tarjeta.getCCV();
         this.id=tarjeta.getId();
         this.numero1=tarjeta.getNumero1();

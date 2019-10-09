@@ -5,10 +5,99 @@
  */
 package co.edu.uniandes.csw.paseadores.resources;
 
+import co.edu.uniandes.csw.paseadores.dtos.CalificacionDTO;
+import co.edu.uniandes.csw.paseadores.ejb.CalificacionLogic;
+import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
+import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+
+
 /**
  *
- * @author Estudiante
+ * @author Juan Vergara
  */
+@Path("Calificaciones")
+@Produces(MediaType.APPLICATION_JSON)      
+@Consumes(MediaType.APPLICATION_JSON)
+@RequestScoped
+        
 class CalificacionResource {
+    
+    @Inject
+    private CalificacionLogic calificacionLogic;
+    
+    @POST
+    public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException{
+        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(calificacion.toEntity()));
+        return calificacionDTO;
+    }
+    
+    @DELETE
+    @Path("{calificacionId: \\d+}")
+    public void deleteCalificacion (@PathParam("calificacionId") Long calificacionId) throws BusinessLogicException{
+        if( calificacionLogic.getCalificacion(calificacionId)==null){
+           throw new WebApplicationException("El recurso /calificacions/" + calificacionId + " no existe.", 404);
+        }
+        
+        calificacionLogic.deleteCalificacion(calificacionId);
+        
+    }
+
+    @GET
+    @Path("{calificacionId: \\d+}")
+    public CalificacionDTO getCalificacion(@PathParam("calificacionId") Long calificacionId) throws BusinessLogicException {
+    	
+        CalificacionEntity entity = calificacionLogic.getCalificacion(calificacionId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
+        }
+        CalificacionDTO calificacionDTO = new CalificacionDTO(entity);
+        return calificacionDTO;
+    }
+
+    @GET
+    public List<CalificacionDTO> getCalificacions() {
+
+        List<CalificacionDTO> listaDTOs = listEntity2DTO(calificacionLogic.getCalificacions());
+        return listaDTOs;
+    }
+    
+ 
+    private List<CalificacionDTO> listEntity2DTO(List<CalificacionEntity> entityList) {
+        List<CalificacionDTO> list = new ArrayList<CalificacionDTO>();
+        for (CalificacionEntity entity : entityList) {
+            list.add(new CalificacionDTO(entity));
+        }
+        return list;
+    }
+
+    @PUT
+    @Path("{calificacionId: \\d+}")
+    public CalificacionDTO updateCalificacion(@PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException {
+
+        if (calificacionId.equals(calificacion.getId())) {
+            throw new BusinessLogicException("Los ids del Calificacion no coinciden.");
+        }
+        CalificacionEntity entity = calificacionLogic.getCalificacion(calificacionId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
+
+        }
+        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calificacionId, calificacion.toEntity()));
+        return calificacionDTO; 
+   }
     
 }
