@@ -6,9 +6,10 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import java.util.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,7 +24,7 @@ public class MascotaPersistence
 {
     @PersistenceContext(unitName = "paseadoresPU")
     protected EntityManager em;
-
+    private static final Logger LOGGER = Logger.getLogger(MascotaPersistence.class.getName());
     public MascotaEntity create(MascotaEntity mascota) 
     {
         em.persist(mascota);

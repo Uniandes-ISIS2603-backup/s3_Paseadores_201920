@@ -10,7 +10,7 @@ import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ClientePersistence;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import java.util.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
@@ -28,6 +28,7 @@ public class MascotaLogic
      @Inject
     private ClientePersistence clientePersistence;
     
+    private static final Logger LOGGER = Logger.getLogger(MascotaLogic.class.getName());
      /**
      * Se encarga de crear un Review en la base de datos.
      *
