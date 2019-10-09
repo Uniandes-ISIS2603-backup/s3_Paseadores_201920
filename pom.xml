@@ -10,7 +10,10 @@
     <packaging>pom</packaging>
     <name>s3_paseadores</name>
  
-    <modules></modules>
+    <modules>
+        <module>s3_paseadores-api</module>
+        <module>s3_paseadores-back</module>
+    </modules>
     
     <repositories>
         <repository>

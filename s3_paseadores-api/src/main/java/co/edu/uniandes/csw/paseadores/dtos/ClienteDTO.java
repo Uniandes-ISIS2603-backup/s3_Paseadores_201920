@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 
  * @author Santiago Bolaños
  */
-class ClienteDTO implements Serializable
+public class ClienteDTO implements Serializable
 {
     //===================================================
     // Atributos
