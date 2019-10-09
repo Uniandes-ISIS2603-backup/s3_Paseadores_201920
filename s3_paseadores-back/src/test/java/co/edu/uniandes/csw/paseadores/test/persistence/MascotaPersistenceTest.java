@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.paseadores.test.persistence;
 
+import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
 import java.util.ArrayList;
@@ -52,12 +53,15 @@ public class MascotaPersistenceTest
    
     private List<MascotaEntity> data = new ArrayList<>();
     
+    private ClienteEntity clienteTest;
+    
      /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() 
     {
         em.createQuery("delete from MascotaEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
     
     /**
@@ -67,9 +71,12 @@ public class MascotaPersistenceTest
     private void insertData() 
     {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) {
+        clienteTest = factory.manufacturePojo(ClienteEntity.class);;
+        em.persist(clienteTest);
+        for( int i = 0; i < 3 ; ++i )
+        {
             MascotaEntity entity = factory.manufacturePojo(MascotaEntity.class);
-
+            entity.setCliente(clienteTest);
             em.persist(entity);
             data.add(entity);
         }
@@ -129,7 +136,7 @@ public class MascotaPersistenceTest
     @Test
     public void getMascotaTest() {
         MascotaEntity entity = data.get(0);
-        MascotaEntity newEntity = mp.find(entity.getId());
+        MascotaEntity newEntity = mp.find(clienteTest.getId(),entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }

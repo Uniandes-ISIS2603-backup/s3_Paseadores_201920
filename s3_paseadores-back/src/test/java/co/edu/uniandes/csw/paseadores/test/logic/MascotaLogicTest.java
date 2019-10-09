@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -79,57 +80,166 @@ public class MascotaLogicTest {
      /**
      * Limpia las tablas que están implicadas en la prueba.
      */
-    private void clearData() {
+    private void clearData() 
+    {
         em.createQuery("delete from MascotaEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
     
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
-    private void insertData() {
-        
-        ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
-        clienteTest = cliente;
-        em.persist(cliente);
-        for( int i = 0; i < 3 ; ++i ){
+    private void insertData() 
+    {
+        clienteTest = factory.manufacturePojo(ClienteEntity.class);;
+        em.persist(clienteTest);
+        for( int i = 0; i < 3 ; ++i )
+        {
             MascotaEntity entity = factory.manufacturePojo(MascotaEntity.class);
-            entity.setCliente(cliente);
+            entity.setCliente(clienteTest);
             em.persist(entity);
             data.add(entity);
         }
     }
     
+    /**
+     * Prueba para crear una mascota
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
     @Test
-    public void createMascota() throws BusinessLogicException {
+    public void createMascota() throws BusinessLogicException 
+    {
         MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
         newEntity.setCliente(clienteTest);
-        MascotaEntity result = mascotaLogic.createMascota(newEntity);
+        MascotaEntity result = mascotaLogic.createMascota(clienteTest.getId(),newEntity);
         Assert.assertNotNull(result);     
         
         MascotaEntity entity = em.find( MascotaEntity.class , result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
+        Assert.assertEquals(entity.getIdMascota(), result.getIdMascota());
     }
     
+    /**
+     * Prueba para crear una mascota con nombre null
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
     @Test( expected = BusinessLogicException.class)
-    public void createMascotaNombreNull() throws BusinessLogicException{
+    public void createMascotaNombreNull() throws BusinessLogicException
+    {
         MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
         newEntity.setNombre(null);
-        MascotaEntity result = mascotaLogic.createMascota(newEntity);
+        newEntity.setCliente(clienteTest);
+        MascotaEntity result = mascotaLogic.createMascota(clienteTest.getId(),newEntity);
     }
     
+    /**
+     * Prueba para crear una mascota con informacion null
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
     @Test( expected = BusinessLogicException.class)
-    public void createMascotaInformacionNull() throws BusinessLogicException{
+    public void createMascotaInformacionNull() throws BusinessLogicException
+    {
         MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
         newEntity.setInfoMascota(null);
-        MascotaEntity result = mascotaLogic.createMascota(newEntity);
+        newEntity.setCliente(clienteTest);
+        MascotaEntity result = mascotaLogic.createMascota(clienteTest.getId(),newEntity);
     }
     
+    /**
+     * Prueba para crear una mascota con cliente null
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
     @Test( expected = BusinessLogicException.class)
-    public void createMascotaClienteNull() throws BusinessLogicException{
+    public void createMascotaClienteNull() throws BusinessLogicException
+    {
         MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
         newEntity.setCliente(null);
-        MascotaEntity result = mascotaLogic.createMascota(newEntity);
+        MascotaEntity result = mascotaLogic.createMascota(null,newEntity);
     }
     
+    
+     /**
+     * Prueba para consultar la lista de mascotas.
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
+    @Test
+    public void getMascotasTest() throws BusinessLogicException 
+    {
+        List<MascotaEntity> list = mascotaLogic.getMascotas(clienteTest.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (MascotaEntity entity : list) 
+        {
+            boolean found = false;
+            for (MascotaEntity storedEntity : data) 
+            {
+                if (entity.getId().equals(storedEntity.getId())) 
+                {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+     /**
+     * Prueba para consultar una mascota.
+     */
+    @Test
+    public void getMascotaTest() throws BusinessLogicException 
+    {
+        MascotaEntity entity = data.get(0);
+        MascotaEntity resultEntity = mascotaLogic.getMascota(clienteTest.getId(), entity.getId());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+    }
+    
+    /**
+     * Prueba para actualizar una mascota.
+     */
+    @Test
+    public void updateMascotaTest() throws BusinessLogicException 
+    {
+        MascotaEntity entity = data.get(0);
+        MascotaEntity pojoEntity = factory.manufacturePojo(MascotaEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        mascotaLogic.updateMascota(clienteTest.getId(), pojoEntity);
+
+        MascotaEntity resp = em.find(MascotaEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+    }
+    
+     /**
+     * Prueba para eliminar una mascota
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
+    @Test
+    public void deleteMascotaTest() throws BusinessLogicException 
+    {
+        MascotaEntity entity = data.get(0);
+        mascotaLogic.deleteMascota(clienteTest.getId(), entity.getId());
+        MascotaEntity deleted = em.find(MascotaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+    
+     /**
+     * Prueba para eliminarle una mascota a un cliente al cual no pertenece.
+     *
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteMascotaConClienteNoAsociadoTest() throws BusinessLogicException 
+    {
+        MascotaEntity entity = data.get(0);
+        mascotaLogic.deleteMascota(clienteTest.getId()+1, entity.getId());
+    }
 }

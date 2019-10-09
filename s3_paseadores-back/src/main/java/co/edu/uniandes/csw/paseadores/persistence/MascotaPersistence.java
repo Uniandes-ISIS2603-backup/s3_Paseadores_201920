@@ -6,7 +6,9 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,11 +31,36 @@ public class MascotaPersistence
         return mascota;
     }
 
-    public MascotaEntity find(Long idMascota)
+    /**
+     * Buscar una mascota
+     *
+     * Busca si hay alguna mascota asociada a un libro y con un ID específico
+     *
+     * @param idCliente El ID del cliente con respecto al cual se busca
+     * @param idMascota El ID de la mascota buscada
+     * @return La mascota encontrada o null. Nota: Si existe una o más msacota
+     * devuelve siempre la primera que encuentra
+     */
+    public MascotaEntity find(Long idCliente, Long idMascota)
     {
-
-           return em.find(MascotaEntity.class, idMascota);
-
+        LOGGER.log(Level.INFO, "Consultando la mascota con id = {0} del libro con id = " + idCliente, idMascota);
+        TypedQuery<MascotaEntity> q = em.createQuery("select p from MascotaEntity p where (p.cliente.id = :idcliente) and (p.id = :idmascota)", MascotaEntity.class);
+        q.setParameter("idcliente", idCliente);
+        q.setParameter("idmascota", idMascota);
+        List<MascotaEntity> results = q.getResultList();
+        MascotaEntity mascota = null;
+        if (results == null) 
+        {
+            mascota = null;
+        } else if (results.isEmpty()) 
+        {
+            mascota = null;
+        } else if (results.size() >= 1) 
+        {
+            mascota = results.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar la mascota con id = {0} del cliente con id =" + idCliente, idMascota);
+        return mascota;
     }
     
     public List<MascotaEntity> findAll()
