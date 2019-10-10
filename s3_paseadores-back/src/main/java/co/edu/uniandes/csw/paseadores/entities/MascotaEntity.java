@@ -21,7 +21,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class MascotaEntity extends BaseEntity implements Serializable
 {
     //Atributos propios de la clase
-    private String idMascota;
+   
     private String nombre;
     private String infoMascota;
     
@@ -48,16 +48,6 @@ public class MascotaEntity extends BaseEntity implements Serializable
     public void setNombre(String nombre) 
     {
         this.nombre = nombre;
-    }
-
-    public String getIdMascota() 
-    {
-        return idMascota;
-    }
-
-    public void setIdMascota(String idMascota) 
-    {
-        this.idMascota = idMascota;
     }
 
     public String getInfoMascota() 

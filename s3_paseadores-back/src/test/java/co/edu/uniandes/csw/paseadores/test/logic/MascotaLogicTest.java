@@ -118,7 +118,7 @@ public class MascotaLogicTest {
         
         MascotaEntity entity = em.find( MascotaEntity.class , result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
-        Assert.assertEquals(entity.getIdMascota(), result.getIdMascota());
+       
     }
     
     /**
