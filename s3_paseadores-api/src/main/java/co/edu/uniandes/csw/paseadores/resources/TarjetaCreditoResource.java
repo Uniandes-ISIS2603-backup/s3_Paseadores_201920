@@ -43,10 +43,10 @@ public class TarjetaCreditoResource {
     }
     
     @DELETE
-    @Path("{tarjetaCreditoId: \\d+}")
-    public void deleteTarjetaCredito (@PathParam("tarjetaCreditoId") Long tarjetaCreditoId) throws BusinessLogicException{
+    @Path("{tarjetaId: \\d+}")
+    public void deleteTarjetaCredito (@PathParam("tarjetaId") Long tarjetaCreditoId) throws BusinessLogicException{
         if( tarjetaCreditoLogic.getTarjetaCredito(tarjetaCreditoId)==null){
-           throw new WebApplicationException("El recurso /tarjetaCreditos/" + tarjetaCreditoId + " no existe.", 404);
+           throw new WebApplicationException("El recurso /tarjetas/" + tarjetaCreditoId + " no existe.", 404);
         }
         
         tarjetaCreditoLogic.deleteTarjetaCredito(tarjetaCreditoId);
@@ -55,11 +55,11 @@ public class TarjetaCreditoResource {
 
     @GET
     @Path("{tarjetaCreditoId: \\d+}")
-    public TarjetaCreditoDTO getTarjetaCredito(@PathParam("tarjetaCreditoId") Long tarjetaCreditoId) throws BusinessLogicException {
+    public TarjetaCreditoDTO getTarjetaCredito(@PathParam("tarjetaId") Long tarjetaCreditoId) throws BusinessLogicException {
     	
         TarjetaCreditoEntity entity = tarjetaCreditoLogic.getTarjetaCredito(tarjetaCreditoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/tarjetaCreditos/" + tarjetaCreditoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso " + "/tarjetas/" + tarjetaCreditoId + " no existe.", 404);
         }
         TarjetaCreditoDTO tarjetaCreditoDTO = new TarjetaCreditoDTO(entity);
         return tarjetaCreditoDTO;
@@ -82,15 +82,15 @@ public class TarjetaCreditoResource {
     }
 
     @PUT
-    @Path("{tarjetaCreditoId: \\d+}")
-    public TarjetaCreditoDTO updateTarjetaCredito(@PathParam("tarjetaCreditoId") Long tarjetaCreditoId, TarjetaCreditoDTO tarjetaCredito) throws BusinessLogicException {
+    @Path("{tarjetaId: \\d+}")
+    public TarjetaCreditoDTO updateTarjetaCredito(@PathParam("tarjetaId") Long tarjetaCreditoId, TarjetaCreditoDTO tarjetaCredito) throws BusinessLogicException {
 
         if (tarjetaCreditoId.equals(tarjetaCredito.getId())) {
             throw new BusinessLogicException("Los ids del TarjetaCredito no coinciden.");
         }
         TarjetaCreditoEntity entity = tarjetaCreditoLogic.getTarjetaCredito(tarjetaCreditoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/tarjetaCreditos/" + tarjetaCreditoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso " + "/tarjetas/" + tarjetaCreditoId + " no existe.", 404);
 
         }
         TarjetaCreditoDTO tarjetaCreditoDTO = new TarjetaCreditoDTO(tarjetaCreditoLogic.updateTarjetaCredito(tarjetaCreditoId, tarjetaCredito.toEntity()));

@@ -20,25 +20,25 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class TarjetaCreditoEntity extends BaseEntity implements Serializable{
     
-    private int cvv;
+    private Integer cvv;
     
-    private int numero1;
+    private Integer numero1;
     
-    private int numero2;
+    private Integer numero2;
     
-    private int numero3;
+    private Integer numero3;
 
-    private int numero4;
+    private Integer numero4;
 
-    public int getNumero2() {
+    public Integer getNumero2() {
         return numero2;
     }
 
-    public int getNumero3() {
+    public Integer getNumero3() {
         return numero3;
     }
 
-    public int getNumero4() {
+    public Integer getNumero4() {
         return numero4;
     }
     
@@ -49,28 +49,28 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable{
     @PodamStrategyValue(DateStrategy.class)
     private Date vencimiento; 
     
-    public int getCCV(){
+    public Integer getCCV(){
         return cvv;
     }
     public void setCCV(int p){
         cvv=p;
     }
-    public int getNumero1(){
+    public Integer getNumero1(){
         return numero1;
     }
 
-    public void setNumero2(int numero2) {
+    public void setNumero2(Integer numero2) {
         this.numero2 = numero2;
     }
 
-    public void setNumero3(int numero3) {
+    public void setNumero3(Integer numero3) {
         this.numero3 = numero3;
     }
 
-    public void setNumero4(int numero4) {
+    public void setNumero4(Integer numero4) {
         this.numero4 = numero4;
     }
-    public void setNumero1(int p){
+    public void setNumero1(Integer p){
         numero1=p;
     }
     public Date getVencimiento(){
