@@ -28,7 +28,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Juan Vergara
  */
-@Path("Tarjetas")
+@Path("tarjetas")
 @Produces(MediaType.APPLICATION_JSON)      
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
