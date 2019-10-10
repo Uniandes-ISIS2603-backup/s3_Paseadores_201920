@@ -9,7 +9,7 @@ import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 
 /**
  *
- * @author Mario Hurtado
+ * @author Estudiante
  */
 class PagoDTO {
 
