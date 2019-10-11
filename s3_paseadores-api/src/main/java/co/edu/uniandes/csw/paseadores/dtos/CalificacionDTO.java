@@ -8,21 +8,27 @@ package co.edu.uniandes.csw.paseadores.dtos;
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
 
 /**
- *
- * @author Estudiante
+ * Clase que modela el DTO para Calificacion
+ * @author Juan Esteban Vergara
  */
+
+
 public class CalificacionDTO {
+    //atributos
     private int Calificacion;
     private Long id;
     
+    //constructor vacio
     public CalificacionDTO(){
         
     }
+    //constructor que usa CalificacionEntity para llenar su informacion
     public CalificacionDTO(CalificacionEntity calificacion){
         this.Calificacion=calificacion.getCalificacion();
         this.id=calificacion.getId();
     }
-
+    //setters de calificacion e id
+    
     public void setCalificacion(int Calificacion) {
         this.Calificacion = Calificacion;
     }
@@ -31,13 +37,25 @@ public class CalificacionDTO {
         this.id = id;
     }
 
+    //getters de calificacion e id
+    /**
+    *@return Calificacion
+    */
     public int getCalificacion() {
         return Calificacion;
     }
-
+    /**
+     * 
+     * @return id
+     */
     public Long getId() {
         return id;
     }
+    //metodo toEntity que crea un Entity en base al DTO
+    /**
+     * 
+     * @return entity 
+     */
     public CalificacionEntity toEntity(){
         CalificacionEntity entity = new CalificacionEntity();
         entity.setCalificacion(this.Calificacion);

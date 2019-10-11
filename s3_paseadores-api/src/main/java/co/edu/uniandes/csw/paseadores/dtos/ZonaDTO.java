@@ -11,15 +11,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
  * @author Juan Vergara
  */
 
-public class ZonaDTO  {
+public class ZonaDTO  implements Serializable{
 
     private String infoZona;
+    
+    private PaseadorDTO paseador;
+
+    public void setPaseador(PaseadorDTO paseador) {
+        this.paseador = paseador;
+    }
+
+    public PaseadorDTO getPaseador() {
+        return paseador;
+    }
+    
     private Long id;
     
     public ZonaDTO(){
@@ -27,7 +40,15 @@ public class ZonaDTO  {
     }
     public ZonaDTO(ZonaEntity zona){
         this.infoZona=zona.getInfoZona();
+        
         this.id=zona.getId();
+        
+        if (zona.getPaseador()!=null){
+            this.paseador= new PaseadorDTO(zona.getPaseador());
+        }
+        else{
+            this.paseador=null;
+        }
     }
     public Long getId() {
         return id;
@@ -49,7 +70,13 @@ public class ZonaDTO  {
         ZonaEntity entity = new ZonaEntity();
         entity.setInfoZona(this.infoZona);
         entity.setId(this.id);
+        if(this.paseador!=null)
+        entity.setPaseador(paseador.toEntity());
         return entity;
     }
+    @Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
     
 }
