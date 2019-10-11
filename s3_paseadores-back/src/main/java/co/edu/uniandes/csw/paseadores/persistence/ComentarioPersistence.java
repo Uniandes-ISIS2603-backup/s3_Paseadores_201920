@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 //import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.util.List;
 //import java.util.logging.Level;
@@ -45,6 +46,37 @@ public class ComentarioPersistence {
     }
     
     
+    /**
+     * Buscar una comentario
+     *
+     * Busca si hay alguna comentario asociado a un contrato y con un ID específico
+     *
+     * @param idContrato El ID del contrato con respecto al cual se busca
+     * @param idComentario El ID del comentario 
+     * @return El comentario encontrada o null.
+     */
+    public ComentarioEntity find(Long comentarioId, Long contratoId)
+    {
+
+        TypedQuery<ComentarioEntity> q = em.createQuery("select p from ComentarioEntity p where (p.contrato.id = :contratoId) and (p.id = :comentarioId)", ComentarioEntity.class);
+        q.setParameter("contratoId", contratoId);
+        q.setParameter("comentarioId", comentarioId);
+        List<ComentarioEntity> results = q.getResultList();
+        ComentarioEntity comentario = null;
+        if (results == null) 
+        {
+            comentario = null;
+        } else if (results.isEmpty()) 
+        {
+            comentario = null;
+        } else if (results.size() >= 1) 
+        {
+            comentario = results.get(0);
+        }
+        return comentario;
+    }
+    
+    
     public List<ComentarioEntity> findAll() {
         
         TypedQuery query = em.createQuery("select u from ComentarioEntity u", ComentarioEntity.class);
@@ -59,6 +91,8 @@ public class ComentarioPersistence {
         la author con los cambios, esto es similar a 
         "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
          */
+        
+        
         return em.merge(comentarioEntity);
     }
     

@@ -1,9 +1,11 @@
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ComentarioPersistence;
+import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
 import java.sql.Time;
 import java.util.List;
@@ -22,13 +24,17 @@ public class ComentarioLogic {
 	@Inject
 	private ComentarioPersistence persistence;
         
-         @Inject
+        @Inject
         private PaseadorPersistence paseadorPersistence;
+        
+        @Inject
+        private ContratoPersistence contratoPersistence;
 
 
-	public ComentarioEntity createComentario(ComentarioEntity comentario) throws BusinessLogicException {
+	public ComentarioEntity createComentario(ComentarioEntity comentario, Long contratoId) throws BusinessLogicException {
 
-
+                ContratoEntity contratoEntity = null;
+            
 		if( comentario.getName() == null ){
 			throw new BusinessLogicException("El nombre del comentario está vacío");
 		}
@@ -38,23 +44,15 @@ public class ComentarioLogic {
 			throw new BusinessLogicException("El campo comentario está vacío");
 		}
 
-		if(comentario.getCliente() == null) {
-
-			throw new BusinessLogicException("El comentario no tiene un cliente asociado");
-
-		}
-
-		if(comentario.getPaseador() == null) {
-
-			throw new BusinessLogicException("El comentario no tiene un paseador asociado");
-
-		}
-
-		if(comentario.getContrato() == null) {
+		if(contratoId == null) {
 
 			throw new BusinessLogicException("El comentario no tiene un contrato asociado");
 
-		}
+		} else {
+                    
+                   contratoEntity = contratoPersistence.find(contratoId);
+                    
+                }
 
 
 		if(comentario.getInfoComentario().length() > 300) {
@@ -63,25 +61,14 @@ public class ComentarioLogic {
 
 		}
 
-		if(comentario.getContrato().getFinalizado() == false) {
+		if(contratoEntity.getFinalizado() == false) {
 
 			throw new BusinessLogicException("No se puede realizar un comentario acerca de un servicio que no ha terminado");
 
 		}
 
-		if(comentario.getContrato().getPaseador() != comentario.getPaseador()) {
 
-			throw new BusinessLogicException("El paseador del contrato no coincide con el paseador del comentario");
-
-		}
-
-		if(comentario.getContrato().getCliente() != comentario.getCliente()) {
-
-			throw new BusinessLogicException("El cliente del contrato no coincide con el cliente del comentario");
-
-		}
-
-
+                comentario.setContrato(contratoEntity);
 		comentario = persistence.create(comentario);
 		return comentario;
 
@@ -94,11 +81,18 @@ public class ComentarioLogic {
 	 * @param comentarioId Identificador de la instancia a consultar
 	 * @return Instancia de ComentarioEntity
 	 */
-	public ComentarioEntity getComentario(Long comentarioId) 
+	public ComentarioEntity getComentario(Long comentarioId, Long contratoId) throws BusinessLogicException
 	{
-		ComentarioEntity comentarioEntity = persistence.find(comentarioId);
+		ComentarioEntity comentarioEntity = persistence.find(comentarioId, contratoId);
+                
+                if( comentarioEntity == null )
+                 {
+                  throw new BusinessLogicException("Comentario no encontrada");
+                 }
+                
 		return comentarioEntity;
 	}
+        
 
 	  /**
      * Obtiene la lista de los registros de Comentario que pertenecen a un Paseador.
@@ -109,8 +103,10 @@ public class ComentarioLogic {
     public List<ComentarioEntity> getComentarios(Long paseadorId) {
     	
         PaseadorEntity paseadorEntity = paseadorPersistence.find(paseadorId);
-
-        return paseadorEntity.getComentarios();
+        
+        List<ComentarioEntity> lista = paseadorEntity.getComentarios();
+        
+        return lista;
         
     }
 
@@ -121,9 +117,10 @@ public class ComentarioLogic {
 	 * @param comentarioEntity Instancia de ComentarioEntity con los nuevos datos.
 	 * @return Instancia de ComentarioEntity con los datos actualizados.
 	 */
-	public ComentarioEntity updateComentario(Long comentarioId, ComentarioEntity comentarioEntity) throws BusinessLogicException
+	public ComentarioEntity updateComentario(Long contratoId, ComentarioEntity comentarioEntity) throws BusinessLogicException
 	{
-
+                ContratoEntity contratoEntity = null;
+                
 		if(comentarioEntity.getName()==null || comentarioEntity.getName().equals("") || NumberUtils.isCreatable(comentarioEntity.getName()))
 		{
 			throw new BusinessLogicException("El nombre del comentario es nulo o tiene un formato incorrecto");
@@ -133,41 +130,40 @@ public class ComentarioLogic {
 			throw new BusinessLogicException("La informacion del comentario es nula o tiene un formato incorrecto");
 		}
 		
-		if(comentarioEntity.getContrato() == null)
-		{
-			throw new BusinessLogicException("El comentario no dispone de un contrato");
-		}
-		
-		
-		if(comentarioEntity.getCliente() == null)
-		{
-			throw new BusinessLogicException("El comentario no dispone de un cliente");
-		}
-		
-		if(comentarioEntity.getPaseador() == null)
-		{
-			throw new BusinessLogicException("El comentario no dispone de un paseador");
-		}
-		
-
-		ComentarioEntity newComentarioEntity = persistence.update(comentarioEntity);
-		return newComentarioEntity;
+                if(contratoId==null || contratoPersistence.find(contratoId) == null)
+        {
+            throw new BusinessLogicException("El contrato asociado es nulo");
+        }
+        else
+        {
+            contratoEntity = contratoPersistence.find(contratoId);
+            comentarioEntity.setContrato(contratoEntity);
+        }
+                
+        comentarioEntity=persistence.update(comentarioEntity);
+        return comentarioEntity;
 
 	}
-
-
-
+              
+        
 	/**
 	 * Elimina una instancia de Comentario de la base de datos.
 	 *
 	 * @param comentarioId Identificador de la instancia a eliminar.
 	 * 
 	 */
-	public void deleteComentario(Long comentarioId) throws BusinessLogicException 
+	public void deleteComentario(Long comentarioId, Long contratoId) throws BusinessLogicException 
 	{
-		persistence.delete(comentarioId);
+                
+                ComentarioEntity old = getComentario(comentarioId, contratoId);
+                
+             if (old == null) 
+            {
+            throw new BusinessLogicException("El comentario con id = " + contratoId + " no esta asociada al contrato con id = " + contratoId);
+            }
+             
+            persistence.delete(old.getId());
 	}
-
-
+        
 
 }

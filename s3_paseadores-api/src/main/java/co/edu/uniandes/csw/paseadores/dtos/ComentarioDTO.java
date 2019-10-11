@@ -20,11 +20,9 @@ public class ComentarioDTO implements Serializable {
     
      private String infoComentario;
      private String name;
-     private String idComentario;
+     private Long idComentario;
      
      //Relaciones
-     private ClienteDTO cliente;
-     private PaseadorDTO paseador;
      private ContratoDTO contrato;
      
      
@@ -58,16 +56,30 @@ public class ComentarioDTO implements Serializable {
             
         }
         
-         public String getIdComentario() {
+         public long getIdComentario() {
         	
         	return idComentario;
         	
         }
         
-        public void setIdComentario(String pIdComentario) {
+        public void setIdComentario(Long pIdComentario) {
         	
         	idComentario = pIdComentario;
         	
+        }
+        
+        
+        public ContratoDTO getContrato() {
+            
+            return contrato;
+            
+        }
+        
+        
+        public void setContrato(ContratoDTO pContrato) {
+            
+            contrato = pContrato;
+            
         }
         
          /**
@@ -89,20 +101,7 @@ public class ComentarioDTO implements Serializable {
             } else {
                 this.contrato = null;
             }
-            
-            if (comentarioEntity.getPaseador() != null) {
-                this.paseador = new PaseadorDTO(comentarioEntity.getPaseador());
-            } else {
-                this.paseador = null;
-            }
-            
-            if (comentarioEntity.getCliente() != null) {
-                this.cliente = new ClienteDTO(comentarioEntity.getCliente());
-            } else {
-                this.cliente = null;
-            }
-            
-            
+
         }
     
      }
@@ -118,18 +117,10 @@ public class ComentarioDTO implements Serializable {
         comentarioEntity.setInfoComentario(this.getInfoComentario());
         comentarioEntity.setName(this.getName());
         comentarioEntity.setInfoComentario(this.getInfoComentario());
-        
-        if (this.paseador != null) {
-            comentarioEntity.setPaseador(this.paseador.toEntity());
-        }
-        
+
         if (this.contrato != null) {
             comentarioEntity.setContrato(this.contrato.toEntity());
-        }
-        
-        if (this.cliente != null) {
-            comentarioEntity.setCliente(this.cliente.toEntity());
-        }
+        } 
         
         return comentarioEntity;
     }

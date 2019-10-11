@@ -50,9 +50,9 @@ public class ComentarioResource {
      * @return JSON {@link ComentarioDTO} - El comentario guardado con el atributo id
      * autogenerado.
      */
-    @POST
-    public ComentarioDTO createComentario(ComentarioDTO comentario) throws BusinessLogicException {
-        ComentarioDTO comentarioDTO = new ComentarioDTO(comentarioLogic.createComentario(comentario.toEntity()));
+     @POST
+    public ComentarioDTO createComentario(ComentarioDTO comentario,@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
+        ComentarioDTO comentarioDTO = new ComentarioDTO(comentarioLogic.createComentario(comentario.toEntity(), contratoId));
         return comentarioDTO;
     }
     
@@ -62,18 +62,20 @@ public class ComentarioResource {
      *
      * @param comentarioId Identificador del comentario que se desea borrar. Este debe
      * ser una cadena de dígitos.
+     * @param contratoId Identificador del contrato que tiene asociado el comentario.
+     *
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el comentario a borrar.
      */
     @DELETE
     @Path("{comentarioId: \\d+}")
-    public void deleteComentario(@PathParam("comentarioId") Long comentarioId) throws BusinessLogicException {
+    public void deleteComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
     	
-        if (comentarioLogic.getComentario(comentarioId) == null) {
-            throw new WebApplicationException("El recurso /comentarios/" + comentarioId + " no existe.", 404);
+        if (comentarioLogic.getComentario(comentarioId, contratoId) == null) {
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + "/comentarios/" + comentarioId + " no existe.", 404);
         }
         
-        comentarioLogic.deleteComentario(comentarioId);
+        comentarioLogic.deleteComentario(comentarioId, contratoId);
         
     }
     
@@ -87,11 +89,11 @@ public class ComentarioResource {
      */
     @GET
     @Path("{comentarioId: \\d+}")
-    public ComentarioDTO getComentario(@PathParam("comentarioId") Long comentarioId) throws BusinessLogicException {
+    public ComentarioDTO getComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
     	
-        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId);
+        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, contratoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + "/comentarios/" + comentarioId + " no existe.", 404);
         }
         ComentarioDTO comentarioDTO = new ComentarioDTO(entity);
         return comentarioDTO;
@@ -132,14 +134,14 @@ public class ComentarioResource {
      */
     @PUT
     @Path("{comentarioId: \\d+}")
-    public ComentarioDTO updateComentario(@PathParam("comentarioId") Long comentarioId, ComentarioDTO comentario) throws BusinessLogicException {
+    public ComentarioDTO updateComentario(@PathParam("contratoId") Long contratoId, @PathParam("comentarioId") Long comentarioId, ComentarioDTO comentario) throws BusinessLogicException {
 
         if (comentarioId.equals(comentario.getIdComentario())) {
             throw new BusinessLogicException("Los ids del Comentario no coinciden.");
         }
-        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId);
+        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, contratoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + "/comentarios/" + comentarioId + " no existe.", 404);
 
         }
         ComentarioDTO comentarioDTO = new ComentarioDTO(comentarioLogic.updateComentario(comentarioId, comentario.toEntity()));

@@ -25,7 +25,7 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     
     private String infoComentario;
     private String name;
-    private String idComentario;
+    private Long idComentario;
     
     /**
      * Relaciones
@@ -82,14 +82,14 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
         
     }
     
-     public String getIdComentario() {
+     public Long getIdComentario() {
     	
     	return idComentario;
     	
     }
     
     
-    public void setId(String pId) {
+    public void setIdComentario(long pId) {
     	
     	idComentario = pId;
     	
