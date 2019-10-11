@@ -35,13 +35,22 @@ import javax.ws.rs.core.MediaType;
 public class TarjetaCreditoResource {
     @Inject
     private TarjetaCreditoLogic tarjetaCreditoLogic;
-    
+    /**
+     * Crea una tarjeta de credito con la informacion recibida y retorna una copia identica de esta
+     * @param tarjetaCredito
+     * @return tarjetaCreditoDTO
+     * @throws BusinessLogicException 
+     */
     @POST
     public TarjetaCreditoDTO createTarjetaCredito(TarjetaCreditoDTO tarjetaCredito) throws BusinessLogicException{
         TarjetaCreditoDTO tarjetaCreditoDTO = new TarjetaCreditoDTO(tarjetaCreditoLogic.createTarjetaCredito(tarjetaCredito.toEntity()));
         return tarjetaCreditoDTO;
     }
-    
+    /**
+     * Borra la tarjeta de credito con el ID asosciado recibido en el URL
+     * @param tarjetaCreditoId
+     * @throws BusinessLogicException 
+     */
     @DELETE
     @Path("{tarjetaId: \\d+}")
     public void deleteTarjetaCredito (@PathParam("tarjetaId") Long tarjetaCreditoId) throws BusinessLogicException{
@@ -52,7 +61,12 @@ public class TarjetaCreditoResource {
         tarjetaCreditoLogic.deleteTarjetaCredito(tarjetaCreditoId);
         
     }
-
+    /**
+     * Busca y devuelve la tarjeta de credito con el ID recibido en el URL
+     * @param tarjetaCreditoId
+     * @return tarjetaCreditoDTO
+     * @throws BusinessLogicException 
+     */
     @GET
     @Path("{tarjetaCreditoId: \\d+}")
     public TarjetaCreditoDTO getTarjetaCredito(@PathParam("tarjetaId") Long tarjetaCreditoId) throws BusinessLogicException {
@@ -64,7 +78,10 @@ public class TarjetaCreditoResource {
         TarjetaCreditoDTO tarjetaCreditoDTO = new TarjetaCreditoDTO(entity);
         return tarjetaCreditoDTO;
     }
-
+    /**
+     * Devuelve todas las tarjetas de credito existentes
+     * @return  ListaDTOs
+     */
     @GET
     public List<TarjetaCreditoDTO> getTarjetaCreditos() {
 
@@ -72,7 +89,12 @@ public class TarjetaCreditoResource {
         return listaDTOs;
     }
     
- 
+
+    /**
+     * Lista de entidades a DTO
+     * @param entityList
+     * @return list
+     */
     private List<TarjetaCreditoDTO> listEntity2DTO(List<TarjetaCreditoEntity> entityList) {
         List<TarjetaCreditoDTO> list = new ArrayList<TarjetaCreditoDTO>();
         for (TarjetaCreditoEntity entity : entityList) {
@@ -80,7 +102,13 @@ public class TarjetaCreditoResource {
         }
         return list;
     }
-
+    /**
+     * Actualiza la informacion de una tarjeta de credito con el id recibida y regresa el objeto actualizado
+     * @param tarjetaCreditoId
+     * @param tarjetaCredito
+     * @return tarjetaCreditoDTO
+     * @throws BusinessLogicException 
+     */
     @PUT
     @Path("{tarjetaId: \\d+}")
     public TarjetaCreditoDTO updateTarjetaCredito(@PathParam("tarjetaId") Long tarjetaCreditoId, TarjetaCreditoDTO tarjetaCredito) throws BusinessLogicException {

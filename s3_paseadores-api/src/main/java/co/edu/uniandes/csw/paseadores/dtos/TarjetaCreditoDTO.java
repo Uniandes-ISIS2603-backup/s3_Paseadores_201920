@@ -94,14 +94,24 @@ public class TarjetaCreditoDTO implements Serializable{
     public int getNumero3() {
         return numero3;
     }
-
+    /**
+     * 
+     * @return numero 4 
+     */
     public int getNumero4() {
         return numero4;
     }
-
+    /**
+     * 
+     * @return id 
+     */
     public Long getId() {
         return id;
     }
+    /**
+     * metodo que crea un entity en base a el DTO
+     * @return entity 
+     */
     public TarjetaCreditoEntity toEntity(){
         TarjetaCreditoEntity entity = new TarjetaCreditoEntity();
         entity.setCCV(this.cvv);
