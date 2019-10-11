@@ -34,25 +34,28 @@ public class FranjaHorariaPersistence {
     }
     
     /**
-     * Retorna todas las franjas horarias de la base de datos.
-     * 
-     * @return una lista con todos las franjas horarias de la base de datos.
-     * "select u from FranjaHorariaEntity u" es como un "select * from FranjaHorariaEntity;" -
-     * "SELECT * FROM table_name" en SQL
+     * Buscar una franja horaria
+     *
+     * Busca si hay alguna franja asociada a un paseador y con un ID específico
+     *
+     * @param paseadorId El ID del pasador con respecto al cual se busca
+     * @param franjaId El ID de la franja buscada
+     * @return La franja encontrada o null
      */
-    public List<FranjaHorariaEntity> findAll(){
-        TypedQuery query = em.createQuery("Select u from FranjaHorariaEntity u",FranjaHorariaEntity.class);
-        return query.getResultList();
-    }
-    
-    /**
-     * Busca si hay una franja con el id que se envía por parámetro
-     * 
-     * @param franjaId. Id de la franja
-     * @return Franja buscada.
-     */
-    public FranjaHorariaEntity find( Long franjaId ){
-        return em.find(FranjaHorariaEntity.class, franjaId);
+    public FranjaHorariaEntity find(Long paseadorId, Long franjaId) {
+        TypedQuery<FranjaHorariaEntity> q = em.createQuery("select p from FranjaHorariaEntity p where (p.paseador.id = :paseadorid) and (p.id = :franjaId)", FranjaHorariaEntity.class);
+        q.setParameter("paseadorid", paseadorId);
+        q.setParameter("franjaId", franjaId);
+        List<FranjaHorariaEntity> results = q.getResultList();
+        FranjaHorariaEntity franja = null;
+        if (results == null) {
+            franja = null;
+        } else if (results.isEmpty()) {
+            franja = null;
+        } else if (results.size() >= 1) {
+            franja = results.get(0);
+        }
+        return franja;
     }
     
     /**
@@ -61,8 +64,8 @@ public class FranjaHorariaPersistence {
      * @param franja La entidad de la frnaja horaria con los nuevos datos.l
      * @return Franja actualizada.
      */
-    public FranjaHorariaEntity update(FranjaHorariaEntity cliente){
-        return em.merge(cliente);
+    public FranjaHorariaEntity update(FranjaHorariaEntity franja){
+        return em.merge(franja);
     }
     
     /**

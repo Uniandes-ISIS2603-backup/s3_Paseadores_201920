@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.FranjaHorariaLogic;
+import co.edu.uniandes.csw.paseadores.ejb.PaseadorLogic;
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
@@ -114,11 +115,8 @@ public class FranjaHorariaLogicTest {
         }
         
         newEntity.setPaseador(paseadorTest);
-        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(newEntity);
+        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
         Assert.assertNotNull(result);     
-        
-        System.out.println(result.getInicio().toString());
-        
         FranjaHorariaEntity entity = em.find( FranjaHorariaEntity.class , result.getId());
         Assert.assertEquals(entity.getInicio(), result.getInicio());
     }
@@ -128,7 +126,7 @@ public class FranjaHorariaLogicTest {
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         newEntity.setInicio(null);
         newEntity.setPaseador(paseadorTest);
-        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(newEntity);
+        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
     }
     
     @Test( expected = BusinessLogicException.class)
@@ -136,16 +134,9 @@ public class FranjaHorariaLogicTest {
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         newEntity.setFin(null);
         newEntity.setPaseador(paseadorTest);
-        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(newEntity);
+        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
     }
-    
-    @Test( expected = BusinessLogicException.class)
-    public void createFranjaPaseadorNull() throws BusinessLogicException{
-        FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
-        newEntity.setPaseador(null);
-        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(newEntity);
-    }
-    
+   
     @Test( expected = BusinessLogicException.class)
     public void createFranjaInicioDepuesFin() throws BusinessLogicException{
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
@@ -156,12 +147,12 @@ public class FranjaHorariaLogicTest {
             newEntity.setInicio(temp);
         }
         newEntity.setPaseador(null);
-        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(newEntity);
+        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
     }
     
     @Test
     public void getFranjasTest(){
-        List<FranjaHorariaEntity> franjas = franjaLogic.getFranjas();
+        List<FranjaHorariaEntity> franjas = franjaLogic.getFranjas(paseadorTest.getId());
         Assert.assertEquals(data.size(), franjas.size());
         for( FranjaHorariaEntity franja : franjas ){
             boolean found = false;
@@ -178,7 +169,7 @@ public class FranjaHorariaLogicTest {
     @Test
     public void getFranjaTest(){
         FranjaHorariaEntity franja = data.get(0);
-        FranjaHorariaEntity result = franjaLogic.getFranja(franja.getId());
+        FranjaHorariaEntity result = franjaLogic.getFranja(paseadorTest.getId(),franja.getId());
         Assert.assertNotNull(result);
         Assert.assertEquals(franja.getInicio(), result.getInicio());
         Assert.assertEquals(franja.getFin(), result.getFin());
@@ -197,7 +188,7 @@ public class FranjaHorariaLogicTest {
             pojoFranja.setInicio(temp);
         }
         pojoFranja.setPaseador(paseadorTest);
-        franjaLogic.updateFranja(franja.getId(), pojoFranja);
+        franjaLogic.updateFranja(paseadorTest.getId(), pojoFranja);
         FranjaHorariaEntity resp = em.find(FranjaHorariaEntity.class, franja.getId());
         Assert.assertNotNull(resp);
         Assert.assertEquals(pojoFranja.getInicio(), resp.getInicio());
@@ -227,15 +218,6 @@ public class FranjaHorariaLogicTest {
     }
     
     @Test( expected = BusinessLogicException.class)
-    public void updateFranjaPaseadorNull() throws BusinessLogicException{
-        FranjaHorariaEntity franja = data.get(0);
-        FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
-        newEntity.setId(franja.getId());
-        newEntity.setPaseador(null);
-        franjaLogic.updateFranja(franja.getId() , newEntity);
-    }
-    
-    @Test( expected = BusinessLogicException.class)
     public void updateFranjaInicioDepuesFin() throws BusinessLogicException{
         FranjaHorariaEntity franja = data.get(0);
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
@@ -251,10 +233,12 @@ public class FranjaHorariaLogicTest {
     }
     
     @Test
-    public void deleteFranjaTest(){
-        FranjaHorariaEntity franja = data.get(0);
-        franjaLogic.deleteFranja(franja.getId());
-        FranjaHorariaEntity deleted = em.find(FranjaHorariaEntity.class, franja.getId());
-        Assert.assertNull(deleted);
+    public void deleteFranjaTest() throws BusinessLogicException{
+        
+            FranjaHorariaEntity franja = data.get(0);
+            franjaLogic.deleteFranja(paseadorTest.getId() , franja.getId());
+            FranjaHorariaEntity deleted = em.find(FranjaHorariaEntity.class, franja.getId());
+            Assert.assertNull(deleted);
+        
     }
 }

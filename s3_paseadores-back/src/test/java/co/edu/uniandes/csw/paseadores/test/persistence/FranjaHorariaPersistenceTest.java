@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.paseadores.test.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.persistence.FranjaHorariaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class FranjaHorariaPersistenceTest {
     
     @Inject
     UserTransaction utx;
+    
+    PaseadorEntity paseadorTest;
     
     private ArrayList<FranjaHorariaEntity> data = new ArrayList<>();
     
@@ -77,6 +80,7 @@ public class FranjaHorariaPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from FranjaHorariaEntity").executeUpdate();
+        em.createQuery("delete from PaseadorEntity").executeUpdate();
     }
     
     /**
@@ -85,8 +89,11 @@ public class FranjaHorariaPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
+        paseadorTest = factory.manufacturePojo(PaseadorEntity.class);
+        em.persist(paseadorTest);
         for (int i = 0; i < 3; i++) {
             FranjaHorariaEntity entity = factory.manufacturePojo(FranjaHorariaEntity.class);
+            entity.setPaseador(paseadorTest);
             em.persist(entity);
             data.add(entity);
         }
@@ -99,42 +106,23 @@ public class FranjaHorariaPersistenceTest {
     public void createTest(){
         PodamFactory factory = new PodamFactoryImpl();
         FranjaHorariaEntity franja = factory.manufacturePojo(FranjaHorariaEntity.class);
+        franja.setPaseador(paseadorTest);
         FranjaHorariaEntity result = fhp.create(franja);
         Assert.assertNotNull(result);
         
         FranjaHorariaEntity entity = em.find( FranjaHorariaEntity.class , result.getId());
         Assert.assertEquals(franja.getInicio(), entity.getInicio());
     }
-    
-    /**
-     * Prueba para consultar la lista de franjas.
-     */
-    @Test
-    public void findAllTest(){
-        List<FranjaHorariaEntity> list = fhp.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for( FranjaHorariaEntity franja : list ){
-            boolean found = false;
-            for( FranjaHorariaEntity ent : data){
-                if( franja.getId().equals(ent.getId())){
-                    found = true;
-                    break;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-    
+      
     /**
      * Prueba para encontrar una franja.
      */
     @Test
     public void findTest(){
-        FranjaHorariaEntity franja = data.get(0);
-        FranjaHorariaEntity newFranja = fhp.find(franja.getId());
-        Assert.assertNotNull(newFranja);
-        Assert.assertEquals(franja.getFin(), newFranja.getFin());
-        Assert.assertEquals(franja.getInicio(), newFranja.getInicio());
+        FranjaHorariaEntity entity = data.get(0);
+        FranjaHorariaEntity newEntity = fhp.find(paseadorTest.getId(), entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getId(), newEntity.getId());
     }
     
     /**

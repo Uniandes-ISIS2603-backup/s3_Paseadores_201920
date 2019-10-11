@@ -206,7 +206,7 @@ public class PaseadorResource
     }
      /**
      * Conexión con el servicio de franjas para un paseador.
-     * {@link FranjaResource}
+     * {@link FranjaHorariaResource}
      *
      * Este método conecta la ruta de /paseadores con las rutas de /franjas que
      * dependen del paseador, es una redirección al servicio que maneja el segmento
@@ -217,13 +217,13 @@ public class PaseadorResource
      * @return El servicio de franjas para ese paseador en particular.
      */
     @Path("{paseadoresId: \\d+}/franjas")
-    public Class<FranjaResource> getFranjaResource(@PathParam("paseadoresId") Long paseadoresId) 
+    public Class<FranjaHorariaResource> getFranjaResource(@PathParam("paseadoresId") Long paseadoresId) 
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {
             throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
         }
-        return FranjaResource.class;
+        return FranjaHorariaResource.class;
     }
      /**
      * Conexión con el servicio de zonas para un paseador.
