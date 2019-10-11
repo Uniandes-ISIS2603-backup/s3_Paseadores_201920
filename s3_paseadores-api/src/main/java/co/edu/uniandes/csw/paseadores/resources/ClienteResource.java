@@ -92,4 +92,26 @@ public class ClienteResource {
         }
         return list;
     }
+    
+    /**
+     * Conexión con el servicio de mascotas par un cliente.
+     * {@link MascotaResource}
+     *
+     * Este método conecta la ruta de /paseadores con las rutas de /contratos que
+     * dependen del paseador, es una redirección al servicio que maneja el segmento
+     * de la URL que se encarga de las contratos.
+     *
+     * @param clientesId El ID del paseador con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de contratos para ese paseador en particular.
+     */
+    @Path("{clientesId: \\d+}/mascotas")
+    public Class<MascotaResource> getMascotaResource(@PathParam("clientesId") Long clientesId) 
+    {
+        if (clienteLogic.getCliente(clientesId) == null) 
+        {
+            throw new WebApplicationException("El recurso /paseadores/" + clientesId + " no existe.", 404);
+        }
+        return MascotaResource.class;
+    }
 }

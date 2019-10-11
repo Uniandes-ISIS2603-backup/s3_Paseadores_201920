@@ -20,6 +20,11 @@ public class FranjaHorariaDTO {
     //===================================================
     
     /**
+     * Id de la franja
+     */
+    private Long id;
+    
+    /**
      * Fecha y hora de inicio de la franja
      */
     private Date inicio;
@@ -34,9 +39,14 @@ public class FranjaHorariaDTO {
     //===================================================
     
     /**
-     * Paseador que ofrece la franja horaria.
+     * Contrato de la franja horaria.
      */
     private ContratoDTO contrato;
+    
+    /**
+     * Paseador que ofrece la franja horaria.
+     */
+    private PaseadorDTO paseador;
     
     //===================================================
     // Constructores DTO y Entidad
@@ -56,8 +66,12 @@ public class FranjaHorariaDTO {
      */
     public FranjaHorariaDTO(FranjaHorariaEntity franja)
     {
+        this.id = franja.getId();
         this.inicio = franja.getInicio();
         this.fin = franja.getFin();
+        if(franja.getPaseador() != null ){
+            this.paseador = new PaseadorDTO(franja.getPaseador());
+        }
         if( franja.getContrato() != null ){
             this.contrato = new ContratoDTO(franja.getContrato());
         }
@@ -69,10 +83,13 @@ public class FranjaHorariaDTO {
      * @return. La entidad de la franja.
      */
     public FranjaHorariaEntity toEntity(){
-        //TODO
         FranjaHorariaEntity franjaEntity = new FranjaHorariaEntity();
+        franjaEntity.setId(id);
         franjaEntity.setInicio(inicio);
         franjaEntity.setFin(fin);
+        if( paseador != null ){
+            franjaEntity.setPaseador(paseador.toEntity());
+        }
         if( contrato != null ){
             franjaEntity.setContrato(contrato.toEntity());
         }
@@ -83,6 +100,24 @@ public class FranjaHorariaDTO {
     // GETTERS
     //===================================================
 
+    /**
+     * Retorna el Id de la franja.
+     * 
+     * @return id.
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Retorna el paseador de la franja.
+     * 
+     * @return. Paseador de la franja
+     */
+    public PaseadorDTO getPaseador() {
+        return paseador;
+    }
+    
     /**
      * Retorna la fecha y hora de inicio de la franja.
      * 
@@ -140,4 +175,23 @@ public class FranjaHorariaDTO {
     public void setContrato(ContratoDTO contrato) {
         this.contrato = contrato;
     }
+
+    /**
+     * Modifica el Id de la franja.
+     * 
+     * @param id. id.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Modifica el paseador que ofrece la franja.
+     * 
+     * @param paseador. Paseador.
+     */
+    public void setPaseador(PaseadorDTO paseador) {
+        this.paseador = paseador;
+    }  
+    
 }
