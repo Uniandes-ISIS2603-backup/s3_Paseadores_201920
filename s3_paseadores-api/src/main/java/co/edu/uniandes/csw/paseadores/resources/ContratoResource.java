@@ -147,10 +147,5 @@ public class ContratoResource {
         return contratoDTO;
 
     }
-    
-    
-    
-    
-    
-    
+ 
     }

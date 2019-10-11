@@ -72,7 +72,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
     }
     
     public void pagar(){
-        
+        return;
     }
             
 }

@@ -312,7 +312,8 @@ public class PaseadorLogicTest {
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         
-    }/**
+    }
+    /**
      * Prueba para eliminar un Paseador
      *
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
