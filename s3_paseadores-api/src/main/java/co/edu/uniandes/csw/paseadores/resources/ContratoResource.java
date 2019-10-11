@@ -148,7 +148,6 @@ public class ContratoResource {
 
     }
     
-    
     @Path("{contratoId: \\d+}/comentarios")
     public Class<ComentarioResource> getComentarioResource(@PathParam("contratoId") Long contratoId) {
         if (contratoLogic.getContrato(contratoId) == null) {
@@ -158,5 +157,5 @@ public class ContratoResource {
     }
     
     
-    
+
     }

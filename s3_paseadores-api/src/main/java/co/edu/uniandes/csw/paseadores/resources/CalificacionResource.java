@@ -28,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 /**
  *
  * @author Juan Vergara
+ * @version 1.0
  */
 @Path("calificaciones")
 @Produces(MediaType.APPLICATION_JSON)      
@@ -38,13 +39,23 @@ class CalificacionResource {
     
     @Inject
     private CalificacionLogic calificacionLogic;
-    
+   
+    /**
+     * 
+     * @param calificacion {@link calificacionDTO} - La calificacion que desea guardar.
+     * @return JSON {@link calificacionDTO} - La calificacion guardada con su id autogenerado
+     * @throws BusinessLogicException 
+     */
     @POST
     public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException{
         CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(calificacion.toEntity()));
         return calificacionDTO;
     }
-    
+    /**
+     * Borra la calificacion con el id recibido en la URL
+     * @param calificacionId
+     * @throws BusinessLogicException 
+     */
     @DELETE
     @Path("{calificacionId: \\d+}")
     public void deleteCalificacion (@PathParam("calificacionId") Long calificacionId) throws BusinessLogicException{
@@ -55,7 +66,12 @@ class CalificacionResource {
         calificacionLogic.deleteCalificacion(calificacionId);
         
     }
-
+    /**
+     * Busca y deuelve la calificacion con el ID recibido en la URL
+     * @param calificacionId
+     * @return calificacionDTO
+     * @throws BusinessLogicException 
+     */
     @GET
     @Path("{calificacionId: \\d+}")
     public CalificacionDTO getCalificacion(@PathParam("calificacionId") Long calificacionId) throws BusinessLogicException {
@@ -67,7 +83,10 @@ class CalificacionResource {
         CalificacionDTO calificacionDTO = new CalificacionDTO(entity);
         return calificacionDTO;
     }
-
+    /**
+     * Devuelve todas las calificaciones que existen
+     * @return listaDTOs
+     */
     @GET
     public List<CalificacionDTO> getCalificacions() {
 
@@ -75,7 +94,12 @@ class CalificacionResource {
         return listaDTOs;
     }
     
- 
+
+    /**
+     * Lista de entidades a DTOs
+     * @param entityList
+     * @return list
+     */
     private List<CalificacionDTO> listEntity2DTO(List<CalificacionEntity> entityList) {
         List<CalificacionDTO> list = new ArrayList<CalificacionDTO>();
         for (CalificacionEntity entity : entityList) {
@@ -83,7 +107,13 @@ class CalificacionResource {
         }
         return list;
     }
-
+    /**
+     * Actualiza una calificacion con la informacion recibida
+     * @param calificacionId
+     * @param calificacion
+     * @return calificacionDTO
+     * @throws BusinessLogicException 
+     */
     @PUT
     @Path("{calificacionId: \\d+}")
     public CalificacionDTO updateCalificacion(@PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException {

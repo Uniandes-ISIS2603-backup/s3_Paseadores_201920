@@ -6,17 +6,27 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.PagoLogic;
+import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
+import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
+import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
+import co.edu.uniandes.csw.paseadores.entities.ZonaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -35,6 +45,7 @@ public class PagoLogicTest {
     @Inject
     private PagoLogic pagoLogic;
     
+    private ArrayList<PagoEntity> data = new ArrayList<PagoEntity>();
     
     @Deployment
     public static JavaArchive createDeployment(){
@@ -48,7 +59,53 @@ public class PagoLogicTest {
     
  @PersistenceContext
  private EntityManager em; 
+ 
+  @Inject
+    UserTransaction utx;
     
+ /**
+	 * Configuración inicial de la prueba.
+	 */
+	@Before
+	public void configTest() {
+		try {
+			utx.begin();
+			clearData();
+			insertData();
+			utx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				utx.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+        
+        
+        /**
+	 * Limpia las tablas que están implicadas en la prueba.
+	 */
+	private void clearData() {
+		em.createQuery("delete from PagoEntity").executeUpdate();
+	}
+
+	/**
+	 * Inserta los datos iniciales para el correcto funcionamiento de las
+	 * pruebas.
+	 */
+	private void insertData() {
+
+		for( int i = 0; i < 3 ; i++ )
+        {
+            PagoEntity pagoEntity = factory.manufacturePojo(PagoEntity.class);          
+            em.persist(pagoEntity);
+              data.add(pagoEntity);
+        }
+                
+	}
+
     
 @Test
 public void createPagoTest() throws BusinessLogicException{
@@ -67,4 +124,70 @@ public void createPagoIdPaseadorNull() throws BusinessLogicException{
     PagoEntity result = pagoLogic.createPago(pago);
 }
     
+@Test (expected = BusinessLogicException.class)
+public void createPagoIdUsuarioNull() throws BusinessLogicException{
+    PagoEntity pago = factory.manufacturePojo(PagoEntity.class);
+    pago.setIdUsuario(null);
+    PagoEntity result = pagoLogic.createPago(pago);
+}
+
+@Test (expected = BusinessLogicException.class)
+public void createPagoValorServicioNegativo() throws BusinessLogicException{
+    PagoEntity pago = factory.manufacturePojo(PagoEntity.class);
+    pago.setValorServicio(-2000);
+    PagoEntity result = pagoLogic.createPago(pago);
+}
+
+/**
+	 * Prueba para consultar un Pago.
+	 */
+	@Test
+	public void getPagoTest() 
+	{
+		PagoEntity entity = data.get(0);
+		PagoEntity resultEntity = pagoLogic.getPago(entity.getId());
+		Assert.assertNotNull(resultEntity);
+		Assert.assertEquals(entity.getId(), resultEntity.getId());
+	}
+
+        @Test
+	public void getPagosTest() 
+	{
+		List<PagoEntity> list = pagoLogic.getPagos();
+		Assert.assertEquals(data.size(), list.size());
+		for (PagoEntity entity : list) {
+			boolean found = false;
+			for (PagoEntity storedEntity : data) {
+				if (entity.getId().equals(storedEntity.getId())) {
+					found = true;
+				}
+			}
+			Assert.assertTrue(found);
+		}
+	}
+        
+         @Test
+    public void updatePagoTest() throws BusinessLogicException 
+    {
+        PagoEntity entity = data.get(0);
+        PagoEntity pojoEntity = factory.manufacturePojo(PagoEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        pagoLogic.updatePago(pojoEntity.getId(), pojoEntity);
+
+        PagoEntity resp = em.find(PagoEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+    }
+    
+    
+     @Test
+    public void deletePagoTest() throws BusinessLogicException 
+    {
+        PagoEntity entity = data.get(0);
+        pagoLogic.deletePago(entity.getId());
+        PagoEntity deleted = em.find(PagoEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
 }

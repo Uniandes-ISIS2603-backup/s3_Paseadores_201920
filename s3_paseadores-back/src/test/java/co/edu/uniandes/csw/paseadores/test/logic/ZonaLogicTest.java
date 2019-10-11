@@ -6,10 +6,14 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.ZonaLogic;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.entities.ZonaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ZonaPersistence;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -29,7 +33,9 @@ public class ZonaLogicTest {
      private PodamFactory factory = new PodamFactoryImpl();
     @Inject
     private ZonaLogic zonaLogic;
-    @Deployment
+    
+        @Deployment
+    
     public static JavaArchive createDeployment(){
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ZonaEntity.class.getPackage())

@@ -11,7 +11,7 @@ import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
  * Clase que modela el DTO de Pago
  * @author Mario Hurtado
  */
-class PagoDTO {
+ public class PagoDTO {
 
     //Atributos
     private String idUsuario;

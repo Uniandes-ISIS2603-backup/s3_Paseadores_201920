@@ -37,13 +37,22 @@ class ZonaResource {
     
     @Inject
     private ZonaLogic zonaLogic;
-    
+    /**
+     * Crea una nueva zona con la informacion recibida y regresa una copua identica de la zona
+     * @param zona
+     * @return zonaDTO
+     * @throws BusinessLogicException 
+     */
     @POST
     public ZonaDTO createZona(ZonaDTO zona) throws BusinessLogicException{
         ZonaDTO zonaDTO = new ZonaDTO(zonaLogic.createZona(zona.toEntity()));
         return zonaDTO;
     }
-    
+    /**
+     * Borra la zona con el id relacionado
+     * @param zonaId
+     * @throws BusinessLogicException 
+     */
     @DELETE
     @Path("{zonaId: \\d+}")
     public void deleteZona (@PathParam("zonaId") Long zonaId) throws BusinessLogicException{
@@ -54,7 +63,12 @@ class ZonaResource {
         zonaLogic.deleteZona(zonaId);
         
     }
-
+    /**
+     * Buscar y regresa la zona identificada con el ID recibido en la URÑ
+     * @param zonaId
+     * @return zonaDTO
+     * @throws BusinessLogicException 
+     */
     @GET
     @Path("{zonaId: \\d+}")
     public ZonaDTO getZona(@PathParam("zonaId") Long zonaId) throws BusinessLogicException {
@@ -66,7 +80,10 @@ class ZonaResource {
         ZonaDTO zonaDTO = new ZonaDTO(entity);
         return zonaDTO;
     }
-
+    /**
+     * Regresa todas las zonas existentes
+     * @return listaDTOs
+     */
     @GET
     public List<ZonaDTO> getZonas() {
 
@@ -74,7 +91,12 @@ class ZonaResource {
         return listaDTOs;
     }
     
- 
+
+    /**
+     * Lista de entity a DTOs
+     * @param entityList
+     * @return list
+     */
     private List<ZonaDTO> listEntity2DTO(List<ZonaEntity> entityList) {
         List<ZonaDTO> list = new ArrayList<ZonaDTO>();
         for (ZonaEntity entity : entityList) {
@@ -82,7 +104,13 @@ class ZonaResource {
         }
         return list;
     }
-
+    /**
+     * Actualiza la zona con la información recibida y la regresa con sus cambios aplicados
+     * @param zonaId
+     * @param zona
+     * @return zonaDTO
+     * @throws BusinessLogicException 
+     */
     @PUT
     @Path("{zonaId: \\d+}")
     public ZonaDTO updateZona(@PathParam("zonaId") Long zonaId, ZonaDTO zona) throws BusinessLogicException {

@@ -13,14 +13,19 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *
+ *Clase que comprueba la logica de tarjetas de credito
  * @author Juan Vergara
  */
 @Stateless
 public class TarjetaCreditoLogic {
     @Inject
     private TarjetaCreditoPersistence persistence;
-    
+    /**
+     * Crea una tarjeta de credito que no cumple las restricciones de una tarjeta de credito, de lo contrario no la crea
+     * @param tarjetaCredito
+     * @return tarjetaCredito
+     * @throws BusinessLogicException 
+     */
     public TarjetaCreditoEntity createTarjetaCredito(TarjetaCreditoEntity tarjetaCredito) throws BusinessLogicException{
         if(tarjetaCredito.getCCV()>999||tarjetaCredito.getCCV()<100){
             throw new BusinessLogicException("Número cvv fuera de rango (100-999)");
@@ -40,7 +45,12 @@ public class TarjetaCreditoLogic {
         tarjetaCredito = persistence.create(tarjetaCredito);
         return tarjetaCredito;
     }
-   
+  
+    /**
+     * Busca y regresa la tarjeta de credito relacionada al id dado
+     * @param tarjetaCreditoId
+     * @return tarjetaCreditoEntity
+     */
 	public TarjetaCreditoEntity getTarjetaCredito(Long tarjetaCreditoId) 
 	{
 
@@ -48,7 +58,10 @@ public class TarjetaCreditoLogic {
 
 		return tarjetaCreditoEntity;
 	}
-
+        /**
+         * Regresa todas las tarjetas existentes
+         * @return lista
+         */
 	public List<TarjetaCreditoEntity> getTarjetaCreditos() {
 
 		List<TarjetaCreditoEntity> lista = persistence.findAll();
@@ -56,7 +69,13 @@ public class TarjetaCreditoLogic {
 		return lista;
 	}
 
-	
+	/**
+         * Actualiza una tarjeta de credito, revisa si las ctualizaciones cumplen las restricciones de una tarjeta de credito y regresa una copia
+         * @param tarjetaCreditoId
+         * @param tarjetaCredito
+         * @return newTarjetaCreditoEntity
+         * @throws BusinessLogicException 
+         */
 	public TarjetaCreditoEntity updateTarjetaCredito(Long tarjetaCreditoId, TarjetaCreditoEntity tarjetaCredito) throws BusinessLogicException
 	{
 
@@ -88,7 +107,11 @@ public class TarjetaCreditoLogic {
 	
 	
 
-	
+	/**
+         * Elimina la tarjeta de credito relacionada al id
+         * @param tarjetaCreditoId
+         * @throws BusinessLogicException 
+         */
 	public void deleteTarjetaCredito(Long tarjetaCreditoId) throws BusinessLogicException 
 	{
 

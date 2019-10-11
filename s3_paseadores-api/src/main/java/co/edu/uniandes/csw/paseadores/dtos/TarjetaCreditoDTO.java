@@ -6,12 +6,14 @@
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.TarjetaCreditoEntity;
+import java.io.Serializable;
 
 /**
- *
+ * Clase que modela el DT0 para TarjetaCredito
  * @author Juan Vergara
  */
-public class TarjetaCreditoDTO {
+public class TarjetaCreditoDTO implements Serializable{
+    // Atributos
     private int cvv;
     
     private int numero1;
@@ -23,10 +25,14 @@ public class TarjetaCreditoDTO {
     private int numero4;
     
     private Long id;
-    
+    //Constructor vacio
     public TarjetaCreditoDTO(){
         
     }
+    /**
+     * Contructor que crea el DTO en base al parametro entity
+     * @param tarjeta 
+     */
     public TarjetaCreditoDTO(TarjetaCreditoEntity tarjeta){
         this.cvv=tarjeta.getCCV();
         this.id=tarjeta.getId();
@@ -35,7 +41,7 @@ public class TarjetaCreditoDTO {
         this.numero3=tarjeta.getNumero3();
         this.numero4=tarjeta.getNumero4();
     }
-
+//setters de cvv, y los 4 grupos de números que componen el número de tarjeta de credito
     public void setCvv(int cvv) {
         this.cvv = cvv;
     }
@@ -59,30 +65,53 @@ public class TarjetaCreditoDTO {
     public void setId(Long id) {
         this.id = id;
     }
-
+    //getters del cvv y los 4 grupos de números que componen el número de tarjeta de credito
+    /**
+     * 
+     * @return cvv
+     */
     public int getCvv() {
         return cvv;
     }
-
+/**
+ * 
+ * @return numero1
+ */
     public int getNumero1() {
         return numero1;
     }
-
+    /**
+     * 
+     * @return numero2 
+     */
     public int getNumero2() {
         return numero2;
     }
-
+    /**
+     * 
+     * @return numero 3 
+     */
     public int getNumero3() {
         return numero3;
     }
-
+    /**
+     * 
+     * @return numero 4 
+     */
     public int getNumero4() {
         return numero4;
     }
-
+    /**
+     * 
+     * @return id 
+     */
     public Long getId() {
         return id;
     }
+    /**
+     * metodo que crea un entity en base a el DTO
+     * @return entity 
+     */
     public TarjetaCreditoEntity toEntity(){
         TarjetaCreditoEntity entity = new TarjetaCreditoEntity();
         entity.setCCV(this.cvv);
