@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -26,10 +27,14 @@ public class MascotaEntity extends BaseEntity implements Serializable
     private String infoMascota;
     
     //Relaciones
-     //Relacion Clientes - Mascotas
+    //Relacion Clientes - Mascotas
     @PodamExclude
     @ManyToOne
     private ClienteEntity cliente;
+    //Relacion Clientes - Mascotas
+    @PodamExclude
+    @ManyToMany(mappedBy="mascotas")
+    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
 
     public ClienteEntity getCliente() {
         return cliente;
@@ -58,6 +63,14 @@ public class MascotaEntity extends BaseEntity implements Serializable
     public void setInfoMascota(String infoMascota) 
     {
         this.infoMascota = infoMascota;
+    }
+
+    public List<ContratoEntity> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(List<ContratoEntity> contratos) {
+        this.contratos = contratos;
     }
     
      
