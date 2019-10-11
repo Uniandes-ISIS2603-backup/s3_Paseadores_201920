@@ -190,66 +190,51 @@ public class ContratoLogicTest {
 		ContratoEntity result = contratoLogic.createContrato(newEntity);
 	}
 
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoMascotasNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setMascotas(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoIdPaseadorNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setIdPaseador(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-
-
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoIdClienteNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setIdUsuario(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-
-
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoZonaNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setZona(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-	
-	
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoFranjaNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setHorarios(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-	
-	
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoPaseadorNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setPaseador(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-	
-	
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoClienteNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setCliente(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
-	
-	@Test( expected = BusinessLogicException.class)
-	public void createContratoPagoNull() throws BusinessLogicException{
-		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
-		newEntity.setPago(null);
-		ContratoEntity result = contratoLogic.createContrato(newEntity);
-	}
+//	@Test( expected = BusinessLogicException.class)
+//	public void createContratoMascotasNull() throws BusinessLogicException{
+//		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+//		newEntity.setMascotas(null);
+//		ContratoEntity result = contratoLogic.createContrato(newEntity);
+//	}
+//        
+//        
+//	@Test( expected = BusinessLogicException.class)
+//	public void createContratoZonaNull() throws BusinessLogicException{
+//		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+//		newEntity.setZona(null);
+//		ContratoEntity result = contratoLogic.createContrato(newEntity);
+//	}
+//	
+//	
+//	@Test( expected = BusinessLogicException.class)
+//	public void createContratoFranjaNull() throws BusinessLogicException{
+//		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+//		newEntity.setHorarios(null);
+//		ContratoEntity result = contratoLogic.createContrato(newEntity);
+//	}
+//	
+//	
+//	@Test( expected = BusinessLogicException.class)
+//	public void createContratoPaseadorNull() throws BusinessLogicException{
+//		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+//		newEntity.setPaseador(null);
+//		ContratoEntity result = contratoLogic.createContrato(newEntity);
+//	}
+//	
+//	
+//	@Test( expected = BusinessLogicException.class)
+//	public void createContratoClienteNull() throws BusinessLogicException{
+//		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+//		newEntity.setCliente(null);
+//		ContratoEntity result = contratoLogic.createContrato(newEntity);
+//	}
+//	
+//	@Test( expected = BusinessLogicException.class)
+//	public void createContratoPagoNull() throws BusinessLogicException{
+//		ContratoEntity newEntity = factory.manufacturePojo(ContratoEntity.class);
+//		newEntity.setPago(null);
+//		ContratoEntity result = contratoLogic.createContrato(newEntity);
+//	}
         
         @Test( expected = BusinessLogicException.class)
 	public void createContratoValorNegativo() throws BusinessLogicException{

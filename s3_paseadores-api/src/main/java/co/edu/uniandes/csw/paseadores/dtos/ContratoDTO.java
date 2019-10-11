@@ -22,296 +22,244 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  *
  * @author Nicolas Potes Garcia
  */
-public class ContratoDTO implements Serializable{
+public class ContratoDTO implements Serializable {
 
+    //Atributos:
+    private Double valorServicio;
 
-	//Atributos:
+    private Boolean satisfactorio;
 
-	private Double valorServicio;
+    private String name;
 
+    private Boolean finalizado;
 
-	//private FranjaHorariaEntity horarios;
-        
-        private String idContrato;
+    private PaseadorDTO paseador;
 
-	private String idPaseador;
+    private ClienteDTO cliente;
 
-	private String idUsuario;
+    private FranjaHorariaDTO franja;
 
-	private Boolean satisfactorio;
+    private ZonaDTO zona;
 
-	private String name;
+    private PagoDTO pago;
 
-	private Boolean finalizado = false;
+    private ComentarioDTO comentario;
 
-	private PaseadorDTO paseador;
+    private CalificacionDTO calificacion;
 
-	private ClienteDTO cliente;
+    private Long id;
 
-	private FranjaHorariaDTO franja;
+    //Constructor de contrato vacío
+    public ContratoDTO() {
 
-	private ZonaDTO zona;
+    }
 
-	private PagoDTO pago;
+    /**
+     * Crea un objeto ContratoDTO a partir de un objeto ContratoEntity.
+     *
+     * @param contratoEntity Entidad ContratoEntity desde la cual se va a crear
+     * el nuevo objeto.
+     *
+     */
+    public ContratoDTO(ContratoEntity contratoEntity) {
+        if (contratoEntity != null) {
+            this.valorServicio = contratoEntity.getValorServicio();
+            this.name = contratoEntity.getName();
+            this.satisfactorio = contratoEntity.getSatisfactorio();
+            this.finalizado = contratoEntity.getFinalizado();
+            this.id = contratoEntity.getId();
+            if (contratoEntity.getPaseador() != null) {
+                this.paseador = new PaseadorDTO(contratoEntity.getPaseador());
+            } else {
+                this.paseador = null;
+            }
 
-	private ComentarioDTO comentario;
+            if (contratoEntity.getCliente() != null) {
+                this.cliente = new ClienteDTO(contratoEntity.getCliente());
+            } else {
+                this.cliente = null;
+            }
 
-	private CalificacionDTO calificacion;
+            if (contratoEntity.getHorarios() != null) {
+                this.franja = new FranjaHorariaDTO(contratoEntity.getHorarios());
+            } else {
+                this.franja = null;
+            }
 
-	//Constructor de contrato vacío
-	public ContratoDTO() {
+            if (contratoEntity.getZona() != null) {
+                this.zona = new ZonaDTO(contratoEntity.getZona());
+            } else {
+                this.zona = null;
+            }
 
-	}
+            if (contratoEntity.getPago() != null) {
+                this.pago = new PagoDTO(contratoEntity.getPago());
+            } else {
+                this.pago = null;
+            }
 
-	/**
-	 * Crea un objeto ContratoDTO a partir de un objeto ContratoEntity.
-	 *
-	 * @param contratoEntity Entidad ContratoEntity desde la cual se va a crear el
-	 * nuevo objeto.
-	 *
-	 */
-	public ContratoDTO(ContratoEntity contratoEntity) {
-		if (contratoEntity != null) {
-			this.valorServicio = contratoEntity.getValorServicio();
-			this.name = contratoEntity.getName();
-			this.idPaseador = contratoEntity.getIdPaseador();
-			this.idUsuario = contratoEntity.getIdUsuario();
-			this.satisfactorio = contratoEntity.getSatisfactorio();
-			this.finalizado = contratoEntity.getFinalizado();
-                        this.idContrato = contratoEntity.getIdContrato();
+            if (contratoEntity.getComentario() != null) {
+                this.comentario = new ComentarioDTO(contratoEntity.getComentario());
+            } else {
+                this.comentario = null;
+            }
 
-			if (contratoEntity.getPaseador() != null) {
-				this.paseador = new PaseadorDTO(contratoEntity.getPaseador());
-			} else {
-				this.paseador = null;
-			}
+            if (contratoEntity.getCalificacion() != null) {
+                this.calificacion = new CalificacionDTO(contratoEntity.getCalificacion());
+            } else {
+                this.calificacion = null;
+            }
 
-			if (contratoEntity.getCliente() != null) {
-				this.cliente = new ClienteDTO(contratoEntity.getCliente());
-			} else {
-				this.cliente = null;
-			}
-
-			if (contratoEntity.getHorarios() != null) {
-				this.franja = new FranjaHorariaDTO(contratoEntity.getHorarios());
-			} else {
-				this.franja = null;
-			}
-
-			if (contratoEntity.getZona() != null) {
-				this.zona = new ZonaDTO(contratoEntity.getZona());
-			} else {
-				this.zona = null;
-			}
-
-			if (contratoEntity.getPago() != null) {
-				this.pago = new PagoDTO(contratoEntity.getPago());
-			} else {
-				this.pago = null;
-			}
-
-			if (contratoEntity.getComentario() != null) {
-				this.comentario = new ComentarioDTO(contratoEntity.getComentario());
-			} else {
-				this.comentario = null;
-			}
-
-			if (contratoEntity.getCalificacion() != null) {
-				this.calificacion = new CalificacionDTO(contratoEntity.getCalificacion());
-			} else {
-				this.calificacion = null;
-			}
-
-		}
-	}
-
-
-	/**
-	 * Convierte un objeto ContratoDTO a ContratoEntity.
-	 *
-	 * @return Nuevo objeto ContratoEntity.
-	 *
-	 */
-	public ContratoEntity toEntity() {
-		ContratoEntity contratoEntity = new ContratoEntity();
-		contratoEntity.setValorServicio(this.getValorServicio());
-		contratoEntity.setName(this.getName());
-		contratoEntity.setIdPaseador(this.idPaseador);
-		contratoEntity.setIdPaseador(this.idPaseador);
-		contratoEntity.setIdUsuario(this.idUsuario);
-		contratoEntity.setSatisfactorio(this.satisfactorio);
-		contratoEntity.setFinalizado(this.finalizado);
-                contratoEntity.setIdContrato(this.idContrato);
-
-		if (this.cliente != null) {
-			contratoEntity.setCliente(this.cliente.toEntity());
-		}
-
-		if (this.paseador != null) {
-			contratoEntity.setPaseador(this.paseador.toEntity());
-		}
-
-		if (this.franja != null) {
-			contratoEntity.setHorarios(this.franja.toEntity());
-		}
-
-		if (this.zona != null) {
-			contratoEntity.setZona(this.zona.toEntity());
-		}
-
-		if (this.pago != null) {
-			contratoEntity.setPago(this.pago.toEntity());
-		}
-
-		if (this.comentario != null) {
-			contratoEntity.setComentario(this.comentario.toEntity());
-		}
-
-		if (this.calificacion != null) {
-			contratoEntity.setCalificacion(this.calificacion.toEntity());
-		}
-
-		return contratoEntity;
-	}
-
-
-
-	//Metodos
-        
-        public String getIdContrato() {
-            
-            return idContrato;
-            
         }
-        
-        public void setIdContrato(String pIdContrato) {
-            
-            idContrato = pIdContrato;
-            
+    }
+
+    /**
+     * Convierte un objeto ContratoDTO a ContratoEntity.
+     *
+     * @return Nuevo objeto ContratoEntity.
+     *
+     */
+    public ContratoEntity toEntity() {
+        ContratoEntity contratoEntity = new ContratoEntity();
+        contratoEntity.setValorServicio(this.getValorServicio());
+        contratoEntity.setName(this.getName());
+        contratoEntity.setSatisfactorio(this.satisfactorio);
+        contratoEntity.setFinalizado(this.finalizado);
+        contratoEntity.setId(this.id);
+
+        if (this.cliente != null) {
+            contratoEntity.setCliente(this.cliente.toEntity());
         }
 
-	//Mirar si se deja o elimina
-	public String getName() {
+        if (this.paseador != null) {
+            contratoEntity.setPaseador(this.paseador.toEntity());
+        }
 
-		return name;
+        if (this.franja != null) {
+            contratoEntity.setHorarios(this.franja.toEntity());
+        }
 
-	}
+        if (this.zona != null) {
+            contratoEntity.setZona(this.zona.toEntity());
+        }
 
-	public void setName(String pName) {
+        if (this.pago != null) {
+            contratoEntity.setPago(this.pago.toEntity());
+        }
 
-		name = pName;
+        if (this.comentario != null) {
+            contratoEntity.setComentario(this.comentario.toEntity());
+        }
 
-	}
+        if (this.calificacion != null) {
+            contratoEntity.setCalificacion(this.calificacion.toEntity());
+        }
 
+        return contratoEntity;
+    }
 
-	//Setters y getters
+    //Metodos
+    //Mirar si se deja o elimina
+    public String getName() {
 
+        return name;
 
-	public Boolean getFinalizado() {
+    }
 
-		return finalizado;
+    public void setName(String pName) {
 
-	}
+        name = pName;
 
-	public void setFinalizado(Boolean pFinalizado){
+    }
 
-		finalizado = pFinalizado;
+    public Long getId() {
 
-	}
+        return id;
 
+    }
 
-	public Double getValorServicio() {
+    public void setId(Long pId) {
 
-		return valorServicio;
+        id = pId;
 
-	}
+    }
 
-	public void setValorServicio(Double pValorServicio) {
+    //Setters y getters
+    public Boolean getFinalizado() {
 
-		valorServicio = pValorServicio;
+        return finalizado;
 
-	}
+    }
 
+    public void setFinalizado(Boolean pFinalizado) {
 
-	public String getIdPaseador() {
+        finalizado = pFinalizado;
 
-		return idPaseador;
+    }
 
-	}
+    public Double getValorServicio() {
 
+        return valorServicio;
 
-	public String getIdUsuario() {
+    }
 
-		return idUsuario;
+    public void setValorServicio(Double pValorServicio) {
 
-	}
+        valorServicio = pValorServicio;
 
-	public void setIdPaseador(String pIdPaseador) {
+    }
 
-		idPaseador = pIdPaseador;
+    public Boolean getSatisfactorio() {
 
-	}
+        return satisfactorio;
 
+    }
 
-	public void setIdCliente(String pIdCliente) {
+    public void setSatisfactorio(Boolean pSatisfactorio) {
 
-		idUsuario = pIdCliente;
+        satisfactorio = pSatisfactorio;
 
-	}
+    }
 
+    public ClienteDTO getCliente() {
 
-	public Boolean getSatisfactorio() {
+        return cliente;
 
-		return satisfactorio;
+    }
 
-	}
+    public PaseadorDTO getPaseador() {
 
+        return paseador;
 
-	public void setSatisfactorio(Boolean pSatisfactorio) {
+    }
 
-		satisfactorio = pSatisfactorio;
+    public ZonaDTO getZona() {
 
-	}
+        return zona;
 
-	public ClienteDTO getCliente() {
+    }
 
-		return cliente;
+    public PagoDTO getPago() {
 
-	}
+        return pago;
 
-	public PaseadorDTO getPaseador() {
+    }
 
-		return paseador;
+    public ComentarioDTO getComentario() {
 
-	}
+        return comentario;
 
-	public ZonaDTO getZona() {
+    }
 
-		return zona;
+    public CalificacionDTO getCalificacion() {
 
-	}
+        return calificacion;
 
-	public PagoDTO getPago() {
+    }
 
-		return pago;
-
-	}
-
-	public ComentarioDTO getComentario() {
-
-		return comentario;
-
-	}
-
-	public CalificacionDTO getCalificacion() {
-
-		return calificacion;
-
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-	}
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 
 }

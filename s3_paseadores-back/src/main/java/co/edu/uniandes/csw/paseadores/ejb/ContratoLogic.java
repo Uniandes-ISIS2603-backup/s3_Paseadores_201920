@@ -41,56 +41,43 @@ public class ContratoLogic {
 
 		}
 
-
-		if(contrato.getIdPaseador() == null || contrato.getIdPaseador().isEmpty()) {
-
-			throw new BusinessLogicException("El contrato no tiene asociado un paseador o un cliente");
-
-		}
-
-		if(contrato.getIdUsuario() == null) {
-
-			throw new BusinessLogicException("El contrato no tiene asociado uno(s) cliente(s)");
-
-		}
-
-		if(contrato.getZona() ==null) {
-
-			throw new BusinessLogicException("No existe una zona en el contrato");
-
-		}         
-
-
-		if(contrato.getHorarios() ==null) {
-
-			throw new BusinessLogicException("No existe una fraja horaria para el contrato");
-
-		}
-
-		if(contrato.getCliente() == null) {
-
-			throw new BusinessLogicException("El contrato no tiene asociado un cliente");
-
-		}
-
-
-		if(contrato.getPaseador() == null) {
-
-			throw new BusinessLogicException("El contrato no tiene asociado un paseador");
-
-		}
-		
-		if(contrato.getMascotas() == null || contrato.getMascotas().isEmpty()) {
-
-			throw new BusinessLogicException("El contrato no dispone de mascota(s)");
-
-		}
-		
-		if(contrato.getPago() == null) {
-
-			throw new BusinessLogicException("El contrato no tiene creado un pago y su metodo de pago");
-
-		}
+//		if(contrato.getZona() ==null) {
+//
+//			throw new BusinessLogicException("No existe una zona en el contrato");
+//
+//		}         
+//
+//
+//		if(contrato.getHorarios() ==null) {
+//
+//			throw new BusinessLogicException("No existe una fraja horaria para el contrato");
+//
+//		}
+//
+//		if(contrato.getCliente() == null) {
+//
+//			throw new BusinessLogicException("El contrato no tiene asociado un cliente");
+//
+//		}
+//
+//
+//		if(contrato.getPaseador() == null) {
+//
+//			throw new BusinessLogicException("El contrato no tiene asociado un paseador");
+//
+//		}
+//		
+//		if(contrato.getMascotas() == null || contrato.getMascotas().isEmpty()) {
+//
+//			throw new BusinessLogicException("El contrato no dispone de mascota(s)");
+//
+//		}
+//		
+//		if(contrato.getPago() == null) {
+//
+//			throw new BusinessLogicException("El contrato no tiene creado un pago y su metodo de pago");
+//
+//		}
                 
                 if(contrato.getValorServicio() <= 0) {
                     
@@ -104,16 +91,6 @@ public class ContratoLogic {
 
 	}
         
-        
-//        public void createContratoMascotasIgualCliente(ContratoEntity contrato) throws BusinessLogicException{
-//		
-//		if(contrato.getCliente().getMascotas() == contrato.getMascotas()) {
-//			
-//			throw new BusinessLogicException("Las mascotas del contrato no corresponden a las del cliente");
-//			
-//		}
-//		
-//	}
 
 
 	/**
@@ -156,27 +133,27 @@ public class ContratoLogic {
 		{
 			throw new BusinessLogicException("El nombre del contrato es nulo o tiene un formato incorrecto");
 		}
-		
-		if(contratoEntity.getHorarios()==null || NumberUtils.isCreatable(contratoEntity.getHorarios().toString()))
-		{
-			throw new BusinessLogicException("Los horarios del contrato son nulos o tiene un formato incorrecto");
-		}
-			
-		if(contratoEntity.getPaseador()==null)
-		{
-			throw new BusinessLogicException("El paseador del contrato no existe");
-		}
-		
-		if(contratoEntity.getCliente()==null)
-		{
-			throw new BusinessLogicException("El cliente del contrato no existe");
-		}
-		
-		if(contratoEntity.getPago()==null)
-		{
-			throw new BusinessLogicException("El pago del contrato no existe");
-		}
-                
+//		
+//		if(contratoEntity.getHorarios()==null || NumberUtils.isCreatable(contratoEntity.getHorarios().toString()))
+//		{
+//			throw new BusinessLogicException("Los horarios del contrato son nulos o tiene un formato incorrecto");
+//		}
+//			
+//		if(contratoEntity.getPaseador()==null)
+//		{
+//			throw new BusinessLogicException("El paseador del contrato no existe");
+//		}
+//		
+//		if(contratoEntity.getCliente()==null)
+//		{
+//			throw new BusinessLogicException("El cliente del contrato no existe");
+//		}
+//		
+//		if(contratoEntity.getPago()==null)
+//		{
+//			throw new BusinessLogicException("El pago del contrato no existe");
+//		}
+//                
                 if(contratoEntity.getValorServicio() < 0) {
                     
                     throw new BusinessLogicException("El valor del contrato no es valido");

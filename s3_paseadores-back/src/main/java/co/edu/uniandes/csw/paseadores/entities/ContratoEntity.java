@@ -67,33 +67,14 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 	//Atributos:
 
 	private Double valorServicio;
-
-	private String idPaseador;
-
-	private String idUsuario;
-
+        
 	private Boolean satisfactorio;
 
 	private String name;
 
 	private Boolean finalizado = false;
-        
-        private String idContrato;
-
 
 	//Metodos
-        
-        public String getIdContrato() {
-            
-            return idContrato;
-            
-        }
-        
-        public void setIdContrato(String pIdContrato) {
-            
-            idContrato = pIdContrato;
-            
-        }
 
 	//Mirar si se deja o elimina
 	public String getName() {
@@ -148,33 +129,8 @@ public class ContratoEntity extends BaseEntity implements Serializable{
 		franja = pHorarios;
 
 	}
-
-	public String getIdPaseador() {
-
-		return idPaseador;
-
-	}
-
-	public String getIdUsuario() {
-
-		return idUsuario;
-
-	}
-
-	public void setIdPaseador(String pIdPaseador) {
-
-		idPaseador = pIdPaseador;
-
-	}
-
-
-	public void setIdUsuario(String pIdCliente) {
-
-		idUsuario = pIdCliente;
-
-	}
-
-
+        
+        
 	public Boolean getSatisfactorio() {
 
 		return satisfactorio;

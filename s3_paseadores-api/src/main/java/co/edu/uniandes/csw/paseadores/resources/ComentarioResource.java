@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
  * @author Nicolas Potes Garcia
  * @version 1.0
  */
-@Path("comentarios")
+@Path("/comentarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -136,7 +136,7 @@ public class ComentarioResource {
     @Path("{comentarioId: \\d+}")
     public ComentarioDTO updateComentario(@PathParam("contratoId") Long contratoId, @PathParam("comentarioId") Long comentarioId, ComentarioDTO comentario) throws BusinessLogicException {
 
-        if (comentarioId.equals(comentario.getIdComentario())) {
+        if (comentarioId.equals(comentario.getId())) {
             throw new BusinessLogicException("Los ids del Comentario no coinciden.");
         }
         ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, contratoId);

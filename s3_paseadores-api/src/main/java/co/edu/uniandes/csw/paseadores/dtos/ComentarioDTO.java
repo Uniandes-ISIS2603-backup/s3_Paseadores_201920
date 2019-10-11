@@ -20,7 +20,7 @@ public class ComentarioDTO implements Serializable {
     
      private String infoComentario;
      private String name;
-     private Long idComentario;
+     private Long id;
      
      //Relaciones
      private ContratoDTO contrato;
@@ -56,15 +56,15 @@ public class ComentarioDTO implements Serializable {
             
         }
         
-         public long getIdComentario() {
+         public long getId() {
         	
-        	return idComentario;
+        	return id;
         	
         }
         
-        public void setIdComentario(Long pIdComentario) {
+        public void setId(Long pId) {
         	
-        	idComentario = pIdComentario;
+        	id = pId;
         	
         }
         
@@ -94,6 +94,7 @@ public class ComentarioDTO implements Serializable {
             this.infoComentario = comentarioEntity.getInfoComentario();
             this.name = comentarioEntity.getName();
             this.infoComentario = comentarioEntity.getInfoComentario();
+            this.id = comentarioEntity.getId();
             
             
             if (comentarioEntity.getContrato() != null) {
@@ -117,6 +118,7 @@ public class ComentarioDTO implements Serializable {
         comentarioEntity.setInfoComentario(this.getInfoComentario());
         comentarioEntity.setName(this.getName());
         comentarioEntity.setInfoComentario(this.getInfoComentario());
+        comentarioEntity.setId(this.getId());
 
         if (this.contrato != null) {
             comentarioEntity.setContrato(this.contrato.toEntity());

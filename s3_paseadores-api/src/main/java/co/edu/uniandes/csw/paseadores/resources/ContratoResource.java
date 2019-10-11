@@ -32,7 +32,7 @@ import javax.ws.rs.core.MediaType;
  * @author Nicolas Potes Garcia
  * @version 1.0
  */
-@Path("contratos")
+@Path("/contratos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -135,7 +135,7 @@ public class ContratoResource {
     @Path("{contratoId: \\d+}")
     public ContratoDTO updateContrato(@PathParam("contratoId") Long contratoId, ContratoDTO contrato) throws BusinessLogicException {
 
-        if (contratoId.equals(contrato.getIdContrato())) {
+        if (contratoId == (contrato.toEntity().getId())) {
             throw new BusinessLogicException("Los ids del Contrato no coinciden.");
         }
         ContratoEntity entity = contratoLogic.getContrato(contratoId);
@@ -149,7 +149,13 @@ public class ContratoResource {
     }
     
     
-    
+    @Path("{contratoId: \\d+}/comentarios")
+    public Class<ComentarioResource> getComentarioResource(@PathParam("contratoId") Long contratoId) {
+        if (contratoLogic.getContrato(contratoId) == null) {
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+        }
+        return ComentarioResource.class;
+    }
     
     
     
