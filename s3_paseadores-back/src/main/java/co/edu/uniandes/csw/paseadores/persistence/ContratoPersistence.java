@@ -21,57 +21,51 @@ import javax.persistence.TypedQuery;
  */
 
 @Stateless
-public class ContratoPersistence {
-    
+public class ContratoPersistence 
+{    
     @PersistenceContext(unitName="paseadoresPU")
     protected EntityManager em;
-   
-    
-    public ContratoEntity create(ContratoEntity contrato) {
-        
-        em.persist(contrato);
-        
+      
+    public ContratoEntity create(ContratoEntity contrato) 
+    {
+        em.persist(contrato);   
         return contrato; 
-        //throw new java.lang.UnsupportedOperationException("Not supported yet.");
     }
     
-    
-    public ContratoEntity find(Long idContrato) {
-        
-       return em.find(ContratoEntity.class, idContrato);
-        
+    public ContratoEntity find(Long idContrato) 
+    {
+       return em.find(ContratoEntity.class, idContrato);        
     }
     
+    public List<ContratoEntity> findAllPorPaseador(Long idPaseador) 
+    {
+        TypedQuery q = em.createQuery("select p from ContratoEntity p where (p.paseador.id = :idPaseador)", ContratoEntity.class);
+        q.setParameter("idPaseador", idPaseador);
+        return q.getResultList();
+    }
     
-    public List<ContratoEntity> findAll() {
-        
+    public List<ContratoEntity> findAllPorCliente(Long idCliente) 
+    {
+        TypedQuery q = em.createQuery("select p from ContratoEntity p where (p.cliente.id = :idCliente)", ContratoEntity.class);
+        q.setParameter("idCliente", idCliente);
+        return q.getResultList();
+    }
+    
+    public List<ContratoEntity> findAll() 
+    {
         TypedQuery query = em.createQuery("select u from ContratoEntity u", ContratoEntity.class);
         return query.getResultList();
-        
     }
     
-    
-    public ContratoEntity update(ContratoEntity contratoEntity) {
-       // LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratoEntity.getId());
-        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
-        la author con los cambios, esto es similar a 
-        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
-         */
+    public ContratoEntity update(ContratoEntity contratoEntity) 
+    {
         return em.merge(contratoEntity);
     }
     
-    
-    public void delete(Long contratoId) {
-
-//        LOGGER.log(Level.INFO, "Borrando el author con id={0}", contratoId);
-      
+    public void delete(Long contratoId) 
+    {
         ContratoEntity contratoEntity = em.find(ContratoEntity.class, contratoId);
-        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
-        EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
-        Es similar a "delete from AuthorEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
         em.remove(contratoEntity);
-    }
-    
-    
+    }  
 }
 

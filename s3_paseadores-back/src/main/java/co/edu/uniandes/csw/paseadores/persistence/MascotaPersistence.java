@@ -24,11 +24,10 @@ public class MascotaPersistence
 {
     @PersistenceContext(unitName = "paseadoresPU")
     protected EntityManager em;
-    private static final Logger LOGGER = Logger.getLogger(MascotaPersistence.class.getName());
+
     public MascotaEntity create(MascotaEntity mascota) 
     {
         em.persist(mascota);
-
         return mascota;
     }
 
@@ -44,7 +43,6 @@ public class MascotaPersistence
      */
     public MascotaEntity find(Long idCliente, Long idMascota)
     {
-        LOGGER.log(Level.INFO, "Consultando la mascota con id = {0} del libro con id = " + idCliente, idMascota);
         TypedQuery<MascotaEntity> q = em.createQuery("select p from MascotaEntity p where (p.cliente.id = :idcliente) and (p.id = :idmascota)", MascotaEntity.class);
         q.setParameter("idcliente", idCliente);
         q.setParameter("idmascota", idMascota);
@@ -60,35 +58,23 @@ public class MascotaPersistence
         {
             mascota = results.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar la mascota con id = {0} del cliente con id =" + idCliente, idMascota);
         return mascota;
     }
     
     public List<MascotaEntity> findAll()
-    {
-        
+    {       
         TypedQuery query = em.createQuery("select u from MascotaEntity u", MascotaEntity.class);
-        return query.getResultList();
-        
+        return query.getResultList();      
     }
     
-    public MascotaEntity update(MascotaEntity mascotaEntity) {
-       // LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratoEntity.getId());
-        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
-        la author con los cambios, esto es similar a 
-        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
-         */
+    public MascotaEntity update(MascotaEntity mascotaEntity) 
+    { 
         return em.merge(mascotaEntity);
     }
     
-     public void delete(Long mascotaId) {
-
-//        LOGGER.log(Level.INFO, "Borrando el author con id={0}", contratoId);
-      
+     public void delete(Long mascotaId) 
+     {
         MascotaEntity authorEntity = em.find(MascotaEntity.class, mascotaId);
-        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
-        EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
-        Es similar a "delete from AuthorEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
         em.remove(authorEntity);
     }
 }

@@ -18,69 +18,60 @@ import javax.inject.Inject;
  */
 @Stateless
 public class ZonaLogic {
+
     @Inject
     private ZonaPersistence persistence;
-    
-    public ZonaEntity createZona(ZonaEntity zona) throws BusinessLogicException{
-        
-        if(zona.getInfoZona()!=null){
+
+    public ZonaEntity createZona(ZonaEntity zona) throws BusinessLogicException {
+        if (zona.getInfoZona() != null) {
             String info = zona.getInfoZona().replace(" ", "");
-            if(info.isEmpty()){
+            if (info.isEmpty()) {
                 throw new BusinessLogicException("La información de la zona esta vacia");
             }
-        }
-        else{
+        } else {
             throw new BusinessLogicException("Lai información de la zona esta vacia");
         }
         zona = persistence.create(zona);
         return zona;
     }
+
     public ZonaEntity getZona(Long zonaId) 
-	{
+    {
+        ZonaEntity zonaEntity = persistence.find(zonaId);
+        return zonaEntity;
+    }
 
-		ZonaEntity zonaEntity = persistence.find(zonaId);
+    public List<ZonaEntity> getZonas() 
+    {
+        List<ZonaEntity> lista = persistence.findAll();
+        return lista;
+    }
 
-		return zonaEntity;
-	}
-
-	public List<ZonaEntity> getZonas() {
-
-		List<ZonaEntity> lista = persistence.findAll();
-
-		return lista;
-	}
-
-	
-	public ZonaEntity updateZona(Long zonaId, ZonaEntity zona) throws BusinessLogicException
-	{
-
-                if(zona.getInfoZona()!=null){
+    public ZonaEntity updateZona(Long zonaId, ZonaEntity zona) throws BusinessLogicException {
+        if (zona.getInfoZona() != null) {
             String info = zona.getInfoZona().replace(" ", "");
-            if(info.isEmpty()){
+            if (info.isEmpty()) {
                 throw new BusinessLogicException("La información de la zona esta vacia");
             }
+        } else {
+            throw new BusinessLogicException("La información de la zona esta vacia");
         }
-        else{
-            throw new BusinessLogicException("Lai información de la zona esta vacia");
+        ZonaEntity newZonaEntity = persistence.update(zona);
+
+        return newZonaEntity;
+    }
+
+    public void deleteZona(Long zonaId) throws BusinessLogicException 
+    {
+        ZonaEntity zona = persistence.find(zonaId);
+        if (zona.getContratos() != null && !zona.getContratos().isEmpty()) 
+        {
+            throw new BusinessLogicException("La zona tiene contratos todavia");
         }
-	
-		ZonaEntity newZonaEntity = persistence.update(zona);
-
-		return newZonaEntity;
-
-	}
-
-
-	
-	
-	
-	
-
-	
-	public void deleteZona(Long zonaId) throws BusinessLogicException 
-	{
-
-		persistence.delete(zonaId);
-
-	}
+        if (zona.getPaseadores() != null && !zona.getPaseadores().isEmpty()) 
+        {
+            throw new BusinessLogicException("La zona tiene paseadores todavia");
+        }
+        persistence.delete(zonaId);
+    }
 }

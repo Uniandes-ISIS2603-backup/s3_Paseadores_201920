@@ -6,6 +6,9 @@
 package co.edu.uniandes.csw.paseadores.entities;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 /**
  *
  * @author Mario Hurtado
@@ -15,17 +18,7 @@ import java.io.Serializable;
 public class PagoEntity extends BaseEntity implements Serializable {
     
     //Atributos
-    
-    /**
-     * Identificador del usuario.
-     */
-    private String idUsuario;
-    
-    /**
-     * Identificador del paseador.
-     */
-    private String idPaseador;
-    
+  
     /**
      * Costo del servicio que presta el paseador.
      */
@@ -36,24 +29,15 @@ public class PagoEntity extends BaseEntity implements Serializable {
      */
     private  boolean pagoRealizado;
     
+    @PodamExclude
+    @ManyToOne
+    private FormaPagoEntity formaPago;
+    
+    @PodamExclude
+    @OneToOne
+    private ContratoEntity contrato;
     
     //Métodos
-
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getIdPaseador() {
-        return idPaseador;
-    }
-
-    public void setIdPaseador(String idPaseador) {
-        this.idPaseador = idPaseador;
-    }
 
     public double getValorServicio() {
         return valorServicio;
@@ -63,16 +47,30 @@ public class PagoEntity extends BaseEntity implements Serializable {
         this.valorServicio = valorServicio;
     }
 
-    public boolean isPagoRealizado() {
+    public boolean getPagoRealizado() {
         return pagoRealizado;
     }
 
     public void setPagoRealizado(boolean pagoRealizado) {
         this.pagoRealizado = pagoRealizado;
     }
-    
-    public void pagar(){
-        return;
+
+    public FormaPagoEntity getFormaPago() {
+        return formaPago;
     }
+
+    public void setFormaPago(FormaPagoEntity formaPago) {
+        this.formaPago = formaPago;
+    }
+
+    public ContratoEntity getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(ContratoEntity contrato) {
+        this.contrato = contrato;
+    }
+    
+    
             
 }

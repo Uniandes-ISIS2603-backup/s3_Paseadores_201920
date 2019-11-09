@@ -90,7 +90,6 @@ public class ClienteLogicTest {
     private void insertData() {
         for( int i = 0; i < 3 ; ++i ){
             ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
-
             em.persist(entity);
             data.add(entity);
         }
@@ -201,7 +200,7 @@ public class ClienteLogicTest {
     }
     
     @Test
-    public void getClienteTest(){
+    public void getClienteTest() throws BusinessLogicException{
         ClienteEntity cliente = data.get(0);
         ClienteEntity result = clienteLogic.getCliente(cliente.getId());
         Assert.assertNotNull(result);
@@ -325,7 +324,7 @@ public class ClienteLogicTest {
     }
     
     @Test
-    public void deleteClienteTest(){
+    public void deleteClienteTest() throws BusinessLogicException{
         ClienteEntity cliente = data.get(0);
         clienteLogic.deleteCliente(cliente.getId());
         ClienteEntity deleted = em.find(ClienteEntity.class, cliente.getId());

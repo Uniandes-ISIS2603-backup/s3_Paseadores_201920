@@ -108,13 +108,12 @@ public class MascotaPersistenceTest
     {
         PodamFactory factory = new PodamFactoryImpl();
         MascotaEntity mascota = factory.manufacturePojo(MascotaEntity.class);
+        mascota.setCliente(clienteTest);
         MascotaEntity result = mp.create(mascota);
         Assert.assertNotNull(result);
         
         MascotaEntity entity = em.find(MascotaEntity.class, result.getId());
-
         Assert.assertEquals(mascota.getNombre(),entity.getNombre());
-
     }
     
     @Test
@@ -149,16 +148,16 @@ public class MascotaPersistenceTest
         MascotaEntity newEntity = factory.manufacturePojo(MascotaEntity.class);
 
         newEntity.setId(entity.getId());
-
+        newEntity.setCliente(clienteTest);
         mp.update(newEntity);
 
         MascotaEntity resp = em.find(MascotaEntity.class, entity.getId());
         Assert.assertNotNull(resp);
-//        Assert.assertEquals(newEntity.getId(), resp.getId());
     }
     
     @Test
-    public void deleteMascotaTest() {
+    public void deleteMascotaTest() 
+    {
         MascotaEntity entity = data.get(0);
         mp.delete(entity.getId());
         MascotaEntity deleted = em.find(MascotaEntity.class, entity.getId());

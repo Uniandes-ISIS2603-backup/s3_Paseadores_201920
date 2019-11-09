@@ -24,16 +24,17 @@ public class MascotaEntity extends BaseEntity implements Serializable
     //Atributos propios de la clase
    
     private String nombre;
+    
     private String infoMascota;
     
     //Relaciones
-    //Relacion Clientes - Mascotas
+   
     @PodamExclude
     @ManyToOne
     private ClienteEntity cliente;
-    //Relacion Clientes - Mascotas
+    
     @PodamExclude
-    @ManyToMany(mappedBy="mascotas")
+    @ManyToMany
     private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
 
     public ClienteEntity getCliente() {

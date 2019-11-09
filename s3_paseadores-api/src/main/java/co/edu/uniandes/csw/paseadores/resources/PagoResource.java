@@ -35,7 +35,6 @@ import javax.ws.rs.core.MediaType;
  * @author Mario Hurtado
  * @version 1.0
  */
-@Path("pagos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -51,12 +50,15 @@ public class PagoResource {
      * base de datos.
      *
      * @param pago {@link PagoDTO} - EL pago que se desea guardar.
+     * @param contratoId
+     * @param idContrato
      * @return JSON {@link PagoDTO} - El pago guardado con el atributo id
      * autogenerado.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     @POST
-    public PagoDTO createPago(PagoDTO pago) throws BusinessLogicException {
-        PagoDTO pagoDTO = new PagoDTO(pagoLogic.createPago(pago.toEntity()));
+    public PagoDTO createPago(PagoDTO pago, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
+        PagoDTO pagoDTO = new PagoDTO(pagoLogic.createPago(contratoId, pago.toEntity()));
         return pagoDTO;
     }
     
@@ -65,18 +67,21 @@ public class PagoResource {
      *
      * @param pagoId Identificador del pago que se desea borrar. Este debe
      * ser una cadena de dígitos.
+     * @param contratoId
+     * @param idContrato
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el pago a borrar.
      */
     @DELETE
     @Path("{pagoId: \\d+}")
-    public void deletePago(@PathParam("pagoId") Long pagoId) throws BusinessLogicException {
+    public void deletePago(@PathParam("pagoId") Long pagoId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
     	
-        if (pagoLogic.getPago(pagoId) == null) {
+        if (pagoLogic.getPago(contratoId, pagoId) == null) {
             throw new WebApplicationException("El recurso /pagos/" + pagoId + " no existe.", 404);
         }
         
-        pagoLogic.deletePago(pagoId);
+        pagoLogic.deletePago(contratoId, pagoId);
         
     }
     
@@ -84,15 +89,18 @@ public class PagoResource {
      * Busca y devuelve el pago con el ID recibido en la URL, relativa a un
      * paseador.
      *
+     * @param pagoId
+     * @param contratoId
      * @return {@link PagoDTO} - El pago asociado a varias clases.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el pago.
      */
     @GET
     @Path("{pagoId: \\d+}")
-    public PagoDTO getPago(@PathParam("pagoId") Long pagoId) throws BusinessLogicException {
+    public PagoDTO getPago(@PathParam("pagoId") Long pagoId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
     	
-        PagoEntity entity = pagoLogic.getPago(pagoId);
+        PagoEntity entity = pagoLogic.getPago(contratoId, pagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/pagos/" + pagoId + " no existe.", 404);
         }
@@ -103,7 +111,6 @@ public class PagoResource {
     
     /**
      * Busca y devuelve todas los pagos que existen
-     * @param pagoId El ID del paseador del cual se buscan los comentarios
      * @return JSONArray {@link PagoDTO} - Los pagos encontrados. Si no hay nunguno retorna una lista vacía.
      */
     @GET
@@ -132,15 +139,20 @@ public class PagoResource {
      /**
      * Actualiza un contrato con la informacion que se recibe en el cuerpo de la
      * petición y se regresa el objeto actualizado.
+     * @param pagoId
+     * @param pago
+     * @param contratoId
+     * @return 
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     @PUT
     @Path("{pagoId: \\d+}")
-    public PagoDTO updatePago(@PathParam("pagoId") Long pagoId, PagoDTO pago) throws BusinessLogicException {
+    public PagoDTO updatePago(@PathParam("pagoId") Long pagoId, PagoDTO pago, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
 
-        if (pagoId.equals(pago.getId())) {
+        if (!pagoId.equals(pago.getId())) {
             throw new BusinessLogicException("Los Id´s del pago no coinciden.");
         }
-        PagoEntity entity = pagoLogic.getPago(pagoId);
+        PagoEntity entity = pagoLogic.getPago(contratoId,pagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/pagos/" + pagoId + " no existe.", 404);
 

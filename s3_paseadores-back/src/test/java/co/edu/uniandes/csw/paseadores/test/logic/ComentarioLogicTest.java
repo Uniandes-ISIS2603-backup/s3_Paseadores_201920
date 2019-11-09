@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.ComentarioLogic;
+import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
@@ -40,25 +41,25 @@ public class ComentarioLogicTest {
     @Inject
     private ComentarioLogic comentarioLogic;
 
-    private List<PaseadorEntity> dataPaseador = new ArrayList<PaseadorEntity>();
+    @PersistenceContext
+    private EntityManager em;
 
     @Inject
     UserTransaction utx;
 
-    @PersistenceContext
-    private EntityManager em;
+    private ArrayList<ComentarioEntity> data = new ArrayList<>();
 
+    private ArrayList<ContratoEntity> contratos = new ArrayList<>();
+
+    private ArrayList<PaseadorEntity> paseadores = new ArrayList<>();
+
+    private ArrayList<ClienteEntity> clientes = new ArrayList<>();
+    
     private ContratoEntity contratoTest;
 
-    private ContratoEntity contratoTest2;
-
-    private ContratoEntity contratoTest3;
-
     private PaseadorEntity paseadorTest;
-    
-    private PaseadorEntity x;
 
-    private ArrayList<ComentarioEntity> data = new ArrayList<ComentarioEntity>();
+    private ClienteEntity clienteTest;
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -96,78 +97,53 @@ public class ComentarioLogicTest {
     private void clearData() {
         em.createQuery("delete from ComentarioEntity").executeUpdate();
         em.createQuery("delete from ContratoEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
         em.createQuery("delete from PaseadorEntity").executeUpdate();
     }
 
-    
     private void insertData() {
-
+        clienteTest = factory.manufacturePojo(ClienteEntity.class);
+        em.persist(clienteTest);
         paseadorTest = factory.manufacturePojo(PaseadorEntity.class);
-        
-
+        em.persist(paseadorTest);
         contratoTest = factory.manufacturePojo(ContratoEntity.class);
         contratoTest.setPaseador(paseadorTest);
-
-        contratoTest2 = factory.manufacturePojo(ContratoEntity.class);
-        contratoTest2.setPaseador(paseadorTest);
-
-        contratoTest3 = factory.manufacturePojo(ContratoEntity.class);
-        contratoTest3.setPaseador(paseadorTest);
-
-        ComentarioEntity entity = factory.manufacturePojo(ComentarioEntity.class);
-        entity.setContrato(contratoTest);
-
-        data.add(entity);
-
-        ComentarioEntity entity2 = factory.manufacturePojo(ComentarioEntity.class);
-        entity2.setContrato(contratoTest2);
-
-        data.add(entity2);
-
-        ComentarioEntity entity3 = factory.manufacturePojo(ComentarioEntity.class);
-        entity3.setContrato(contratoTest3);
-
-        data.add(entity3);
-
+        contratoTest.setCliente(clienteTest);
         em.persist(contratoTest);
-        em.persist(contratoTest2);
-        em.persist(contratoTest3);
-
-        em.persist(entity);
-        em.persist(entity2);
-        em.persist(entity3);
-
-        paseadorTest.setComentarios(data);
-
-        em.persist(paseadorTest);
         
-        x = em.find(PaseadorEntity.class, paseadorTest.getId());
-
+        for (int i = 0; i < 3; ++i) {
+            ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(cliente);
+            PaseadorEntity paseador = factory.manufacturePojo(PaseadorEntity.class);
+            em.persist(paseador);
+            ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
+            contrato.setCliente(cliente);
+            contrato.setPaseador(paseador);
+            em.persist(contrato);
+            ComentarioEntity comentario = factory.manufacturePojo(ComentarioEntity.class);
+            comentario.setContrato(contrato);
+            comentario.setPaseador(paseador);
+            em.persist(comentario);
+            data.add(comentario);
+            clientes.add(cliente);
+            contratos.add(contrato);
+            paseadores.add(paseador);
+        }
     }
-    
-     
 
     @Test
     public void createComentario() throws BusinessLogicException {
-        
-        ComentarioEntity newEntity = factory.manufacturePojo(ComentarioEntity.class);
-
-        newEntity.setContrato(contratoTest);
-
-        ComentarioEntity result = comentarioLogic.createComentario(newEntity, contratoTest.getId());
+        ComentarioEntity comentario = factory.manufacturePojo(ComentarioEntity.class);
+        ComentarioEntity result = comentarioLogic.createComentario(comentario, contratoTest.getId());
         Assert.assertNotNull(result);
-
-        ComentarioEntity entity = em.find(ComentarioEntity.class, result.getId());
-        Assert.assertEquals(result.getName(), entity.getName());
-
+        Assert.assertEquals(result.getPaseador().getId(), comentario.getPaseador().getId());
     }
 
     @Test(expected = BusinessLogicException.class)
     public void createComentarioInfoNull() throws BusinessLogicException {
-        
         ComentarioEntity newEntity = factory.manufacturePojo(ComentarioEntity.class);
         newEntity.setInfoComentario(null);
-        ComentarioEntity result = comentarioLogic.createComentario(newEntity, contratoTest.getId());
+        ComentarioEntity result = comentarioLogic.createComentario(newEntity, contratos.get(0).getId());
     }
 
     @Test(expected = BusinessLogicException.class)
@@ -180,10 +156,10 @@ public class ComentarioLogicTest {
 
     @Test(expected = BusinessLogicException.class)
     public void createComentarioInfoCantCaracteres() throws BusinessLogicException {
-        
+
         ComentarioEntity newEntity = factory.manufacturePojo(ComentarioEntity.class);
         newEntity.setInfoComentario("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.");
-        ComentarioEntity result = comentarioLogic.createComentario(newEntity, contratoTest.getId());
+        ComentarioEntity result = comentarioLogic.createComentario(newEntity, contratos.get(0).getId());
     }
 
     /**
@@ -191,9 +167,9 @@ public class ComentarioLogicTest {
      */
     @Test
     public void deleteComentarioTest() throws BusinessLogicException {
-        
+
         ComentarioEntity entity = data.get(0);
-        comentarioLogic.deleteComentario(entity.getId(), contratoTest.getId());
+        comentarioLogic.deleteComentario(entity.getId(), entity.getPaseador().getId());
         ComentarioEntity deleted = em.find(ComentarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
@@ -205,23 +181,22 @@ public class ComentarioLogicTest {
     public void getComentarioTest() throws BusinessLogicException {
 
         ComentarioEntity entity = data.get(0);
-        ComentarioEntity resultEntity = comentarioLogic.getComentario(entity.getId(), contratoTest.getId());
+        ComentarioEntity resultEntity = comentarioLogic.getComentario(entity.getId(), entity.getPaseador().getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getInfoComentario(), resultEntity.getInfoComentario());
     }
 
     @Test
     public void getComentariosTest() throws BusinessLogicException {
-
-        
-        List<ComentarioEntity> list = comentarioLogic.getComentarios(paseadorTest.getId());
-        
-        //Assert.assertEquals(data.size(), list.size());
+        List<ComentarioEntity> list = comentarioLogic.getComentarios();
+        Assert.assertEquals(data.size(), list.size());
         for (ComentarioEntity entity : list) {
             boolean found = false;
             for (ComentarioEntity storedEntity : data) {
                 if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
+                    break;
                 }
             }
             Assert.assertTrue(found);
@@ -233,22 +208,14 @@ public class ComentarioLogicTest {
      */
     @Test
     public void updateComentarioTest() throws BusinessLogicException {
-        
+
         ComentarioEntity entity = data.get(0);
         ComentarioEntity pojoEntity = factory.manufacturePojo(ComentarioEntity.class);
-
-        System.out.println(pojoEntity.getId());
-
-        System.out.println(data.get(0).getId());
-
         pojoEntity.setId(data.get(0).getId());
-
-        comentarioLogic.updateComentario(contratoTest.getId(), pojoEntity);
-
+        comentarioLogic.updateComentario(contratos.get(0).getId(), pojoEntity);
         ComentarioEntity resp = em.find(ComentarioEntity.class, entity.getId());
-
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
-
+        Assert.assertEquals(pojoEntity.getInfoComentario(), resp.getInfoComentario());
     }
 
 }

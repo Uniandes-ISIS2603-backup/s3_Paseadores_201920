@@ -37,34 +37,34 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class FranjaHorariaLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private FranjaHorariaLogic franjaLogic;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private PaseadorEntity paseadorTest;
-    
+
     private ArrayList<FranjaHorariaEntity> data = new ArrayList<FranjaHorariaEntity>();
-    
+
     @Deployment
-    public static JavaArchive createDeployment(){
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(FranjaHorariaEntity.class.getPackage())
                 .addPackage(FranjaHorariaLogic.class.getPackage())
                 .addPackage(FranjaHorariaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-              .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @Before
-    public void configTest(){
+    public void configTest() {
         try {
             utx.begin();
             em.joinTransaction();
@@ -80,14 +80,15 @@ public class FranjaHorariaLogicTest {
             }
         }
     }
-    
-     /**
+
+    /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from FranjaHorariaEntity").executeUpdate();
+        em.createQuery("delete from PaseadorEntity").executeUpdate();
     }
-    
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
@@ -96,68 +97,68 @@ public class FranjaHorariaLogicTest {
         PaseadorEntity paseador = factory.manufacturePojo(PaseadorEntity.class);
         em.persist(paseador);
         paseadorTest = paseador;
-        for( int i = 0; i < 3 ; ++i ){
+        for (int i = 0; i < 3; ++i) {
             FranjaHorariaEntity entity = factory.manufacturePojo(FranjaHorariaEntity.class);
             entity.setPaseador(paseador);
             em.persist(entity);
             data.add(entity);
         }
     }
-    
+
     @Test
     public void createFranjaHoraria() throws BusinessLogicException {
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         Date temp;
-        if( newEntity.getInicio().after(newEntity.getFin())){
+        if (newEntity.getInicio().after(newEntity.getFin())) {
             temp = newEntity.getFin();
             newEntity.setFin(newEntity.getInicio());
             newEntity.setInicio(temp);
         }
-        
+
         newEntity.setPaseador(paseadorTest);
-        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
-        Assert.assertNotNull(result);     
-        FranjaHorariaEntity entity = em.find( FranjaHorariaEntity.class , result.getId());
+        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(), newEntity);
+        Assert.assertNotNull(result);
+        FranjaHorariaEntity entity = em.find(FranjaHorariaEntity.class, result.getId());
         Assert.assertEquals(entity.getInicio(), result.getInicio());
     }
-    
-    @Test( expected = BusinessLogicException.class)
-    public void createFranjaFechaInicioNull() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createFranjaFechaInicioNull() throws BusinessLogicException {
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         newEntity.setInicio(null);
         newEntity.setPaseador(paseadorTest);
-        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
+        FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(), newEntity);
     }
-    
-    @Test( expected = BusinessLogicException.class)
-    public void createFranjaFechaFinNull() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createFranjaFechaFinNull() throws BusinessLogicException {
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         newEntity.setFin(null);
         newEntity.setPaseador(paseadorTest);
-        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
+        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(paseadorTest.getId(), newEntity);
     }
-   
-    @Test( expected = BusinessLogicException.class)
-    public void createFranjaInicioDepuesFin() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void createFranjaInicioDepuesFin() throws BusinessLogicException {
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         Date temp;
-        if( !newEntity.getInicio().after(newEntity.getFin())){
+        if (!newEntity.getInicio().after(newEntity.getFin())) {
             temp = newEntity.getFin();
             newEntity.setFin(newEntity.getInicio());
             newEntity.setInicio(temp);
         }
         newEntity.setPaseador(null);
-        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(paseadorTest.getId(),newEntity);
+        FranjaHorariaEntity fin = franjaLogic.createFranjaHoraria(paseadorTest.getId(), newEntity);
     }
-    
+
     @Test
-    public void getFranjasTest(){
+    public void getFranjasTest() {
         List<FranjaHorariaEntity> franjas = franjaLogic.getFranjas(paseadorTest.getId());
         Assert.assertEquals(data.size(), franjas.size());
-        for( FranjaHorariaEntity franja : franjas ){
+        for (FranjaHorariaEntity franja : franjas) {
             boolean found = false;
-            for( FranjaHorariaEntity c : data ){
-                if( franja.getId().equals(c.getId())){
+            for (FranjaHorariaEntity c : data) {
+                if (franja.getId().equals(c.getId())) {
                     found = true;
                     break;
                 }
@@ -165,24 +166,24 @@ public class FranjaHorariaLogicTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getFranjaTest(){
+    public void getFranjaTest() {
         FranjaHorariaEntity franja = data.get(0);
-        FranjaHorariaEntity result = franjaLogic.getFranja(paseadorTest.getId(),franja.getId());
+        FranjaHorariaEntity result = franjaLogic.getFranja(paseadorTest.getId(), franja.getId());
         Assert.assertNotNull(result);
         Assert.assertEquals(franja.getInicio(), result.getInicio());
         Assert.assertEquals(franja.getFin(), result.getFin());
         Assert.assertEquals(franja.getPaseador().getId(), result.getPaseador().getId());
     }
-    
+
     @Test
-    public void updateFranjaTest() throws BusinessLogicException{
+    public void updateFranjaTest() throws BusinessLogicException {
         FranjaHorariaEntity franja = data.get(0);
         FranjaHorariaEntity pojoFranja = factory.manufacturePojo(FranjaHorariaEntity.class);
         pojoFranja.setId(franja.getId());
         Date temp;
-        if( pojoFranja.getInicio().after(pojoFranja.getFin())){
+        if (pojoFranja.getInicio().after(pojoFranja.getFin())) {
             temp = pojoFranja.getFin();
             pojoFranja.setFin(pojoFranja.getInicio());
             pojoFranja.setInicio(temp);
@@ -194,51 +195,51 @@ public class FranjaHorariaLogicTest {
         Assert.assertEquals(pojoFranja.getInicio(), resp.getInicio());
         Assert.assertEquals(pojoFranja.getFin(), resp.getFin());
         Assert.assertEquals(pojoFranja.getPaseador().getId(), resp.getPaseador().getId());
-        
+
     }
-    
-    @Test( expected = BusinessLogicException.class)
-    public void updateFranjaFechaInicioNull() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void updateFranjaFechaInicioNull() throws BusinessLogicException {
         FranjaHorariaEntity franja = data.get(0);
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         newEntity.setId(franja.getId());
         newEntity.setInicio(null);
         newEntity.setPaseador(paseadorTest);
-        franjaLogic.updateFranja(franja.getId() , newEntity);
+        franjaLogic.updateFranja(franja.getId(), newEntity);
     }
-    
-    @Test( expected = BusinessLogicException.class)
-    public void updateFranjaFechaFinNull() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void updateFranjaFechaFinNull() throws BusinessLogicException {
         FranjaHorariaEntity franja = data.get(0);
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         newEntity.setId(franja.getId());
         newEntity.setFin(null);
         newEntity.setPaseador(paseadorTest);
-        franjaLogic.updateFranja(franja.getId() , newEntity);
+        franjaLogic.updateFranja(franja.getId(), newEntity);
     }
-    
-    @Test( expected = BusinessLogicException.class)
-    public void updateFranjaInicioDepuesFin() throws BusinessLogicException{
+
+    @Test(expected = BusinessLogicException.class)
+    public void updateFranjaInicioDepuesFin() throws BusinessLogicException {
         FranjaHorariaEntity franja = data.get(0);
         FranjaHorariaEntity newEntity = factory.manufacturePojo(FranjaHorariaEntity.class);
         Date temp;
-        if( !newEntity.getInicio().after(newEntity.getFin())){
+        if (!newEntity.getInicio().after(newEntity.getFin())) {
             temp = newEntity.getFin();
             newEntity.setFin(newEntity.getInicio());
             newEntity.setInicio(temp);
         }
         newEntity.setId(franja.getId());
         newEntity.setPaseador(paseadorTest);
-        franjaLogic.updateFranja(franja.getId() , newEntity);
+        franjaLogic.updateFranja(franja.getId(), newEntity);
     }
-    
+
     @Test
-    public void deleteFranjaTest() throws BusinessLogicException{
-        
-            FranjaHorariaEntity franja = data.get(0);
-            franjaLogic.deleteFranja(paseadorTest.getId() , franja.getId());
-            FranjaHorariaEntity deleted = em.find(FranjaHorariaEntity.class, franja.getId());
-            Assert.assertNull(deleted);
-        
+    public void deleteFranjaTest() throws BusinessLogicException {
+
+        FranjaHorariaEntity franja = data.get(0);
+        franjaLogic.deleteFranja(paseadorTest.getId(), franja.getId());
+        FranjaHorariaEntity deleted = em.find(FranjaHorariaEntity.class, franja.getId());
+        Assert.assertNull(deleted);
+
     }
 }

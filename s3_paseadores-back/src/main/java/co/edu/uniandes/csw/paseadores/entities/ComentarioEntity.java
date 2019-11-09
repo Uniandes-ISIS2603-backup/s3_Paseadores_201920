@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 
@@ -25,7 +26,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     
     private String infoComentario;
     private String name;
-    private Long idComentario;
     
     /**
      * Relaciones
@@ -36,11 +36,7 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     private PaseadorEntity paseador;
     
     @PodamExclude
-    @ManyToOne
-    private ClienteEntity cliente;
-    
-    @PodamExclude
-    @ManyToOne
+    @OneToOne
     private ContratoEntity contrato;
     
     //Setters y getters
@@ -52,15 +48,7 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     public void setPaseador(PaseadorEntity paseador) {
         this.paseador = paseador;
     }
-    
-    public ClienteEntity getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(ClienteEntity cliente) {
-        this.cliente = cliente;
-    }
-    
+  
     public ContratoEntity getContrato() {
         return contrato;
     }
@@ -82,18 +70,7 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
         
     }
     
-     public Long getIdComentario() {
-    	
-    	return idComentario;
-    	
-    }
-    
-    
-    public void setIdComentario(long pId) {
-    	
-    	idComentario = pId;
-    	
-    }
+   
     
     
     public String getName() {

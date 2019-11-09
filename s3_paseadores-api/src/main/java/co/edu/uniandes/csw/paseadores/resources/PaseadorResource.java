@@ -84,7 +84,7 @@ public class PaseadorResource
      */
     @GET
     @Path("{paseadoresId: \\d+}")
-    public PaseadorDetailDTO getPaseador(@PathParam("paseadoresId") Long paseadoresId) 
+    public PaseadorDetailDTO getPaseador(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
     {
         LOGGER.log(Level.INFO, "PaseadorResource getPaseador: input: {0}", paseadoresId);
         PaseadorEntity paseadorEntity = paseadorLogic.getPaseador(paseadoresId);
@@ -153,7 +153,7 @@ public class PaseadorResource
      * @return El servicio de calificaciones para ese paseador en particular.
      */
     @Path("{paseadoresId: \\d+}/calificaciones")
-    public Class<CalificacionResource> getCalificacionResource(@PathParam("paseadoresId") Long paseadoresId) 
+    public Class<CalificacionResource> getCalificacionResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {
@@ -173,15 +173,15 @@ public class PaseadorResource
      * servicio.
      * @return El servicio de comentarios para ese paseador en particular.
      */
-    @Path("{paseadoresId: \\d+}/comentarios")
-    public Class<ComentarioResource> getComentarioResource(@PathParam("paseadoresId") Long paseadoresId) 
-    {
-        if (paseadorLogic.getPaseador(paseadoresId) == null) 
-        {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
-        }
-        return ComentarioResource.class;
-    }
+//    @Path("{paseadoresId: \\d+}/comentarios")
+//    public Class<ComentarioResource> getComentarioResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
+//    {
+//        if (paseadorLogic.getPaseador(paseadoresId) == null) 
+//        {
+//            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+//        }
+//        return ComentarioResource.class;
+//    }
      /**
      * Conexión con el servicio de contratos para un paseador.
      * {@link ContratoResource}
@@ -194,15 +194,15 @@ public class PaseadorResource
      * servicio.
      * @return El servicio de contratos para ese paseador en particular.
      */
-    @Path("{paseadoresId: \\d+}/contratos")
-    public Class<ContratoResource> getContratoResource(@PathParam("paseadoresId") Long paseadoresId) 
-    {
-        if (paseadorLogic.getPaseador(paseadoresId) == null) 
-        {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
-        }
-        return ContratoResource.class;
-    }
+//    @Path("{paseadoresId: \\d+}/contratos")
+//    public Class<ContratoResource> getContratoResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
+//    {
+//        if (paseadorLogic.getPaseador(paseadoresId) == null) 
+//        {
+//            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+//        }
+//        return ContratoResource.class;
+//    }
      /**
      * Conexión con el servicio de franjas para un paseador.
      * {@link FranjaHorariaResource}
@@ -216,7 +216,7 @@ public class PaseadorResource
      * @return El servicio de franjas para ese paseador en particular.
      */
     @Path("{paseadoresId: \\d+}/franjas")
-    public Class<FranjaHorariaResource> getFranjaResource(@PathParam("paseadoresId") Long paseadoresId) 
+    public Class<FranjaHorariaResource> getFranjaResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {
@@ -237,7 +237,7 @@ public class PaseadorResource
      * @return El servicio de zonas para ese paseador en particular.
      */
     @Path("{paseadoresId: \\d+}/zonas")
-    public Class<ZonaResource> getZonaResource(@PathParam("paseadoresId") Long paseadoresId) 
+    public Class<ZonaResource> getZonaResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {

@@ -18,8 +18,8 @@ import javax.persistence.TypedQuery;
  * @author Juan Vergara
  */
 @Stateless
-public class TarjetaCreditoPersistence {
-    
+public class TarjetaCreditoPersistence 
+{  
     @PersistenceContext (unitName = "paseadoresPU") 
     protected EntityManager em;
     

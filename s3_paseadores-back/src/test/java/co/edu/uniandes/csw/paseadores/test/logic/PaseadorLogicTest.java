@@ -6,8 +6,6 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.PaseadorLogic;
-import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
-import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
@@ -267,7 +265,7 @@ public class PaseadorLogicTest {
      * Prueba para consultar un Paseador.
      */
     @Test
-    public void getPaseadorTest() 
+    public void getPaseadorTest() throws BusinessLogicException
     {
         PaseadorEntity entity = data.get(0);
         PaseadorEntity resultEntity = paseadorLogic.getPaseador(entity.getId());

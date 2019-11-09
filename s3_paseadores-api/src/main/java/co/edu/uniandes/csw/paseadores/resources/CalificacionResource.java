@@ -30,7 +30,6 @@ import javax.ws.rs.core.MediaType;
  * @author Juan Vergara
  * @version 1.0
  */
-@Path("calificaciones")
 @Produces(MediaType.APPLICATION_JSON)      
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -47,8 +46,8 @@ class CalificacionResource {
      * @throws BusinessLogicException 
      */
     @POST
-    public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException{
-        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(calificacion.toEntity()));
+    public CalificacionDTO createCalificacion(@PathParam("contratoId")Long contratoId, CalificacionDTO calificacion) throws BusinessLogicException{
+        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(contratoId, calificacion.toEntity()));
         return calificacionDTO;
     }
     /**
@@ -58,13 +57,11 @@ class CalificacionResource {
      */
     @DELETE
     @Path("{calificacionId: \\d+}")
-    public void deleteCalificacion (@PathParam("calificacionId") Long calificacionId) throws BusinessLogicException{
-        if( calificacionLogic.getCalificacion(calificacionId)==null){
+    public void deleteCalificacion (@PathParam("calificacionId") Long calificacionId, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException{
+        if( calificacionLogic.getCalificacion(paseadoresId, calificacionId)==null){
            throw new WebApplicationException("El recurso /calificacions/" + calificacionId + " no existe.", 404);
-        }
-        
-        calificacionLogic.deleteCalificacion(calificacionId);
-        
+        }        
+        calificacionLogic.deleteCalificacion(paseadoresId, calificacionId);        
     }
     /**
      * Busca y deuelve la calificacion con el ID recibido en la URL
@@ -74,9 +71,9 @@ class CalificacionResource {
      */
     @GET
     @Path("{calificacionId: \\d+}")
-    public CalificacionDTO getCalificacion(@PathParam("calificacionId") Long calificacionId) throws BusinessLogicException {
+    public CalificacionDTO getCalificacion(@PathParam("calificacionId") Long calificacionId, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
     	
-        CalificacionEntity entity = calificacionLogic.getCalificacion(calificacionId);
+        CalificacionEntity entity = calificacionLogic.getCalificacion(paseadoresId, calificacionId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
         }
@@ -88,9 +85,9 @@ class CalificacionResource {
      * @return listaDTOs
      */
     @GET
-    public List<CalificacionDTO> getCalificacions() {
+    public List<CalificacionDTO> getCalificaciones(@PathParam("paseadoresId") Long paseadoresId) {
 
-        List<CalificacionDTO> listaDTOs = listEntity2DTO(calificacionLogic.getCalificacions());
+        List<CalificacionDTO> listaDTOs = listEntity2DTO(calificacionLogic.getCalificacionesPorPaseador(paseadoresId));
         return listaDTOs;
     }
     
@@ -116,12 +113,12 @@ class CalificacionResource {
      */
     @PUT
     @Path("{calificacionId: \\d+}")
-    public CalificacionDTO updateCalificacion(@PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException {
+    public CalificacionDTO updateCalificacion(@PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
 
-        if (calificacionId.equals(calificacion.getId())) {
+        if (!calificacionId.equals(calificacion.getId())) {
             throw new BusinessLogicException("Los ids del Calificacion no coinciden.");
         }
-        CalificacionEntity entity = calificacionLogic.getCalificacion(calificacionId);
+        CalificacionEntity entity = calificacionLogic.getCalificacion(paseadoresId, calificacionId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
 

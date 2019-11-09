@@ -106,9 +106,7 @@ public class PaseadorPersistenceTest
         Assert.assertNotNull(result);
         
         PaseadorEntity entity = em.find(PaseadorEntity.class, result.getId());
-
         Assert.assertEquals(paseador.getId(),entity.getId());
-
     }
     
     @Test
@@ -145,9 +143,7 @@ public class PaseadorPersistenceTest
         newEntity.setId(entity.getId());
 
         pp.update(newEntity);
-
         PaseadorEntity resp = em.find(PaseadorEntity.class, entity.getId());
-
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
     

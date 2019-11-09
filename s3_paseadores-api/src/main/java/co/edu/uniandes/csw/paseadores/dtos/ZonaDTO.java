@@ -15,7 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Clase que mpdela el DTO para Zona
+ * Clase que modela el DTO para Zona
  * @author Juan Vergara
  */
 
@@ -23,7 +23,6 @@ public class ZonaDTO  implements Serializable{
     //atributos
     private String infoZona;
     private Long id;
-    private PaseadorDTO paseador;
     
     //Constructor vacio
     public ZonaDTO(){
@@ -38,21 +37,10 @@ public class ZonaDTO  implements Serializable{
         
         this.id=zona.getId();
         
-        if (zona.getPaseador()!=null){
-            this.paseador= new PaseadorDTO(zona.getPaseador());
-        }
-        else{
-            this.paseador=null;
-        }
+        
     }
 //setters y getters de infoZona, id y paseador
-    public void setPaseador(PaseadorDTO paseador) {
-        this.paseador = paseador;
-    }
-
-    public PaseadorDTO getPaseador() {
-        return paseador;
-    }
+    
   
     public Long getId() {
         return id;
@@ -77,8 +65,7 @@ public class ZonaDTO  implements Serializable{
         ZonaEntity entity = new ZonaEntity();
         entity.setInfoZona(this.infoZona);
         entity.setId(this.id);
-        if(this.paseador!=null)
-        entity.setPaseador(paseador.toEntity());
+       
         return entity;
     }
     @Override

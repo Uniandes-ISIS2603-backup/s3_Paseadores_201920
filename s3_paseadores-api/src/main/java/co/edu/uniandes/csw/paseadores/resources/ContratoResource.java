@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.paseadores.resources;
 
-
 import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
@@ -37,46 +36,46 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class ContratoResource {
-    
+
     @Inject
     private ContratoLogic contratoLogic;
-    
-    
+
     /**
-     * Crea un nuevo contrato con la informacion que se recibe en el cuerpo de la
-     * petición y se regresa un objeto identico con un id auto-generado por la
-     * base de datos.
+     * Crea un nuevo contrato con la informacion que se recibe en el cuerpo de
+     * la petición y se regresa un objeto identico con un id auto-generado por
+     * la base de datos.
      *
      * @param contrato {@link ContratoDTO} - EL contrato que se desea guardar.
-     * @return JSON {@link ContratoDTO} - El contrato guardado con el atributo id
-     * autogenerado.
+     * @return JSON {@link ContratoDTO} - El contrato guardado con el atributo
+     * id autogenerado.
      */
     @POST
     public ContratoDTO createContrato(ContratoDTO contrato) throws BusinessLogicException {
         ContratoDTO contratoDTO = new ContratoDTO(contratoLogic.createContrato(contrato.toEntity()));
         return contratoDTO;
     }
-    
-      /**
+
+    /**
      * Borra el contrato con el id asociado recibido en la URL.
      *
-     * @param contratoId Identificador del contrato que se desea borrar. Este debe
-     * ser una cadena de dígitos.
+     * @param contratoId Identificador del contrato que se desea borrar. Este
+     * debe ser una cadena de dígitos.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
-     * Error de lógica que se genera cuando no se encuentra el contrato a borrar.
+     * Error de lógica que se genera cuando no se encuentra el contrato a
+     * borrar.
      */
     @DELETE
     @Path("{contratoId: \\d+}")
     public void deletContrato(@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
-    	
+
         if (contratoLogic.getContrato(contratoId) == null) {
             throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
         }
-        
+
         contratoLogic.deleteContrato(contratoId);
-        
+
     }
-    
+
     /**
      * Busca y devuelve el contrato con el ID recibido en la URL, relativa a un
      * paseador.
@@ -88,7 +87,7 @@ public class ContratoResource {
     @GET
     @Path("{contratoId: \\d+}")
     public ContratoDTO getContrato(@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
-    	
+
         ContratoEntity entity = contratoLogic.getContrato(contratoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/contratos/" + contratoId + " no existe.", 404);
@@ -96,10 +95,10 @@ public class ContratoResource {
         ContratoDTO contratoDTO = new ContratoDTO(entity);
         return contratoDTO;
     }
-    
-    
+
     /**
      * Busca y devuelve todas los contratos que existen
+     *
      * @param paseadorId El ID del paseador del cual se buscan los comentarios
      * @return JSONArray {@link ContratoDTO} - Los contratos encontrados en el
      * paseador. Si no hay nunguno retorna una lista vacía.
@@ -110,11 +109,10 @@ public class ContratoResource {
         List<ContratoDTO> listaDTOs = listEntity2DTO(contratoLogic.getContratos());
         return listaDTOs;
     }
-    
-    
-    
+
     /**
      * Lista de entidades a DTO.
+     *
      * @return la lista de contratos en forma DTO (json)
      */
     private List<ContratoDTO> listEntity2DTO(List<ContratoEntity> entityList) {
@@ -124,10 +122,8 @@ public class ContratoResource {
         }
         return list;
     }
-    
-    
-    
-     /**
+
+    /**
      * Actualiza un contrato con la informacion que se recibe en el cuerpo de la
      * petición y se regresa el objeto actualizado.
      */
@@ -147,7 +143,7 @@ public class ContratoResource {
         return contratoDTO;
 
     }
-    
+
     @Path("{contratoId: \\d+}/comentarios")
     public Class<ComentarioResource> getComentarioResource(@PathParam("contratoId") Long contratoId) {
         if (contratoLogic.getContrato(contratoId) == null) {
@@ -155,7 +151,13 @@ public class ContratoResource {
         }
         return ComentarioResource.class;
     }
-    
-    
 
+    @Path("{contratoId: \\d+}/pagos")
+    public Class<PagoResource> getPagoResource(@PathParam("contratoId") Long contratoId) {
+        if (contratoLogic.getContrato(contratoId) == null) {
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+        }
+        return PagoResource.class;
     }
+
+}

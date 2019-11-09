@@ -32,7 +32,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Juan Vergara
  */
 @RunWith(Arquillian.class)
-public class tarjetaCreditoPersistenceTest {
+public class TarjetaCreditoPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment(){
         return ShrinkWrap.create(JavaArchive.class)

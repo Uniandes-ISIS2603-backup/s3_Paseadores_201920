@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -59,7 +60,7 @@ public class PaseadorEntity extends BaseEntity implements Serializable
 
     //Relacion Paseadores - Zonas
     @PodamExclude
-    @OneToMany(mappedBy = "paseador")
+    @ManyToMany(mappedBy = "paseadores")
     private List<ZonaEntity> zonas = new ArrayList<ZonaEntity>();
     
     //Relacion Paseadores - Contratos

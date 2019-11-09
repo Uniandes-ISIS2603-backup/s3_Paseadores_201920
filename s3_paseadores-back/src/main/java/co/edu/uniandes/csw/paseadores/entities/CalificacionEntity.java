@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.paseadores.entities;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -26,6 +27,10 @@ public class CalificacionEntity extends BaseEntity implements Serializable{
     @ManyToOne
     private PaseadorEntity paseador;
 
+    @PodamExclude
+    @OneToOne
+    private ContratoEntity contrato;
+    
     public PaseadorEntity getPaseador() {
         return paseador;
     }
@@ -40,6 +45,14 @@ public class CalificacionEntity extends BaseEntity implements Serializable{
 
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public ContratoEntity getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(ContratoEntity contrato) {
+        this.contrato = contrato;
     }
     
     

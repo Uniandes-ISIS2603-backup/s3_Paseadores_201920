@@ -6,8 +6,11 @@
 package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -24,8 +27,12 @@ public class ZonaEntity extends BaseEntity implements Serializable{
      */
     
     @PodamExclude
-    @ManyToOne
-    private PaseadorEntity paseador;
+    @ManyToMany
+    private List<PaseadorEntity> paseadores = new ArrayList<PaseadorEntity>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "zona")
+    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
     
     public void setInfoZona(String infoZona) {
         this.infoZona = infoZona;
@@ -35,12 +42,21 @@ public class ZonaEntity extends BaseEntity implements Serializable{
         return infoZona;
     }
 
-    public PaseadorEntity getPaseador() {
-        return paseador;
+    public List<PaseadorEntity> getPaseadores() {
+        return paseadores;
     }
 
-    public void setPaseador(PaseadorEntity paseador) {
-        this.paseador = paseador;
+    public void setPaseadores(List<PaseadorEntity> paseadores) {
+        this.paseadores = paseadores;
     }
-    
+
+    public List<ContratoEntity> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(List<ContratoEntity> contratos) {
+        this.contratos = contratos;
+    }
+
+   
 }

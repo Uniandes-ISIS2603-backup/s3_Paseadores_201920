@@ -5,8 +5,9 @@
  */
 package co.edu.uniandes.csw.paseadores.test.persistence;
 
-
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.persistence.ComentarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,34 +32,40 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class ComentarioPersistenceTest {
-    
-        @Deployment
+
+    @Deployment
     public static JavaArchive createDeployment() {
-      return ShrinkWrap.create(JavaArchive.class)
-             .addPackage(ComentarioEntity.class.getPackage())
-              .addPackage(ComentarioPersistence.class.getPackage())
-              .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-              .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(ComentarioEntity.class.getPackage())
+                .addPackage(ComentarioPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     @Inject
     private ComentarioPersistence cp;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
-     @Inject
+
+    @Inject
     UserTransaction utx;
-   
-     private List<ComentarioEntity> data = new ArrayList<>();
-     
-     
-     
-      /**
+
+    private List<ComentarioEntity> data = new ArrayList<>();
+
+    private List<ContratoEntity> contratos = new ArrayList<>();
+
+    private PaseadorEntity paseadorTest;
+
+    private ContratoEntity contratoTest;
+
+    /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from ComentarioEntity").executeUpdate();
+        em.createQuery("delete from ContratoEntity").executeUpdate();
+        em.createQuery("delete from PaseadorEntity").executeUpdate();
     }
 
     /**
@@ -67,15 +74,26 @@ public class ComentarioPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
+        paseadorTest = factory.manufacturePojo(PaseadorEntity.class);
+        em.persist(paseadorTest);
+        contratoTest = factory.manufacturePojo(ContratoEntity.class);
+        contratoTest.setPaseador(paseadorTest);
+        em.persist(contratoTest);
+        
         for (int i = 0; i < 3; i++) {
+            ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
             ComentarioEntity entity = factory.manufacturePojo(ComentarioEntity.class);
-
+            entity.setPaseador(paseadorTest);
+            entity.setContrato(contrato);
+            contrato.setPaseador(paseadorTest);
+            em.persist(contrato);
             em.persist(entity);
             data.add(entity);
+            contratos.add(contrato);
         }
     }
-     
-         /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -95,23 +113,20 @@ public class ComentarioPersistenceTest {
             }
         }
     }
-   
+
     @Test
     public void createTest() {
-        //Falta crear contrato
-        
         PodamFactory factory = new PodamFactoryImpl();
         ComentarioEntity comentario = factory.manufacturePojo(ComentarioEntity.class);
+        comentario.setPaseador(paseadorTest);
+        comentario.setContrato(contratoTest);
         ComentarioEntity result = cp.create(comentario);
         Assert.assertNotNull(result);
-        
-        ComentarioEntity entity = 
-           em.find(ComentarioEntity.class, result.getId());
-        Assert.assertEquals(comentario.getName(), entity.getName());
-        
+
+        ComentarioEntity entity = em.find(ComentarioEntity.class, result.getId());
+        Assert.assertEquals(comentario.getInfoComentario(), entity.getInfoComentario());
     }
-    
-    
+
     @Test
     public void findComentariosTest() {
         List<ComentarioEntity> list = cp.findAll();
@@ -126,23 +141,31 @@ public class ComentarioPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
-    public void getComentarioTest() {
+    public void getComentarioPorPaseadorTest() {
         ComentarioEntity entity = data.get(0);
-        ComentarioEntity newEntity = cp.find(entity.getId());
+        ComentarioEntity newEntity = cp.find(paseadorTest.getId(), entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getName(), newEntity.getName());
-        
+        Assert.assertEquals(entity.getInfoComentario(), newEntity.getInfoComentario());
     }
-    
-    
-     @Test
+
+    @Test
+    public void getAllCalificacionPorPaseadorTest() {
+        List<ComentarioEntity> list = cp.findAllPorPaseador(paseadorTest.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (ComentarioEntity c : list) {
+            Assert.assertEquals(c.getPaseador().getId(), paseadorTest.getId());
+        }
+    }
+
+    @Test
     public void updateComentarioTest() {
         ComentarioEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         ComentarioEntity newEntity = factory.manufacturePojo(ComentarioEntity.class);
-
+        newEntity.setContrato(entity.getContrato());
+        newEntity.setPaseador(paseadorTest);
         newEntity.setId(entity.getId());
 
         cp.update(newEntity);
@@ -151,7 +174,7 @@ public class ComentarioPersistenceTest {
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
-    
+
     @Test
     public void deleteComentarioTest() {
         ComentarioEntity entity = data.get(0);
@@ -159,5 +182,5 @@ public class ComentarioPersistenceTest {
         ComentarioEntity deleted = em.find(ComentarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
 }

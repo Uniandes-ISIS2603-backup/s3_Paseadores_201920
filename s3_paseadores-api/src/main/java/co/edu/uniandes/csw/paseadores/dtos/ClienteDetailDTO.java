@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
+import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
     /**
      * Formas de pago del cliente
      */
-//    private List<FormaPagoDTO> formasPago;
+    private List<FormaPagoDTO> formasPago;
     
     //===================================================
     // Constructores DTO y Entidad
@@ -72,11 +73,19 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
                 mascotas.add(new MascotaDTO((mascota)));
             }
         }
+        List<FormaPagoEntity> formasPagoEntity = cliente.getFormasPago();
+        if( formasPagoEntity != null ){
+            formasPago = new ArrayList<>();
+            for( FormaPagoEntity formaPago : formasPagoEntity ){
+                formasPago.add(new FormaPagoDTO((formaPago)));
+            }
+        }
     }
     
     /**
      * Método para transformar el DTO en una entidad.
      * 
+     * @return 
      * @return. La entidad del cliente.
      */
     public ClienteEntity toEntity(){
@@ -94,6 +103,13 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
                 mascotasEntity.add(mascota.toEntity());
             }
             cliente.setMascotas(mascotasEntity);
+        }
+        if( formasPago != null ){
+            List<FormaPagoEntity> formasPagoEntity = new ArrayList<>();
+            for( FormaPagoDTO formaPago : formasPago ){
+                formasPagoEntity.add(formaPago.toEntity());
+            }
+            cliente.setFormasPago(formasPagoEntity);
         }
         return cliente;
     }
@@ -125,9 +141,9 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
      * 
      * @return Formas de pago del cliente
      */
-//    public List<FormaPagoDTO> getFormasPago(){
-//        return formasPago;
-//    }
+    public List<FormaPagoDTO> getFormasPago(){
+        return formasPago;
+    }
     
     //===================================================
     // SETTERS
@@ -145,7 +161,7 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
     /**
      * Modifica las formas de pago del cliente
      * 
-     * @param formasPago Lista de formas de pago
+     * @param mascotas
      */
     public void setMascotas(List<MascotaDTO> mascotas) {
         this.mascotas = mascotas;
@@ -156,9 +172,9 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
      * 
      * @param formasPago Lista de formas de pago
      */
-//    public void setFormasPago(List<FormaPagoDTO> formasPago) {
-//        this.formasPago = formasPago;
-//    }
+    public void setFormasPago(List<FormaPagoDTO> formasPago) {
+        this.formasPago = formasPago;
+    }
     
     
     

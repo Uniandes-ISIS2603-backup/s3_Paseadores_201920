@@ -29,8 +29,6 @@ public class ContratoDTO implements Serializable {
 
     private Boolean satisfactorio;
 
-    private String name;
-
     private Boolean finalizado;
 
     private PaseadorDTO paseador;
@@ -64,7 +62,6 @@ public class ContratoDTO implements Serializable {
     public ContratoDTO(ContratoEntity contratoEntity) {
         if (contratoEntity != null) {
             this.valorServicio = contratoEntity.getValorServicio();
-            this.name = contratoEntity.getName();
             this.satisfactorio = contratoEntity.getSatisfactorio();
             this.finalizado = contratoEntity.getFinalizado();
             this.id = contratoEntity.getId();
@@ -80,8 +77,8 @@ public class ContratoDTO implements Serializable {
                 this.cliente = null;
             }
 
-            if (contratoEntity.getHorarios() != null) {
-                this.franja = new FranjaHorariaDTO(contratoEntity.getHorarios());
+            if (contratoEntity.getFranja() != null) {
+                this.franja = new FranjaHorariaDTO(contratoEntity.getFranja());
             } else {
                 this.franja = null;
             }
@@ -122,7 +119,6 @@ public class ContratoDTO implements Serializable {
     public ContratoEntity toEntity() {
         ContratoEntity contratoEntity = new ContratoEntity();
         contratoEntity.setValorServicio(this.getValorServicio());
-        contratoEntity.setName(this.getName());
         contratoEntity.setSatisfactorio(this.satisfactorio);
         contratoEntity.setFinalizado(this.finalizado);
         contratoEntity.setId(this.id);
@@ -136,7 +132,7 @@ public class ContratoDTO implements Serializable {
         }
 
         if (this.franja != null) {
-            contratoEntity.setHorarios(this.franja.toEntity());
+            contratoEntity.setFranja(this.franja.toEntity());
         }
 
         if (this.zona != null) {
@@ -159,19 +155,6 @@ public class ContratoDTO implements Serializable {
     }
 
     //Metodos
-    //Mirar si se deja o elimina
-    public String getName() {
-
-        return name;
-
-    }
-
-    public void setName(String pName) {
-
-        name = pName;
-
-    }
-
     public Long getId() {
 
         return id;

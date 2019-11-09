@@ -6,8 +6,11 @@
 package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -18,9 +21,14 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class FormaPagoEntity extends BaseEntity implements Serializable{
     
-    @ManyToOne
+    
     @PodamExclude
+    @ManyToOne
     private ClienteEntity cliente;
+    
+    @PodamExclude
+    @OneToMany(mappedBy="formaPago")
+    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
     
     /**
      * Capacidad de pago del usuario.
@@ -47,6 +55,14 @@ public class FormaPagoEntity extends BaseEntity implements Serializable{
 
     public void setCliente(ClienteEntity cliente) {
         this.cliente = cliente;
+    }
+
+    public List<PagoEntity> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<PagoEntity> pagos) {
+        this.pagos = pagos;
     }
     
     

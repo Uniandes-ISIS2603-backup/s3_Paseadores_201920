@@ -31,7 +31,6 @@ import javax.ws.rs.core.MediaType;
  * @author Nicolas Potes Garcia
  * @version 1.0
  */
-@Path("/comentarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -47,8 +46,10 @@ public class ComentarioResource {
      * base de datos.
      *
      * @param comentario {@link ComentarioDTO} - EL comentario que se desea guardar.
+     * @param contratoId
      * @return JSON {@link ComentarioDTO} - El comentario guardado con el atributo id
      * autogenerado.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
      @POST
     public ComentarioDTO createComentario(ComentarioDTO comentario,@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
@@ -62,20 +63,21 @@ public class ComentarioResource {
      *
      * @param comentarioId Identificador del comentario que se desea borrar. Este debe
      * ser una cadena de dígitos.
-     * @param contratoId Identificador del contrato que tiene asociado el comentario.
+     * @param paseadoresId
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      *
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el comentario a borrar.
      */
     @DELETE
     @Path("{comentarioId: \\d+}")
-    public void deleteComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
+    public void deleteComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
     	
-        if (comentarioLogic.getComentario(comentarioId, contratoId) == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + "/comentarios/" + comentarioId + " no existe.", 404);
+        if (comentarioLogic.getComentario(comentarioId, paseadoresId) == null) {
+            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no existe.", 404);
         }
         
-        comentarioLogic.deleteComentario(comentarioId, contratoId);
+        comentarioLogic.deleteComentario(comentarioId, paseadoresId);
         
     }
     
@@ -83,17 +85,20 @@ public class ComentarioResource {
      * Busca y devuelve el comentario con el ID recibido en la URL, relativa a un
      * paseador.
      *
+     * @param comentarioId
+     * @param paseadoresId
      * @return {@link ComentarioDTO} - El comentario asociado a un paseador y contrato.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el comentario.
      */
     @GET
     @Path("{comentarioId: \\d+}")
-    public ComentarioDTO getComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
+    public ComentarioDTO getComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
     	
-        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, contratoId);
+        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, paseadoresId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no existe.", 404);
         }
         ComentarioDTO comentarioDTO = new ComentarioDTO(entity);
         return comentarioDTO;
@@ -110,7 +115,7 @@ public class ComentarioResource {
     @GET
     public List<ComentarioDTO> getComentarios(@PathParam("paseadorId") Long paseadorId) {
 
-        List<ComentarioDTO> listaDTOs = listEntity2DTO(comentarioLogic.getComentarios(paseadorId));
+        List<ComentarioDTO> listaDTOs = listEntity2DTO(comentarioLogic.getComentariosPorPaseador(paseadorId));
         return listaDTOs;
     }
     
@@ -134,14 +139,14 @@ public class ComentarioResource {
      */
     @PUT
     @Path("{comentarioId: \\d+}")
-    public ComentarioDTO updateComentario(@PathParam("contratoId") Long contratoId, @PathParam("comentarioId") Long comentarioId, ComentarioDTO comentario) throws BusinessLogicException {
+    public ComentarioDTO updateComentario(@PathParam("paseadoresId") Long paseadoresId, @PathParam("comentarioId") Long comentarioId, ComentarioDTO comentario) throws BusinessLogicException {
 
-        if (comentarioId.equals(comentario.getId())) {
+        if (!comentarioId.equals(comentario.getId())) {
             throw new BusinessLogicException("Los ids del Comentario no coinciden.");
         }
-        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, contratoId);
+        ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, paseadoresId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no existe.", 404);
 
         }
         ComentarioDTO comentarioDTO = new ComentarioDTO(comentarioLogic.updateComentario(comentarioId, comentario.toEntity()));

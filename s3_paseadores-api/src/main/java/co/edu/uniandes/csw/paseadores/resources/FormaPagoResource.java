@@ -38,7 +38,6 @@ import javax.ws.rs.core.MediaType;
  * @author Mario Hurtado
  * @version 1.0
  */
-@Path("formasPago")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -54,12 +53,15 @@ public class FormaPagoResource {
      * base de datos.
      *
      * @param formaPago {@link PagoDTO} - EL pago que se desea guardar.
+     * @param clientesId
+     * @param idCliente
      * @return JSON {@link FormaPagoDTO} - El pago guardado con el atributo id
      * autogenerado.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     @POST
-    public FormaPagoDTO createFormaPago(FormaPagoDTO formaPago) throws BusinessLogicException {
-        FormaPagoDTO formaPagoDTO = new FormaPagoDTO(formaPagoLogic.createFormaPago(formaPago.toEntity()));
+    public FormaPagoDTO createFormaPago(FormaPagoDTO formaPago, @PathParam("clientesId") Long clientesId) throws BusinessLogicException {
+        FormaPagoDTO formaPagoDTO = new FormaPagoDTO(formaPagoLogic.createFormaPago(clientesId, formaPago.toEntity()));
         return formaPagoDTO;
     }
     
@@ -68,18 +70,20 @@ public class FormaPagoResource {
      *
      * @param formaPagoId Identificador del pago que se desea borrar. Este debe
      * ser una cadena de dígitos.
+     * @param clientesId
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el pago a borrar.
      */
     @DELETE
     @Path("{formaPagoId: \\d+}")
-    public void deletePago(@PathParam("formaPagoId") Long formaPagoId) throws BusinessLogicException {
-    	
-        if (formaPagoLogic.getFormaPago(formaPagoId) == null) {
+    public void deletePago(@PathParam("formaPagoId") Long formaPagoId, @PathParam("clientesId") Long clientesId) throws BusinessLogicException 
+    {
+        if (formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId) == null) {
             throw new WebApplicationException("El recurso /formasPago/" + formaPagoId + " no existe.", 404);
         }
         
-        formaPagoLogic.deleteFormaPago(formaPagoId);
+        formaPagoLogic.deleteFormaPago(clientesId, formaPagoId);
         
     }
     
@@ -87,15 +91,18 @@ public class FormaPagoResource {
      * Busca y devuelve la forma de pago con el ID recibido en la URL, relativa a un
      * paseador.
      *
+     * @param formaPagoId
+     * @param clientesId
      * @return {@link PagoDTO} - La forma de pago asociada a varias clases.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el pago.
      */
     @GET
     @Path("{formaPagoId: \\d+}")
-    public FormaPagoDTO getFormaPago(@PathParam("formaPagoId") Long formaPagoId) throws BusinessLogicException {
+    public FormaPagoDTO getFormaPago(@PathParam("formaPagoId") Long formaPagoId, @PathParam("clientesId") Long clientesId) throws BusinessLogicException {
     	
-        FormaPagoEntity entity = formaPagoLogic.getFormaPago(formaPagoId);
+        FormaPagoEntity entity = formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/formasPago/" + formaPagoId + " no existe.", 404);
         }
@@ -139,12 +146,12 @@ public class FormaPagoResource {
      */
     @PUT
     @Path("{formaPagoId: \\d+}")
-    public FormaPagoDTO updateFormaPago(@PathParam("formaPagoId") Long formaPagoId, FormaPagoDTO formaPago) throws BusinessLogicException {
+    public FormaPagoDTO updateFormaPago(@PathParam("formaPagoId") Long formaPagoId, FormaPagoDTO formaPago, @PathParam("clientesId") Long clientesId) throws BusinessLogicException {
 
         if (formaPagoId.equals(formaPago.getId())) {
             throw new BusinessLogicException("Los Id´s de la forma de pago no coinciden.");
         }
-        FormaPagoEntity entity = formaPagoLogic.getFormaPago(formaPagoId);
+        FormaPagoEntity entity = formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/formasPago/" + formaPagoId + " no existe.", 404);
 

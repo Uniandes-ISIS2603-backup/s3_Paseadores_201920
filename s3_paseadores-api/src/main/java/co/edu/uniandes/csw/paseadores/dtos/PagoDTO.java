@@ -9,55 +9,24 @@ import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 
 /**
  * Clase que modela el DTO de Pago
+ *
  * @author Mario Hurtado
  */
- public class PagoDTO {
+public class PagoDTO {
 
     //Atributos
-    private String idUsuario;
-    private String idPaseador;
     private double valorServicio;
     private boolean pagoRealizado;
     private Long id;
-    
+
     //Constructor
     public PagoDTO(PagoEntity pago) {
-       this.idUsuario = pago.getIdUsuario();
-       this.idPaseador = pago.getIdPaseador();
-       this.pagoRealizado = pago.isPagoRealizado();
-       this.valorServicio = pago.getValorServicio();
-       this.id = pago.getId();
+        this.pagoRealizado = pago.getPagoRealizado();
+        this.valorServicio = pago.getValorServicio();
+        this.id = pago.getId();
     }
 
     //Métodos
-    /**
-     * @return the idUsuario
-     */
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    /**
-     * @param idUsuario the idUsuario to set
-     */
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    /**
-     * @return the idPaseador
-     */
-    public String getIdPaseador() {
-        return idPaseador;
-    }
-
-    /**
-     * @param idPaseador the idPaseador to set
-     */
-    public void setIdPaseador(String idPaseador) {
-        this.idPaseador = idPaseador;
-    }
-
     /**
      * @return the valorServicio
      */
@@ -99,11 +68,9 @@ import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
     public void setId(Long id) {
         this.id = id;
     }
-    
-     public PagoEntity toEntity() {
+
+    public PagoEntity toEntity() {
         PagoEntity entity = new PagoEntity();
-        entity.setIdPaseador(this.getIdPaseador());
-        entity.setIdUsuario(this.getIdUsuario());
         entity.setPagoRealizado(this.isPagoRealizado());
         entity.setValorServicio(this.getValorServicio());
         entity.setId(this.getId());

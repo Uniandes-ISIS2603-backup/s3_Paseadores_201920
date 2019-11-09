@@ -53,7 +53,7 @@ public class ClienteResource {
     
     @GET
     @Path("{clientesId: \\d+}")
-    public ClienteDetailDTO getCliente(@PathParam("clientesId") Long clientesId) 
+    public ClienteDetailDTO getCliente(@PathParam("clientesId") Long clientesId) throws BusinessLogicException 
     {
         ClienteEntity entity = clienteLogic.getCliente(clientesId);
         if (entity == null) {
@@ -106,7 +106,7 @@ public class ClienteResource {
      * @return El servicio de contratos para ese paseador en particular.
      */
     @Path("{clientesId: \\d+}/mascotas")
-    public Class<MascotaResource> getMascotaResource(@PathParam("clientesId") Long clientesId) 
+    public Class<MascotaResource> getMascotaResource(@PathParam("clientesId") Long clientesId) throws BusinessLogicException 
     {
         if (clienteLogic.getCliente(clientesId) == null) 
         {

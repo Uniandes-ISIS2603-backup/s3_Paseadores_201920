@@ -19,8 +19,8 @@ import javax.persistence.TypedQuery;
  * @author Juan Vergara
  */
 @Stateless
-public class ZonaPersistence {
-    
+public class ZonaPersistence 
+{ 
     @PersistenceContext (unitName = "paseadoresPU")
     protected EntityManager em;
     

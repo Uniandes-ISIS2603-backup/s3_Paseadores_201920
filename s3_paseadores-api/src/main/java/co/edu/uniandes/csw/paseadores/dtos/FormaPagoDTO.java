@@ -14,33 +14,15 @@ import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
 public class FormaPagoDTO {
     
     //Atributos 
-    private ClienteDTO cliente;
     private double capacidadPago;
     private Long id;
     
-    public FormaPagoDTO(FormaPagoEntity formaPago){
-        this.capacidadPago = formaPago.getCapacidadPago();
-        if (formaPago.getCliente()!= null) {
-				this.cliente = new ClienteDTO(formaPago.getCliente());
-			} else {
-				this.cliente = null;
-			}
-        
-        this.id = formaPago.getId();
-    }
-
-    /**
-     * @return the cliente
-     */
-    public ClienteDTO getCliente() {
-        return cliente;
-    }
-
-    /**
-     * @param cliente the cliente to set
-     */
-    public void setCliente(ClienteDTO cliente) {
-        this.cliente = cliente;
+    public FormaPagoDTO(FormaPagoEntity formaPago)
+    {
+        if( formaPago != null ){
+                this.id = formaPago.getId();
+                this.capacidadPago = formaPago.getCapacidadPago();
+        }
     }
 
     /**
@@ -71,12 +53,10 @@ public class FormaPagoDTO {
         this.id = id;
     }
     
-    public FormaPagoEntity toEntity(){
+    public FormaPagoEntity toEntity()
+    {
         FormaPagoEntity entity = new FormaPagoEntity();
         entity.setCapacidadPago(this.capacidadPago);
-        if (this.cliente != null) {
-			entity.setCliente(this.cliente.toEntity());
-		}
         entity.setId(this.id);
         return entity;
     }

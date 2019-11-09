@@ -4,97 +4,99 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.paseadores.ejb;
- 
 
+import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
 import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
-import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.paseadores.persistence.ClientePersistence;
 import co.edu.uniandes.csw.paseadores.persistence.FormaPagoPersistence;
-import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
  * @author Mario Hurtado
  */
-
 @Stateless
 public class FormaPagoLogic {
-    
+
     @Inject
     private FormaPagoPersistence persistence;
-    
-    public FormaPagoEntity createFormaPago (FormaPagoEntity formaPago) throws BusinessLogicException{
-        
-        if (formaPago.getCapacidadPago()== 0){
-            throw new BusinessLogicException ("La capacidad debe ser mayor a 0");
+
+    @Inject
+    private ClientePersistence clientePersistence;
+
+    public FormaPagoEntity createFormaPago(Long idCliente, FormaPagoEntity formaPago) throws BusinessLogicException {
+
+        ClienteEntity cliente = clientePersistence.find(idCliente);
+        if (cliente == null) {
+            throw new BusinessLogicException("El cliente buscado no existe");
+        }
+        if (formaPago.getCapacidadPago() <= 0) {
+            throw new BusinessLogicException("La capacidad debe ser mayor a 0");
+        }
+        formaPago.setCliente(cliente);
+        return persistence.create(formaPago);
     }
-        formaPago = persistence.create(formaPago);
-        return formaPago;
+
+    /**
+     * Obtiene los datos de una instancia de FormaPago a partir de su id.
+     *
+     * @param idCliente
+     * @param idFormaPago
+     * @return Instancia de FormaPagoEntity con los datos consultados.
+     */
+    public FormaPagoEntity getFormaPagoPorCliente(Long idCliente, Long idFormaPago) {
+        return persistence.find(idCliente, idFormaPago);
     }
-    
-         /**
-	 * Obtiene los datos de una instancia de FormaPago a partir de su id.
-	 *
-	 * @param formaPagoId Identificador de la instancia a consultar
-	 * @return Instancia de FormaPagoEntity con los datos consultados.
-	 */
-    public FormaPagoEntity getFormaPago(Long formaPagoId) 
-	{
 
-		FormaPagoEntity formaPagoEntity = persistence.find(formaPagoId);
+    /**
+     * Obtiene la lista de los registros de las formas de Pago.
+     *
+     * @return Colección de objetos de FomraPagoEntity.
+     */
+    public List<FormaPagoEntity> getFormasPago() {
+        List<FormaPagoEntity> lista = persistence.findAll();
+        return lista;
+    }
 
-		return formaPagoEntity;
-	}
-    
-    
-     /**
-	 * Obtiene la lista de los registros de las formas de Pago.
-	 *
-	 * @return Colección de objetos de FomraPagoEntity.
-	 */
-	public List<FormaPagoEntity> getFormasPago() {
+    /**
+     * Actualiza la información de una instancia de FormaPago.
+     *
+     * @param idCliente
+     * @param formaPago
+     * @return Instancia de FormaPagoEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
+    public FormaPagoEntity updateFormaPago(Long idCliente, FormaPagoEntity formaPago) throws BusinessLogicException {
+        ClienteEntity cliente = clientePersistence.find(idCliente);
+        if (cliente == null) {
+            throw new BusinessLogicException("El cliente buscado no existe");
+        }
+        if (formaPago.getCapacidadPago() <= 0) {
+            throw new BusinessLogicException("La capacidad debe ser mayor a 0");
+        }
+        formaPago.setCliente(cliente);
+        FormaPagoEntity nuevaFormaEntidad = persistence.update(formaPago);
 
-		List<FormaPagoEntity> lista = persistence.findAll();
+        return nuevaFormaEntidad;
+    }
 
-		return lista;
-	}
-        
-        
-          /**
-	 * Actualiza la información de una instancia de FormaPago.
-	 *
-	 * @param formaPagoId Identificador de la instancia a actualizar
-	 * @param formaPagoEntity Instancia de FormaPagoEntity con los nuevos datos.
-	 * @return Instancia de FormaPagoEntity con los datos actualizados.
-	 */
-	public FormaPagoEntity updateFormaPago(Long formaPagoId, FormaPagoEntity formaPagoEntity) throws BusinessLogicException
-	{
-		if(formaPagoEntity.getCliente() == null || NumberUtils.isCreatable(formaPagoEntity.getCliente().toString()))
-		{
-			throw new BusinessLogicException("El cliente es nulo o tiene un formato incorrecto");
-		}
-		
-		FormaPagoEntity nuevaFormaEntidad = persistence.update(formaPagoEntity);
+    /**
+     * Elimina una instancia FormaPago de la base de datos.
+     *
+     * @param idCliente
+     * @param formaPagoId Identificador de la instancia a eliminar.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     *
+     */
+    public void deleteFormaPago(Long idCliente, Long formaPagoId) throws BusinessLogicException {
+        FormaPagoEntity formaPagoAntigua = getFormaPagoPorCliente(idCliente, formaPagoId);
+        if (formaPagoAntigua == null) {
+            throw new BusinessLogicException("El cliente " + idCliente + " no tiene una forma de pago " + formaPagoId);
+        }
+        persistence.delete(formaPagoId);
 
-		return nuevaFormaEntidad;
-	}
-        
-        
-        
-         /**
-	 * Elimina una instancia FormaPago de la base de datos.
-	 *
-	 * @param formaPagoId Identificador de la instancia a eliminar.
-	 * 
-	 */
-	public void deleteFormaPago(Long formaPagoId) throws BusinessLogicException 
-	{
-
-		persistence.delete(formaPagoId);
-
-	}
+    }
 }

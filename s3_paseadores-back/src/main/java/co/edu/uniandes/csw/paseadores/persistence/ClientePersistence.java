@@ -18,8 +18,8 @@ import javax.persistence.TypedQuery;
  * @author Santiago Bolaños 
  */
 @Stateless
-public class ClientePersistence {
-    
+public class ClientePersistence 
+{
     @PersistenceContext( unitName = "paseadoresPU")
     protected EntityManager em;
     
@@ -29,7 +29,8 @@ public class ClientePersistence {
      * @param cliente. objeto cliente que se creará en la base de datos.
      * @return la entidad cliente creada con un id dado por la base de datos.
      */
-    public ClienteEntity create ( ClienteEntity cliente ){
+    public ClienteEntity create ( ClienteEntity cliente )
+    {
         em.persist(cliente);
         return cliente;
     }
@@ -41,7 +42,8 @@ public class ClientePersistence {
      * "select u from ClienteEntity u" es como un "select * from ClienteEntity;" -
      * "SELECT * FROM table_name" en SQL
      */
-    public List<ClienteEntity> findAll(){
+    public List<ClienteEntity> findAll()
+    {
         TypedQuery query = em.createQuery("Select u from ClienteEntity u",ClienteEntity.class);
         return query.getResultList();
     }
@@ -52,7 +54,8 @@ public class ClientePersistence {
      * @param clienteId. Id del cliente
      * @return Cliente buscado.
      */
-    public ClienteEntity find( Long clienteId ){
+    public ClienteEntity find( Long clienteId )
+    {
         return em.find(ClienteEntity.class, clienteId);
     }
     
@@ -62,7 +65,8 @@ public class ClientePersistence {
      * @param cliente La entidad del cliente con los nuevos datos.l
      * @return Cliente actualizado.
      */
-    public ClienteEntity update(ClienteEntity cliente){
+    public ClienteEntity update(ClienteEntity cliente)
+    {
         return em.merge(cliente);
     }
     
@@ -71,7 +75,8 @@ public class ClientePersistence {
      * 
      * @param clienteId id del cliente a eliminar.
      */
-    public void delete( Long clienteId){
+    public void delete( Long clienteId)
+    {
         ClienteEntity cliente = em.find(ClienteEntity.class , clienteId);
         em.remove(cliente);
     }

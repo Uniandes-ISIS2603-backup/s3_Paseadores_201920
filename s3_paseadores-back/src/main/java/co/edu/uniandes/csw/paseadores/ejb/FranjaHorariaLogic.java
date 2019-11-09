@@ -37,7 +37,8 @@ public class FranjaHorariaLogic {
      * @return Objeto ClienteEntity creado y con su Id.
      * @throws BusinessLogicException Si alguno de los parámetros es inválido.
      */
-    public FranjaHorariaEntity createFranjaHoraria( Long paseadorId , FranjaHorariaEntity franja ) throws BusinessLogicException {
+    public FranjaHorariaEntity createFranjaHoraria( Long paseadorId , FranjaHorariaEntity franja ) throws BusinessLogicException 
+    {
         if(paseadorId == null ){
             throw new BusinessLogicException("Debe enviarse un Id de paseador válido.");
         }
@@ -75,6 +76,7 @@ public class FranjaHorariaLogic {
     /**
      * Busca ua franja por su Id
      * 
+     * @param paseadorId
      * @param franjaId El Id de la franja a buscar.
      * @return FranjaHoraria buscada. null si no lo encuentra.
      */
@@ -85,7 +87,7 @@ public class FranjaHorariaLogic {
     /**
      * Actaliza la informaión de una franja por su Id.
      * 
-     * @param franjaId. Id de la franja a actualizar.
+     * @param paseadorId
      * @param franja. Información de la franja actualizada.
      * @return La entidad del cliente actualizada.
      * @throws BusinessLogicException 

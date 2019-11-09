@@ -5,11 +5,14 @@
  */
 package co.edu.uniandes.csw.paseadores.test.persistence;
 
-
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.persistence.CalificacionPersistence;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,32 +34,39 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class CalificacionPersistenceTest {
+
     @Deployment
-    public static JavaArchive createDeployment(){
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CalificacionEntity.class.getPackage())
                 .addPackage(CalificacionPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-              .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     @Inject
     private CalificacionPersistence cp;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
-     @Inject
+
+    @Inject
     UserTransaction utx;
-   
-     private List<CalificacionEntity> data = new ArrayList<>();
-     
-     
-     
-      /**
+
+    private List<CalificacionEntity> data = new ArrayList<>();
+
+    private List<ContratoEntity> contratos = new ArrayList<>();
+
+    private PaseadorEntity paseadorTest;
+    
+    private ContratoEntity contratoTest;
+
+    /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from CalificacionEntity").executeUpdate();
+        em.createQuery("delete from ContratoEntity").executeUpdate();
+        em.createQuery("delete from PaseadorEntity").executeUpdate();
     }
 
     /**
@@ -65,15 +75,26 @@ public class CalificacionPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) {
-            CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
+        paseadorTest = factory.manufacturePojo(PaseadorEntity.class);
+        em.persist(paseadorTest);
+        contratoTest = factory.manufacturePojo(ContratoEntity.class);
+        contratoTest.setPaseador(paseadorTest);
+        em.persist(contratoTest);
 
+        for (int i = 0; i < 3; i++) {
+            ContratoEntity contrato = factory.manufacturePojo(ContratoEntity.class);
+            CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
+            entity.setPaseador(paseadorTest);
+            entity.setContrato(contrato);
+            contrato.setPaseador(paseadorTest);
+            em.persist(contrato);
             em.persist(entity);
             data.add(entity);
+            contratos.add(contrato);
         }
     }
-     
-         /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -93,23 +114,20 @@ public class CalificacionPersistenceTest {
             }
         }
     }
-   
+
     @Test
     public void createTest() {
-        //Falta crear contrato
-        
         PodamFactory factory = new PodamFactoryImpl();
         CalificacionEntity Calificacion = factory.manufacturePojo(CalificacionEntity.class);
+        Calificacion.setPaseador(paseadorTest);
+        Calificacion.setContrato(contratoTest);
         CalificacionEntity result = cp.create(Calificacion);
         Assert.assertNotNull(result);
-        
-        CalificacionEntity entity = 
-           em.find(CalificacionEntity.class, result.getId());
+
+        CalificacionEntity entity = em.find(CalificacionEntity.class, result.getId());
         Assert.assertEquals(Calificacion.getCalificacion(), entity.getCalificacion());
-        
     }
-    
-    
+
     @Test
     public void findCalificacionsTest() {
         List<CalificacionEntity> list = cp.findAll();
@@ -124,23 +142,31 @@ public class CalificacionPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
     @Test
     public void getCalificacionTest() {
         CalificacionEntity entity = data.get(0);
-        CalificacionEntity newEntity = cp.find(entity.getId());
+        CalificacionEntity newEntity = cp.findCalificacion(paseadorTest.getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getCalificacion(), newEntity.getCalificacion());
-        
     }
-    
-    
-     @Test
+
+    @Test
+    public void getAllCalificacionPorPaseadorTest() {
+        List<CalificacionEntity> list = cp.findAllPorPaseador(paseadorTest.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (CalificacionEntity c : list) {
+            Assert.assertEquals(c.getPaseador().getId(), paseadorTest.getId());
+        }
+    }
+
+    @Test
     public void updateCalificacionTest() {
-       CalificacionEntity entity = data.get(0);
+        CalificacionEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-
+        newEntity.setContrato(entity.getContrato());
+        newEntity.setPaseador(paseadorTest);
         newEntity.setId(entity.getId());
 
         cp.update(newEntity);
@@ -149,7 +175,7 @@ public class CalificacionPersistenceTest {
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
-    
+
     @Test
     public void deleteCalificacionTest() {
         CalificacionEntity entity = data.get(0);
@@ -157,5 +183,5 @@ public class CalificacionPersistenceTest {
         CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
 }

@@ -17,8 +17,8 @@ import javax.persistence.TypedQuery;
  * @author Santiago Bolaños Vega
  */
 @Stateless
-public class FranjaHorariaPersistence {
-    
+public class FranjaHorariaPersistence 
+{
     @PersistenceContext( unitName = "paseadoresPU")
     protected EntityManager em;
     
@@ -28,7 +28,8 @@ public class FranjaHorariaPersistence {
      * @param franja. objeto franja que se creará en la base de datos.
      * @return la entidad franjaHoraria creada con un id dado por la base de datos.
      */
-    public FranjaHorariaEntity create(FranjaHorariaEntity franja ){
+    public FranjaHorariaEntity create(FranjaHorariaEntity franja )
+    {
         em.persist(franja);
         return franja;
     }
@@ -42,7 +43,8 @@ public class FranjaHorariaPersistence {
      * @param franjaId El ID de la franja buscada
      * @return La franja encontrada o null
      */
-    public FranjaHorariaEntity find(Long paseadorId, Long franjaId) {
+    public FranjaHorariaEntity find(Long paseadorId, Long franjaId) 
+    {
         TypedQuery<FranjaHorariaEntity> q = em.createQuery("select p from FranjaHorariaEntity p where (p.paseador.id = :paseadorid) and (p.id = :franjaId)", FranjaHorariaEntity.class);
         q.setParameter("paseadorid", paseadorId);
         q.setParameter("franjaId", franjaId);
@@ -57,6 +59,13 @@ public class FranjaHorariaPersistence {
         }
         return franja;
     }
+    
+    public List<FranjaHorariaEntity> findAllPorPaseador(Long paseadorId) {
+        TypedQuery q = em.createQuery("select u from FranjaHorariaEntity u where (u.paseador.id = :paseadorid)", FranjaHorariaEntity.class);
+        q.setParameter("paseadorid", paseadorId);
+        return q.getResultList();
+    }
+    
     
     /**
      * Actualiza una franja horaria.

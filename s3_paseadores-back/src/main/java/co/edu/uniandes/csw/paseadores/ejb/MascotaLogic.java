@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -28,7 +29,6 @@ public class MascotaLogic
      @Inject
     private ClientePersistence clientePersistence;
     
-    private static final Logger LOGGER = Logger.getLogger(MascotaLogic.class.getName());
      /**
      * Se encarga de crear un Review en la base de datos.
      *
@@ -41,9 +41,8 @@ public class MascotaLogic
      */
     public MascotaEntity createMascota(Long clienteId, MascotaEntity mascota) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de crear mascota");
         ClienteEntity cliente;
-        if(mascota.getNombre()==null)
+        if(mascota.getNombre()==null || NumberUtils.isCreatable(mascota.getNombre()))
         {
             throw new BusinessLogicException("El nombre de la mascota es nulo");
         }
@@ -61,7 +60,6 @@ public class MascotaLogic
             mascota.setCliente(cliente);
         }
         mascota=persistence.create(mascota);
-        LOGGER.log(Level.INFO, "Termina proceso de creación de mascota");
         return mascota;
     }
     
@@ -106,10 +104,8 @@ public class MascotaLogic
      */
     public MascotaEntity updateMascota(Long idCliente, MascotaEntity mascotaEntity) throws BusinessLogicException
     {
-        
         ClienteEntity clienteEntity;
-       
-        if(mascotaEntity.getNombre()==null)
+        if(mascotaEntity.getNombre()==null || NumberUtils.isCreatable(mascotaEntity.getNombre()))
         {
             throw new BusinessLogicException("El nombre de la mascota es nulo");
         }

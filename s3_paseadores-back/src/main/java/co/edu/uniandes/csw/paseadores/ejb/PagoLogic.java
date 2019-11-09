@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.paseadores.ejb;
- 
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,134 +19,109 @@ import org.apache.commons.lang3.math.NumberUtils;
  *
  * @author Mario Hurtado
  */
-
 @Stateless
 public class PagoLogic {
-    
+
     /**
      * Inyección de la persistencia de pago
      */
     @Inject
     private PagoPersistence persistence;
-    
-    
+
+    @Inject
+    private ContratoPersistence contratoPersistence;
+
     //Métodos 
-    
     /**
      * Crea el pago a partir de una instacia de PagoEntity
+     *
+     * @param idContrato
      * @param pago El pago a crear
      * @return el pago creado
      * @throws BusinessLogicException si al validar la información hay errores
      */
-    public PagoEntity createPago (PagoEntity pago) throws BusinessLogicException{
-        
-        if (pago.getIdPaseador()== null){
-            throw new BusinessLogicException ("El id del paseador no debe ser nulo");
-    }
-        if (pago.getIdUsuario()== null){
-            throw new BusinessLogicException ("El id del usuario no debe ser nulo");
-    }
-        if (pago.getValorServicio()<= 0){
-            throw new BusinessLogicException ("El valor del servicio no es válido");
-    }
+    public PagoEntity createPago(Long idContrato, PagoEntity pago) throws BusinessLogicException {
+        if (pago.getValorServicio() <= 0) {
+            throw new BusinessLogicException("El valor del servicio no es válido");
+        }
+        if (pago.getPagoRealizado()) {
+            throw new BusinessLogicException("El pago no debe estar realizado");
+        }
+        if (pago.getFormaPago() == null) {
+            throw new BusinessLogicException("El pago debe tener una forma de pago");
+        }
+        ContratoEntity contrato = contratoPersistence.find(idContrato);
+        if (contrato.getPago() != null) {
+            throw new BusinessLogicException("El contrato ya tiene un pago asociado");
+        }
+        pago.setContrato(contrato);
         pago = persistence.create(pago);
-        return pago;   
+        return pago;
     }
-  
-    
-         /**
-	 * Obtiene los datos de una instancia de Pago a partir de su id.
-	 *
-	 * @param pagoId Identificador de la instancia a consultar
-	 * @return Instancia de PagoEntity con los datos consultados.
-	 */
-    public PagoEntity getPago(Long pagoId) 
-	{
 
-		PagoEntity pagoEntity = persistence.find(pagoId);
-
-		return pagoEntity;
-	}
-    
-    
     /**
-	 * Obtiene la lista de los registros de Pago.
-	 *
-	 * @return Colección de objetos de PagoEntity.
-	 */
-	public List<PagoEntity> getPagos() {
+     * Obtiene los datos de una instancia de Pago a partir de su id.
+     *
+     * @param idContrato
+     * @param pagoId Identificador de la instancia a consultar
+     * @return Instancia de PagoEntity con los datos consultados.
+     */
+    public PagoEntity getPago(Long idContrato, Long pagoId) {
+        PagoEntity pagoEntity = persistence.find(idContrato, pagoId);
+        return pagoEntity;
+    }
 
-		List<PagoEntity> lista = persistence.findAll();
+    /**
+     * Obtiene la lista de los registros de Pago.
+     *
+     * @return Colección de objetos de PagoEntity.
+     */
+    public List<PagoEntity> getPagos() {
 
-		return lista;
-	}
-        
-        /**
-	 * Actualiza la información de una instancia de Pago.
-	 *
-	 * @param pagoId Identificador de la instancia a actualizar
-	 * @param pagoEntity Instancia de PagoEntity con los nuevos datos.
-	 * @return Instancia de PagoEntity con los datos actualizados.
-	 */
-	public PagoEntity updatePago(Long pagoId, PagoEntity pagoEntity) throws BusinessLogicException
-	{
+        List<PagoEntity> lista = persistence.findAll();
 
-                if(pagoEntity.getIdPaseador()==null || pagoEntity.getIdPaseador().equals("") || NumberUtils.isCreatable(pagoEntity.getIdPaseador()))
-		{
-			throw new BusinessLogicException("El id del paseador es nulo o tiene un formato incorrecto");
-		}
-		
-		if(pagoEntity.getIdUsuario()==null || NumberUtils.isCreatable(pagoEntity.getIdUsuario().toString()))
-		{
-			throw new BusinessLogicException("El id del usuario es nulo o tiene un formato incorrecto");
-		}
-			
-		if(pagoEntity.getValorServicio() <= 0)
-		{
-			throw new BusinessLogicException("El valor del servicio es inválido");
-		}
-		
-		PagoEntity nuevaEntidad = persistence.update(pagoEntity);
+        return lista;
+    }
 
-		return nuevaEntidad;
-	}
-        
-        
-	public void deletePagoFinalizado(PagoEntity pago) throws BusinessLogicException {
+    /**
+     * Actualiza la información de una instancia de Pago.
+     *
+     * @param idContrato
+     * @param pagoEntity Instancia de PagoEntity con los nuevos datos.
+     * @return Instancia de PagoEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     */
+    public PagoEntity updatePago(Long idContrato, PagoEntity pagoEntity) throws BusinessLogicException {
+        if (pagoEntity.getValorServicio() <= 0) {
+            throw new BusinessLogicException("El valor del servicio no es válido");
+        }
+        if (pagoEntity.getFormaPago() == null) {
+            throw new BusinessLogicException("El pago debe tener una forma de pago");
+        }
+        ContratoEntity contrato = contratoPersistence.find(idContrato);
+        pagoEntity.setContrato(contrato);
+        PagoEntity nuevaEntidad = persistence.update(pagoEntity);
+        return nuevaEntidad;
+    }
 
+    /**
+     * Elimina una instancia de Pago de la base de datos.
+     *
+     * @param pagoId Identificador de la instancia a eliminar.
+     * @param idContrato
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
+     *
+     */
+    public void deletePago(Long pagoId , Long idContrato) throws BusinessLogicException {
+        PagoEntity pago = getPago(idContrato, pagoId);
+        if (pago==null) {
+            throw new BusinessLogicException("El pago asociado no existe");
+        }
+        if (pago.getPagoRealizado() != true) {
+            throw new BusinessLogicException("No se puede eliminar el pago porque no se ha realizado");
+        }
+        persistence.delete(pagoId);
 
-		if(!(pago.isPagoRealizado())) {
-
-			throw new BusinessLogicException("No se puede eliminar el pago porque no se ha realizado");
-
-		}
-
-		persistence.delete(pago.getId());
-	}
-        
-        
-	public void deletePagoSinFinalizar(PagoEntity pago) throws BusinessLogicException {
-		
-		if(pago.isPagoRealizado() == true) {
-			
-			throw new BusinessLogicException("No se puede eliminar el pago porque ya se realizó");
-			
-		}
-		
-		persistence.delete(pago.getId());
-	}
-        
-        /**
-	 * Elimina una instancia de Pago de la base de datos.
-	 *
-	 * @param pagoId Identificador de la instancia a eliminar.
-	 * 
-	 */
-	public void deletePago(Long pagoId) throws BusinessLogicException 
-	{
-
-		persistence.delete(pagoId);
-
-	}
+    }
 
 }

@@ -75,7 +75,8 @@ public class ClientePersistenceTest {
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
-    private void clearData() {
+    private void clearData() 
+    {
         em.createQuery("delete from ClienteEntity").executeUpdate();
     }
     

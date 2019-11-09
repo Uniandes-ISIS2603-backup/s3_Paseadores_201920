@@ -31,34 +31,34 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class FranjaHorariaPersistenceTest {
-    
+
     @Inject
     FranjaHorariaPersistence fhp;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     PaseadorEntity paseadorTest;
-    
+
     private ArrayList<FranjaHorariaEntity> data = new ArrayList<>();
-    
-    @Deployment 
-    public  static JavaArchive createDeployment(){
+
+    @Deployment
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(FranjaHorariaEntity.class.getPackage())
                 .addPackage(FranjaHorariaPersistence.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml" , "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml" , "beans.xml");
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     /**
      * Configuración inicial de la prueba.
      */
     @Before
-    public void configTest(){
+    public void configTest() {
         try {
             utx.begin();
             em.joinTransaction();
@@ -74,15 +74,15 @@ public class FranjaHorariaPersistenceTest {
             }
         }
     }
-    
-     /**
+
+    /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from FranjaHorariaEntity").executeUpdate();
         em.createQuery("delete from PaseadorEntity").executeUpdate();
     }
-    
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
@@ -98,55 +98,69 @@ public class FranjaHorariaPersistenceTest {
             data.add(entity);
         }
     }
-    
+
     /**
      * Prueba para crear una franja Horaria.
      */
     @Test
-    public void createTest(){
+    public void createTest() {
         PodamFactory factory = new PodamFactoryImpl();
         FranjaHorariaEntity franja = factory.manufacturePojo(FranjaHorariaEntity.class);
         franja.setPaseador(paseadorTest);
         FranjaHorariaEntity result = fhp.create(franja);
         Assert.assertNotNull(result);
-        
-        FranjaHorariaEntity entity = em.find( FranjaHorariaEntity.class , result.getId());
+
+        FranjaHorariaEntity entity = em.find(FranjaHorariaEntity.class, result.getId());
         Assert.assertEquals(franja.getInicio(), entity.getInicio());
     }
-      
+
     /**
      * Prueba para encontrar una franja.
      */
     @Test
-    public void findTest(){
+    public void findTest() {
         FranjaHorariaEntity entity = data.get(0);
         FranjaHorariaEntity newEntity = fhp.find(paseadorTest.getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }
-    
+
+    /**
+     * Prueba para encontrar una franja.
+     */
+    @Test
+    public void findPorPaseadorTest() {
+        List<FranjaHorariaEntity> list = fhp.findAllPorPaseador(paseadorTest.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (FranjaHorariaEntity f : list) {
+            Assert.assertEquals(f.getPaseador().getId(), paseadorTest.getId());
+        }
+    }
+
     /**
      * Prueba para actualizar una franja.
      */
     @Test
-    public void updateTest(){
+    public void updateTest() {
         FranjaHorariaEntity franja = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         FranjaHorariaEntity entity = factory.manufacturePojo(FranjaHorariaEntity.class);
         entity.setId(franja.getId());
+        entity.setPaseador(paseadorTest);
         fhp.update(entity);
-        FranjaHorariaEntity resp = em.find(FranjaHorariaEntity.class , franja.getId());
-        Assert.assertEquals(resp.getInicio(), entity.getInicio());
+        FranjaHorariaEntity resp = em.find(FranjaHorariaEntity.class, franja.getId());
+        Assert.assertEquals(resp.getId(), entity.getId());
     }
-    
+
     /**
      * Prueba para eliminar una franja.
      */
     @Test
-    public void  deleteTest(){
+    public void deleteTest() 
+    {
         FranjaHorariaEntity franja = data.get(0);
         fhp.delete(franja.getId());
         FranjaHorariaEntity deleted = em.find(FranjaHorariaEntity.class, franja.getId());
-        Assert.assertNull(deleted); 
+        Assert.assertNull(deleted);
     }
 }

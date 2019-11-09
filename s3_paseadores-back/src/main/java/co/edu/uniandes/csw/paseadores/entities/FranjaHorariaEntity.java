@@ -55,7 +55,7 @@ public class FranjaHorariaEntity extends BaseEntity implements Serializable{
     private PaseadorEntity paseador;
     
     /**
-     * Contrato asociado a la franja horaria-
+     * Contrato asociado a la franja horaria
      */
     @PodamExclude
     @OneToOne
