@@ -1,0 +1,427 @@
+{
+	"info": {
+		"_postman_id": "035a78c2-e0dc-483a-9f5d-ab6399db0db9",
+		"name": "ZonaResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crea una zona 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b0e9db3-70ea-47d5-800e-02785a2a9fa0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"id_zona_1\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"infoZona\": \"Chapinero\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una zona 2 (InfoZona vacia - Debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "741fc738-5e2c-4b4e-8b59-1f377844a396",
+						"exec": [
+							"tests[\"No se debería agregar\"] = responseCode.code === 412;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"infoZona\": \" \"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una zona 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b0e9db3-70ea-47d5-800e-02785a2a9fa0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"id_zona_2\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"infoZona\": \"La Candelaria\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las zonas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a66110de-5bf8-4644-be3b-f0baaea60202",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas?",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "localhost",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene una zona 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a16d725a-2107-4784-a5fa-fef3ec78d25a",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas/{{id_zona_1}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas",
+						"{{id_zona_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene una zona 2 (Debe fallar - la zona no existe)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae7b79e8-4fd3-4ae8-a8aa-5ec6697d40bf",
+						"exec": [
+							"tests[\"Debe fallar. La zona no existe.\"] = responseCode.code === 404;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edita una mascota 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f1d4262c-caf7-4702-a933-cf526494b9cd",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"infoZona\": \"La Candelaria\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas/{{id_zona_1}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas",
+						"{{id_zona_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edita una zona 2 (Debe fallar - Info vacia)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5ab5e538-b7e9-4681-9d6b-21967056b559",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 412;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"infoZona\": \" \"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas/{{id_zona_2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas",
+						"{{id_zona_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Elimina una zona 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "708cbab3-bc9b-4708-b640-b10c33e0471a",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 204;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas/{{id_zona_1}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas",
+						"{{id_zona_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Elimina una zona 2 (Debe falla - la zona no existe)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
