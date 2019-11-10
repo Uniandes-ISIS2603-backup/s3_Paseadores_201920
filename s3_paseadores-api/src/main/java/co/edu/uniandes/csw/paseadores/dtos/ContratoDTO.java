@@ -174,6 +174,36 @@ public class ContratoDTO implements Serializable {
 
     }
 
+    public void setPaseador(PaseadorDTO paseador) {
+        this.paseador = paseador;
+    }
+
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setFranja(FranjaHorariaDTO franja) {
+        this.franja = franja;
+    }
+
+    public void setZona(ZonaDTO zona) {
+        this.zona = zona;
+    }
+
+    public void setPago(PagoDTO pago) {
+        this.pago = pago;
+    }
+
+    public void setComentario(ComentarioDTO comentario) {
+        this.comentario = comentario;
+    }
+
+    public void setCalificacion(CalificacionDTO calificacion) {
+        this.calificacion = calificacion;
+    }
+    
+    
+
     public void setFinalizado(Boolean pFinalizado) {
 
         finalizado = pFinalizado;
@@ -240,6 +270,10 @@ public class ContratoDTO implements Serializable {
 
     }
 
+    public FranjaHorariaDTO getFranja() {
+        return franja;
+    }
+    
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

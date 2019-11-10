@@ -39,12 +39,6 @@ public class ContratoLogic {
         if (contrato.getPaseador() == null) {
             throw new BusinessLogicException("El contrato no tiene asociado un paseador");
         }
-        if (contrato.getMascotas() == null || contrato.getMascotas().isEmpty()) {
-            throw new BusinessLogicException("El contrato no dispone de mascota(s)");
-        }
-        if (contrato.getPago() == null) {
-            throw new BusinessLogicException("El contrato no tiene creado un pago y su metodo de pago");
-        }
         if (contrato.getFinalizado()) {
             throw new BusinessLogicException("El contrato no se puede crear como finalizado");
         }

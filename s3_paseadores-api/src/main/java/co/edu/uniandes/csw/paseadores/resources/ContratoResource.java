@@ -51,6 +51,7 @@ public class ContratoResource {
      */
     @POST
     public ContratoDTO createContrato(ContratoDTO contrato) throws BusinessLogicException {
+        
         ContratoDTO contratoDTO = new ContratoDTO(contratoLogic.createContrato(contrato.toEntity()));
         return contratoDTO;
     }
