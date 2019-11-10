@@ -1,47 +1,98 @@
-delete from CalificacionEntity;
-delete from ClienteEntity;
-delete from ComentarioEntity;
-delete from ContratoEntity;
-delete from FormaPagoEntity;
-delete from FranjaHorariaEntity;
-delete from MascotaEntity;
-delete from PagoEntity;
-delete from PaseadorEntity;
-delete from TarjetaCreditoEntity;
-delete from ZonaEntity;
+delete from CalificacionEntity; --listo
+delete from ClienteEntity; --listo
+delete from ComentarioEntity; --listo
+delete from ContratoEntity; --listo
+delete from FormaPagoEntity; --listo
+delete from FranjaHorariaEntity; --listo
+delete from MascotaEntity; --listo
+delete from PagoEntity; --listo
+delete from PaseadorEntity; --listo
+delete from TarjetaCreditoEntity; --listo
+delete from ZonaEntity; --listo
+delete from MascotaEntity_ContratoEntity;
+delete from ZonaEntity_PaseadorEntity;
 
-insert into ZonaEntity   (id, infoZona) values (1, 'Usaquen');
+-- Tabla Zona
+insert into ZonaEntity (id, infoZona) values (1, 'Usaquen');
 insert into ZonaEntity (id, infoZona) values (2, 'Suba');
 insert into ZonaEntity (id, infoZona) values (3, 'La Candelaria');
 insert into ZonaEntity (id, infoZona) values (4, 'Bosa');
 insert into ZonaEntity (id, infoZona) values (5, 'Soacha');
 
-/*insert into EditorialEntity (id, name) values (100,'Oveja Negra');
-insert into EditorialEntity (id, name) values (200,'Siruela');
+-- Tabla Cliente
+insert into ClienteEntity (id, contrasena, correo, infoContacto, nombre) values (1, 'contrasena', 'daniel@clientes.com', 'Daniel', 'Daniel Garcia');
+insert into ClienteEntity (id, contrasena, correo, infoContacto, nombre) values (2, 'contrasena', 'santiago@clientes.com', 'Santiago', 'Santiago Bolanos');
+insert into ClienteEntity (id, contrasena, correo, infoContacto, nombre) values (3, 'contrasena', 'nicolas@clientes.com', 'Nicolas', 'Nicolas Potes');
+insert into ClienteEntity (id, contrasena, correo, infoContacto, nombre) values (4, 'contrasena', 'mario@clientes.com', 'Mario', 'Mario Hurtado');
+insert into ClienteEntity (id, contrasena, correo, infoContacto, nombre) values (5, 'contrasena', 'juan@clientes.com', 'Juan', 'Juan Vergara');
 
-insert into BookEntity (id, name, isbn, image, description, publishDate, editorial_id) values (100, 'The Lord of the Rings', '930330149-8', 'https://images-na.ssl-images-amazon.com/images/I/516GyHY9p6L.jpg', 'Supplement R Tympanic Membrane with Synth Sub, Via Opening', '8/20/1996',100);
-insert into BookEntity (id, name, isbn, image, description, publishDate, editorial_id) values (200, 'Harry Potter and the Sorcerer´s Stone', '507119915-7', 'http://m.cdn.blog.hu/ko/kockagyar/image/harry_potter_poster/harry_potter_1.jpg', 'Occlusion of Right Femoral Artery, Percutaneous Approach', '2/19/2014',100);
-insert into BookEntity (id, name, isbn, image, description, publishDate, editorial_id) values (300, 'A Game of Thrones', '279453624-9', 'https://cdn.waterstones.com/bookjackets/large/9780/0075/9780007548231.jpg', 'Removal of Spacer from T-lum Jt, Perc Approach', '4/7/1998',100);
-insert into BookEntity (id, name, isbn, image, description, publishDate, editorial_id) values (400, 'The Winds of Winter', '744706866-7', 'http://www.darkmediaonline.com/wp-content/uploads/2013/01/WindsofWinter.jpg', 'Reposition Left Femoral Shaft, Perc Endo Approach', '10/10/1998',200);
-insert into BookEntity (id, name, isbn, image, description, publishDate, editorial_id) values (500, 'The Slow Regard of Silent Things', '260760424-9', 'http://www.patrickrothfuss.com/images/page/cover-slow-regard_277.jpg', 'Supplement Lower Artery with Autol Sub, Perc Approach', '5/9/2013',200);
-insert into BookEntity (id, name, isbn, image, description, publishDate, editorial_id) values (600, 'Harry Potter and the Philosopher´s Stone', '260760424-9', 'https://katemacdonalddotnet.files.wordpress.com/2015/11/potter-1-4.jpg', 'disse accumsan tortor quis turp Perc Approach', '5/9/2013',200);
+-- Tabla Mascota
+insert into MascotaEntity (id, infoMascota, nombre, cliente_id) values (1, 'Golden Retriever', 'Milo', 1);
+insert into MascotaEntity (id, infoMascota, nombre, cliente_id) values (2, 'Beagle', 'Tobias', 2);
+insert into MascotaEntity (id, infoMascota, nombre, cliente_id) values (3, 'Beagle', 'Lucky', 3);
+insert into MascotaEntity (id, infoMascota, nombre, cliente_id) values (4, 'Bernes de la Montaña', 'Magnus', 4);
+insert into MascotaEntity (id, infoMascota, nombre, cliente_id) values (5, 'Pastor Belga', 'Lemmy', 4);
 
-insert into AuthorEntity (id, name,  image, birthDate, description) values (100,'J.K. Rowling', 'http://cdn1us.denofgeek.com/sites/denofgeekus/files/2016/11/rowling.jpg', '4/7/1965','Joanne  Rowling, OBE, FRSL, pen names J. K. Rowling and Robert Galbraith, is a British novelist, screenwriter and film producer best known as the author of the Harry Potter fantasy series.');
-insert into AuthorEntity (id, name,  image, birthDate, description) values (200, 'J. R. R. Tolkien', 'http://www.biografiasyvidas.com/biografia/t/fotos/tolkien.jpg', '01/03/1892','Joanne  Rowling, OBE, FRSL, pen names J. K. Rowling and Robert Galbraith, is a British novelist, screenwriter and film producer best known as the author of the Harry Potter fantasy series.');
-insert into AuthorEntity (id, name,  image, birthDate, description) values (300, 'George R. R. Martin','http://static1.businessinsider.com/image/54d3c832eab8eabe028b4569-960/george-rr-martin-2011.jpg','09/20/1948', 'asA smkcxm slklkc n names J. K. Rowling and Robert Galbraith, is a British novelist');
-insert into AuthorEntity (id, name,  image, birthDate, description) values (400,'Patrick Rothfuss','http://librista.es/blog/wp-content/uploads/2014/05/patrick-rothfuss.jpg/5x10','06/06/1973','Joanne  Rowling, OBE, FRSL, pen names J. K. Rowling and Robert Galbraith, is a British novelist, screenwriter and film producer best known as the author of the Harry Potter fantasy series.');
+-- Tabla FormaPago
+insert into FormaPagoEntity (id, capacidadPago, cliente_id) values (1, 2000, 1);
+insert into FormaPagoEntity (id, capacidadPago, cliente_id) values (2, 4000, 2);
+insert into FormaPagoEntity (id, capacidadPago, cliente_id) values (3, 6000, 3);
+insert into FormaPagoEntity (id, capacidadPago, cliente_id) values (4, 8000, 4);
+insert into FormaPagoEntity (id, capacidadPago, cliente_id) values (5, 5000, 5);
 
-insert into BookEntity_AuthorEntity (books_id,authors_id ) values (100,200);
-insert into BookEntity_AuthorEntity (books_id,authors_id ) values (200,100); 
-insert into BookEntity_AuthorEntity (books_id,authors_id ) values (300,300);
-insert into BookEntity_AuthorEntity (books_id,authors_id ) values (400,300); 
-insert into BookEntity_AuthorEntity (books_id,authors_id ) values (500,400);   
-insert into BookEntity_AuthorEntity (books_id,authors_id ) values (600,100);      
+-- Tabla Paseador
+insert into PaseadorEntity (id, contrasena, correo, foto, ganancias, infoAdicional, infoContacto, nombre, precio) values (1, 'contrasena', 'daniel@paseadores.com', 'sinFoto', 0, 'Me gusta pasear perros', 'Sin Contacto' ,'Daniel Garcia', 1000);
+insert into PaseadorEntity (id, contrasena, correo, foto, ganancias, infoAdicional, infoContacto, nombre, precio) values (2, 'contrasena', 'santiago@paseadores.com', 'sinFoto', 0, 'Me gusta pasear perros', 'Sin Contacto',  'Santiago Bolanos', 2000);
+insert into PaseadorEntity (id, contrasena, correo, foto, ganancias, infoAdicional, infoContacto, nombre, precio) values (3, 'contrasena', 'nicolas@paseadores.com', 'sinFoto', 0, 'Me gusta pasear perros', 'Sin Contacto', 'Nicolas Potes', 3000);
+insert into PaseadorEntity (id, contrasena, correo, foto, ganancias, infoAdicional, infoContacto, nombre, precio) values (4, 'contrasena', 'mario@paseadores.com', 'sinFoto', 0, 'Me gusta pasear perros', 'Sin Contacto', 'Mario Hurtado', 2000);
+insert into PaseadorEntity (id, contrasena, correo, foto, ganancias, infoAdicional, infoContacto, nombre, precio) values (5, 'contrasena', 'juan@paseadores.com', 'sinFoto', 0, 'Me gusta pasear perros', 'Sin Contacto', 'Juan Vergara', 2000);
 
-insert into ReviewEntity  (id, name,  description, source, book_id) values (100,' ', 'This isnot really like other books, even its imitators, though the best of them are similarly long, variable in pace and diverse in language and location. The early part of the story was meant to be a follow-up  ', ' ', 100);
-insert into ReviewEntity  (id, name,  description, source, book_id) values (200, ' ','The trilogy is worth reading once. For readers who like fast paced action , this is not a series I would recommend. It progresses quite slowly and the descriptions are lengthy - not really my type. But if you have the patience, the plot is worth it.', ' ', 100);
-insert into ReviewEntity  (id, name,  description, source, book_id) values (300,' ','This isnt really like other books, even its imitators, though the best of them are similarly long, variable in pace and diverse in language and location. The early part of the story was meant to be a follow-up to The Hobbit, u ',' ', 200);
-insert into ReviewEntity  (id, name,  description, source, book_id) values (400,' ', 'The trilogy is worth reading once. For readers who like fast paced action , this is not a series I would recommend. It progresses quite slowly and the descriptions are lengthy - not really my type. But if you have the patience, the plot is worth it.',' ', 300);
+--Tabla FranjaHoraria
+insert into FranjaHorariaEntity (id, inicio, fin, paseador_id) values (1,'2012-11-11 16:00:00', '2012-11-11 17:00:00', 1);
+insert into FranjaHorariaEntity (id, inicio, fin, paseador_id) values (2,'2012-11-11 17:00:00', '2012-11-11 18:00:00', 2);
+insert into FranjaHorariaEntity (id, inicio, fin, paseador_id) values (3,'2012-11-11 18:00:00', '2012-11-11 19:00:00', 3);
+insert into FranjaHorariaEntity (id, inicio, fin, paseador_id) values (4,'2012-11-12 16:00:00', '2012-11-12 17:00:00', 1);
+insert into FranjaHorariaEntity (id, inicio, fin, paseador_id) values (5,'2012-11-11 12:00:00', '2012-11-11 13:00:00', 4);
+insert into FranjaHorariaEntity (id, inicio, fin, paseador_id) values (6,'2012-11-11 14:00:00', '2012-11-11 15:00:00', 5);
+
+-- Tabla Contrato
+insert into ContratoEntity (id, finalizado, satisfactorio, valorServicio, cliente_id, paseador_id, zona_id, franja_id) values (2, 1, 1, 1000, 1, 1, 1, 1);
+insert into ContratoEntity (id, finalizado, satisfactorio, valorServicio, cliente_id, paseador_id, zona_id, franja_id) values (3, 1, 1, 1000, 2, 4, 4, 3);
+insert into ContratoEntity (id, finalizado, satisfactorio, valorServicio, cliente_id, paseador_id, zona_id, franja_id) values (4, 1, 1, 1000, 3, 5, 5, 4);
+
+-- Tabla Calificacion
+insert into CalificacionEntity (id, calificacion, paseador_id, contrato_id) values (1, 4, 1, 2);
+insert into CalificacionEntity (id, calificacion, paseador_id, contrato_id) values (2, 5, 4, 3);
+insert into CalificacionEntity (id, calificacion, paseador_id, contrato_id) values (3, 1, 5, 4);
+
+-- Tabla Comentario
+insert into ComentarioEntity (id, infoComentario, name, paseador_id, contrato_id) values (1, 'Buen paseador, muy amable', 'Buen servicio', 1, 2);
+insert into ComentarioEntity (id, infoComentario, name, paseador_id, contrato_id) values (2, 'Amable', 'Bueno', 4, 3);
+insert into ComentarioEntity (id, infoComentario, name, paseador_id, contrato_id) values (3, 'Mato mi perro a patadas', 'Pesimo', 5, 4);
+
+-- Tabla Pago
+insert into PagoEntity (id, pagoRealizado, valorServicio, formaPago_id, contrato_id) values (1, 1, 2000, 1, 4);
+insert into PagoEntity (id, pagoRealizado, valorServicio, formaPago_id, contrato_id) values (2, 1, 2000, 2, 2);
+insert into PagoEntity (id, pagoRealizado, valorServicio, formaPago_id, contrato_id) values (3, 1, 2000, 3, 3);
+
+-- Tabla Mascota_Contrato
+insert into MascotaEntity_ContratoEntity (contratos_id, mascotas_id) values (4, 1);
+insert into MascotaEntity_ContratoEntity (contratos_id, mascotas_id) values (4, 2);
+insert into MascotaEntity_ContratoEntity (contratos_id, mascotas_id) values (4, 3);
+insert into MascotaEntity_ContratoEntity (contratos_id, mascotas_id) values (2, 4);
+insert into MascotaEntity_ContratoEntity (contratos_id, mascotas_id) values (2, 3);
+insert into MascotaEntity_ContratoEntity (contratos_id, mascotas_id) values (3, 5);
+
+-- Tabla Zona_Paseador
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (1, 1); 
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (1, 2); 
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (2, 3); 
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (2, 4); 
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (3, 5); 
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (4, 3); 
+insert into ZonaEntity_PaseadorEntity (zonas_id, paseadores_id) values (5, 4); 
 
 
-*/
+
+
+
