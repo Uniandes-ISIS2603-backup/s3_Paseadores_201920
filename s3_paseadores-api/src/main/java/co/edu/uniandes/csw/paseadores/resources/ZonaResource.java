@@ -29,11 +29,11 @@ import javax.ws.rs.core.MediaType;
  * @author Juan Vergara
  */
 
-@Path("zonas")
+@Path("/zonas")
 @Produces(MediaType.APPLICATION_JSON)      
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-class ZonaResource {
+public class ZonaResource {
     
     @Inject
     private ZonaLogic zonaLogic;
@@ -115,9 +115,7 @@ class ZonaResource {
     @Path("{zonaId: \\d+}")
     public ZonaDTO updateZona(@PathParam("zonaId") Long zonaId, ZonaDTO zona) throws BusinessLogicException {
 
-        if (zonaId.equals(zona.getId())) {
-            throw new BusinessLogicException("Los ids del Zona no coinciden.");
-        }
+        zona.setId(zonaId);
         ZonaEntity entity = zonaLogic.getZona(zonaId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/zonas/" + zonaId + " no existe.", 404);
