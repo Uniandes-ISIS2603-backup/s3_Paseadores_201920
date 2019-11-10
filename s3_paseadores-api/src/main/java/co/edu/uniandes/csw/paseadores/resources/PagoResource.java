@@ -81,7 +81,7 @@ public class PagoResource {
             throw new WebApplicationException("El recurso /pagos/" + pagoId + " no existe.", 404);
         }
         
-        pagoLogic.deletePago(contratoId, pagoId);
+        pagoLogic.deletePago(pagoId, contratoId);
         
     }
     
@@ -149,15 +149,13 @@ public class PagoResource {
     @Path("{pagoId: \\d+}")
     public PagoDTO updatePago(@PathParam("pagoId") Long pagoId, PagoDTO pago, @PathParam("contratoId") Long contratoId) throws BusinessLogicException {
 
-        if (!pagoId.equals(pago.getId())) {
-            throw new BusinessLogicException("Los Id´s del pago no coinciden.");
-        }
+        pago.setId(pagoId);
         PagoEntity entity = pagoLogic.getPago(contratoId,pagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/pagos/" + pagoId + " no existe.", 404);
 
         }
-        PagoDTO pagoDTO = new PagoDTO(pagoLogic.updatePago(pagoId, pago.toEntity()));
+        PagoDTO pagoDTO = new PagoDTO(pagoLogic.updatePago(contratoId, pago.toEntity()));
         return pagoDTO;
 
     }

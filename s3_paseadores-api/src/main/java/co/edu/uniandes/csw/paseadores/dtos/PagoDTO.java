@@ -16,17 +16,27 @@ public class PagoDTO {
 
     //Atributos
     private double valorServicio;
+
     private boolean pagoRealizado;
+
     private Long id;
+
+    private FormaPagoDTO formaPago;
 
     //Constructor
     public PagoDTO(PagoEntity pago) {
-        this.pagoRealizado = pago.getPagoRealizado();
-        this.valorServicio = pago.getValorServicio();
-        this.id = pago.getId();
+        if (pago != null) {
+            this.pagoRealizado = pago.getPagoRealizado();
+            this.valorServicio = pago.getValorServicio();
+            this.id = pago.getId();
+            if( pago.getFormaPago() != null ){
+                this.formaPago = new FormaPagoDTO(pago.getFormaPago());
+            }
+        }
     }
-    public PagoDTO(){
-        
+
+    public PagoDTO() {
+
     }
 
     //Métodos
@@ -72,11 +82,22 @@ public class PagoDTO {
         this.id = id;
     }
 
+    public FormaPagoDTO getFormaPago() {
+        return formaPago;
+    }
+
+    public void setFormaPago(FormaPagoDTO formaPago) {
+        this.formaPago = formaPago;
+    }
+    
+    
+
     public PagoEntity toEntity() {
         PagoEntity entity = new PagoEntity();
         entity.setPagoRealizado(this.isPagoRealizado());
         entity.setValorServicio(this.getValorServicio());
         entity.setId(this.getId());
+        entity.setFormaPago(this.formaPago.toEntity());
         return entity;
     }
 

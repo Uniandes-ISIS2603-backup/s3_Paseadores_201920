@@ -34,7 +34,7 @@ public class FormaPagoLogic {
             throw new BusinessLogicException("El cliente buscado no existe");
         }
         if (formaPago.getCapacidadPago() <= 0) {
-            throw new BusinessLogicException("La capacidad debe ser mayor a 0");
+            throw new BusinessLogicException(" La capacidad debe ser mayor a 0 ");
         }
         formaPago.setCliente(cliente);
         return persistence.create(formaPago);

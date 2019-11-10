@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "7c41644d-08b5-44c7-94a1-ef3f6bfe9fba",
+		"name": "PagoResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crea un cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a920c164-4750-4538-972b-84bf3cf51b12",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_cliente_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"samuel\",\n\t\"correo\": \"correo@\",\n\t\"contrasena\": \"hola\",\n\t\"infoContacto\": \"noinfo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una forma de pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17cf9c58-bcd1-45a7-9520-0c0cedcf817f",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_formaPago_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": 20000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_p}}/formasPago",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_p}}",
+						"formasPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un paseador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fa0367b7-4827-4bf2-84bf-5801f9ac80de",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_paseador_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Santiago\",\n\t\"correo\":\"santiago@\",\n\t\"contrasena\": \"holaaa\",\n\t\"infoContacto\": \"Llama\",\n\t\"foto\": \"sinfoto\",\n\t\"precio\": 2200.0 ,\n\t\"ganancias\": 2000.0 ,\n\t\"infoAdicional\": \"sjskjsdl\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"paseadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una mascota 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d531ea6d-ed93-4602-9418-3f5f949c96b9",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_mascota1_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"KKK\",\n\t\"infoMascota\": \"beaglee\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_p}}/mascotas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_p}}",
+						"mascotas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una mascota 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "45885544-96c3-4a0f-89a7-6707172978aa",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_mascota2_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Django\",\n\t\"infoMascota\": \"beaglee\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_p}}/mascotas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_p}}",
+						"mascotas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una zona 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b0e9db3-70ea-47d5-800e-02785a2a9fa0",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_zona_1\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"infoZona\": \"Chapinero\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"zonas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una franja",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "87b94d53-aba1-4725-b21e-76a763a83b38",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"franja1\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"inicio\": \"1927-03-03T00:00:00-05:00\",\n\t\"fin\": \"1927-03-03T00:00:00-06:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_p}}/franjas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"paseadores",
+						"{{id_paseador_p}}",
+						"franjas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un contrato 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "42d6b8de-c5ae-4d40-9a65-b233dd5038c4",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_contrato_p\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 2000.0,\n\t\"satisfactorio\": false,\n\t\"finalizado\": false,\n\t\"franja\":{\n    \t\"id\": {{franja1}}\n\t\t},\n\t\"cliente\": {\n    \t\"id\": {{id_cliente_p}}\n\t\t},\n\t\"zona\": {\n    \t\"id\": {{id_zona_1}}\n\t\t},\n\t\"paseador\":{\n\t    \"id\": {{id_paseador_p}}\n\t\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un contrato 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "30cf48a5-fb87-47f8-bc88-e18c334f850e",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_contrato_p2\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 2000.0,\n\t\"satisfactorio\": false,\n\t\"finalizado\": false,\n\t\"franja\":{\n    \t\"id\": {{franja1}}\n\t\t},\n\t\"cliente\": {\n    \t\"id\": {{id_cliente_p}}\n\t\t},\n\t\"zona\": {\n    \t\"id\": {{id_zona_1}}\n\t\t},\n\t\"paseador\":{\n\t    \"id\": {{id_paseador_p}}\n\t\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un pago 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7e92685-8fde-4d31-a96b-89cc3198d64d",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"id_pago_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 2500.0,\n\t\"pagoRealizado\": false,\n\t\"formaPago\":{\n\t\t\"id\": {{id_formaPago_p}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p}}/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p}}",
+						"pagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un pago 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f85369e7-74a4-44a4-b478-3812c8c0ffa2",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"id_pago_p2\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 800.0,\n\t\"pagoRealizado\": false,\n\t\"formaPago\":{\n\t\t\"id\": {{id_formaPago_p}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p2}}/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p2}}",
+						"pagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un pago 3 (Pago hecho - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f85369e7-74a4-44a4-b478-3812c8c0ffa2",
+						"exec": [
+							"tests[\"Debe generar error\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 800.0,\n\t\"pagoRealizado\": true,\n\t\"formaPago\":{\n\t\t\"id\": {{id_formaPago_p}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p2}}/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p2}}",
+						"pagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un pago 4 (Valor negativo - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f85369e7-74a4-44a4-b478-3812c8c0ffa2",
+						"exec": [
+							"tests[\"debe generar error\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": -1100.0,\n\t\"pagoRealizado\": false,\n\t\"formaPago\":{\n\t\t\"id\": {{id_formaPago_p}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p2}}/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p2}}",
+						"pagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los pagos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2b52873b-a3f0-4f25-9464-739a5aea9a36",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p}}/pagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p}}",
+						"pagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener pago 1 (Contrato 1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a46edc29-5e68-44a5-920b-34bf0dbad1df",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p}}/pagos/{{id_pago_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p}}",
+						"pagos",
+						"{{id_pago_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener pago 2 (Contrato 2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "97833147-5af9-4388-81b2-31c0bcb56d6d",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p2}}/pagos/{{id_pago_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p2}}",
+						"pagos",
+						"{{id_pago_p2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener pago 3 (No existe - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "97833147-5af9-4388-81b2-31c0bcb56d6d",
+						"exec": [
+							"tests[\"Debe tener error\"] = responseCode.code ===404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p2}}/pagos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p2}}",
+						"pagos",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualiza un pago 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67135aa3-a2a9-4cf7-bdff-dce218258d50",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 4000.0,\n\t\"pagoRealizado\": true,\n\t\"formaPago\":{\n\t\t\"id\": {{id_formaPago_p}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p}}/pagos/{{id_pago_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p}}",
+						"pagos",
+						"{{id_pago_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualiza un pago 2 (No existe - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67135aa3-a2a9-4cf7-bdff-dce218258d50",
+						"exec": [
+							"tests[\"debe generar error\"] = responseCode.code ===404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 4000.0,\n\t\"pagoRealizado\": true,\n\t\"formaPago\":{\n\t\t\"id\": {{id_formaPago_p}}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p2}}/pagos/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p2}}",
+						"pagos",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Elimina un pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9e90f839-f6f0-4ea9-b8b7-75679b8b3b56",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code ===204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p}}/pagos/{{id_pago_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos",
+						"{{id_contrato_p}}",
+						"pagos",
+						"{{id_pago_p}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

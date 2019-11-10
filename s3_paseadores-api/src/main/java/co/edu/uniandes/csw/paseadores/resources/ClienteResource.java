@@ -118,4 +118,14 @@ public class ClienteResource {
         }
         return MascotaResource.class;
     }
+    
+    @Path("{clientesId: \\d+}/formasPago")
+    public Class<FormaPagoResource> getFormaPagoResource(@PathParam("clientesId") Long clientesId) throws BusinessLogicException 
+    {
+        if (clienteLogic.getCliente(clientesId) == null) 
+        {
+            throw new WebApplicationException("El recurso /paseadores/" + clientesId + " no existe.", 404);
+        }
+        return FormaPagoResource.class;
+    }
 }
