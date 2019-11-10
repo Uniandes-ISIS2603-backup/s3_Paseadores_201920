@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.paseadores.resources;
 
 import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
+import co.edu.uniandes.csw.paseadores.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
@@ -127,10 +128,14 @@ public class ContratoResource {
     /**
      * Actualiza un contrato con la informacion que se recibe en el cuerpo de la
      * petición y se regresa el objeto actualizado.
+     * @param contratoId
+     * @param contrato
+     * @return 
+     * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException 
      */
     @PUT
     @Path("{contratoId: \\d+}")
-    public ContratoDTO updateContrato(@PathParam("contratoId") Long contratoId, ContratoDTO contrato) throws BusinessLogicException {
+    public ContratoDetailDTO updateContrato(@PathParam("contratoId") Long contratoId, ContratoDetailDTO contrato) throws BusinessLogicException {
 
         if (contratoId == (contrato.toEntity().getId())) {
             throw new BusinessLogicException("Los ids del Contrato no coinciden.");
@@ -140,8 +145,8 @@ public class ContratoResource {
             throw new WebApplicationException("El recurso " + "/contratos/" + contratoId + " no existe.", 404);
 
         }
-        ContratoDTO contratoDTO = new ContratoDTO(contratoLogic.updateContrato(contratoId, contrato.toEntity()));
-        return contratoDTO;
+        ContratoDetailDTO contratoDetailDTO = new ContratoDetailDTO(contratoLogic.updateContrato(contratoId, contrato.toEntity()));
+        return contratoDetailDTO;
 
     }
 
