@@ -106,9 +106,7 @@ public class FranjaHorariaResource {
     @PUT
     @Path("{franjasId: \\d+}")
     public FranjaHorariaDTO updatFranja(@PathParam("paseadoresId") Long paseadoresId, @PathParam("franjasId") Long franjasId, FranjaHorariaDTO franja) throws BusinessLogicException {
-        if (franjasId.equals(franja.getId())) {
-            throw new BusinessLogicException("Los ids delas franjas no coinciden.");
-        }
+        franja.setId(franjasId);
         FranjaHorariaEntity entity = franjaLogic.getFranja(paseadoresId, franjasId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + "/franjas/" + franjasId + " no existe.", 404);

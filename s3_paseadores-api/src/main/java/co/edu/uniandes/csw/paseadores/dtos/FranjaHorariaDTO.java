@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.paseadores.dtos;
 
+import co.edu.uniandes.csw.paseadores.adapters.DateAdapter;
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Clase de transferencia de datos de Franjas horarias. 
@@ -18,7 +20,8 @@ public class FranjaHorariaDTO {
     //===================================================
     // Atributos
     //===================================================
-    
+    @XmlJavaTypeAdapter(DateAdapter.class)
+
     /**
      * Id de la franja
      */

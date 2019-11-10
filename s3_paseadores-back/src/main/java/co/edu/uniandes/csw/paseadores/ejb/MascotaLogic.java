@@ -22,14 +22,14 @@ import org.apache.commons.lang3.math.NumberUtils;
  * @author Daniel García
  */
 @Stateless
-public class MascotaLogic 
-{
+public class MascotaLogic {
+
     @Inject
     private MascotaPersistence persistence;
-     @Inject
+    @Inject
     private ClientePersistence clientePersistence;
-    
-     /**
+
+    /**
      * Se encarga de crear un Review en la base de datos.
      *
      * @param mascota Objeto de MascotaEntity con los datos nuevos
@@ -39,61 +39,52 @@ public class MascotaLogic
      * entity.
      *
      */
-    public MascotaEntity createMascota(Long clienteId, MascotaEntity mascota) throws BusinessLogicException
-    {
+    public MascotaEntity createMascota(Long clienteId, MascotaEntity mascota) throws BusinessLogicException {
         ClienteEntity cliente;
-        if(mascota.getNombre()==null || NumberUtils.isCreatable(mascota.getNombre()))
-        {
+        if (mascota.getNombre() == null || NumberUtils.isCreatable(mascota.getNombre())) {
             throw new BusinessLogicException("El nombre de la mascota es nulo");
         }
-        if(mascota.getInfoMascota()==null)
-        {
+        if (mascota.getInfoMascota() == null) {
             throw new BusinessLogicException("La informacion de la mascota es nulo");
         }
-        if(clienteId==null || clientePersistence.find(clienteId)==null)
-        {
+        if (clienteId == null || clientePersistence.find(clienteId) == null) {
             throw new BusinessLogicException("El cliente es nulo");
-        }
-        else
-        {
+        } else {
             cliente = clientePersistence.find(clienteId);
             mascota.setCliente(cliente);
         }
-        mascota=persistence.create(mascota);
+        mascota = persistence.create(mascota);
         return mascota;
     }
-    
-     /**
+
+    /**
      * Retorna todos las mascotas en la base de datos.
-     * 
+     *
      * @param clienteId id del cliente
      * @return Lista de entidades tipo Mascota.
      */
-    public List<MascotaEntity> getMascotas(Long clienteId)
-    {
+    public List<MascotaEntity> getMascotas(Long clienteId) {
         ClienteEntity clienteEntity = clientePersistence.find(clienteId);
         List<MascotaEntity> lista = clienteEntity.getMascotas();
         return lista;
     }
-    
+
     /**
      * Busca una mascota por su Id
-     * 
+     *
      * @param clienteId el id del cliente
      * @param mascotaId El Id de la mascota a buscar.
      * @return mascota buscada. null si no lo encuentra.
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
-    public MascotaEntity getMascota(Long clienteId, Long mascotaId ) throws BusinessLogicException
-    {
+    public MascotaEntity getMascota(Long clienteId, Long mascotaId) throws BusinessLogicException {
         MascotaEntity mascota = persistence.find(clienteId, mascotaId);
-        if( mascota == null )
-        {
-             throw new BusinessLogicException("Mascota no encontrada");
+        if (mascota == null) {
+            throw new BusinessLogicException("Mascota no encontrada");
         }
         return mascota;
     }
-    
+
     /**
      * Actualiza la información de una instancia de Paseador.
      *
@@ -102,42 +93,37 @@ public class MascotaLogic
      * @return Instancia de PaseadorEntity con los datos actualizados.
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
-    public MascotaEntity updateMascota(Long idCliente, MascotaEntity mascotaEntity) throws BusinessLogicException
-    {
+    public MascotaEntity updateMascota(Long idCliente, MascotaEntity mascotaEntity) throws BusinessLogicException {
         ClienteEntity clienteEntity;
-        if(mascotaEntity.getNombre()==null || NumberUtils.isCreatable(mascotaEntity.getNombre()))
-        {
+        if (mascotaEntity.getNombre() == null || NumberUtils.isCreatable(mascotaEntity.getNombre())) {
             throw new BusinessLogicException("El nombre de la mascota es nulo");
         }
-        if(mascotaEntity.getInfoMascota()==null)
-        {
+        if (mascotaEntity.getInfoMascota() == null) {
             throw new BusinessLogicException("La informacion de la mascota es nulo");
         }
-        if(idCliente==null || clientePersistence.find(idCliente) == null)
-        {
-            throw new BusinessLogicException("El cliente asociado es nulo");
+        if (idCliente == null) {
+            throw new BusinessLogicException("Id de cliente  invalido.");
         }
-        else
-        {
+        if (clientePersistence.find(idCliente) == null) {
+            throw new BusinessLogicException("El cliente asociado es nulo");
+        } else {
             clienteEntity = clientePersistence.find(idCliente);
             mascotaEntity.setCliente(clienteEntity);
         }
-        mascotaEntity=persistence.update(mascotaEntity);
+        mascotaEntity = persistence.update(mascotaEntity);
         return mascotaEntity;
     }
-    
+
     /**
      * Elimina una mascota por su Id.
-     * 
+     *
      * @param idCliente id del cliente asociado
      * @param mascotaId Id de la mascota a eliminar
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
-    public void deleteMascota(Long idCliente, Long mascotaId ) throws BusinessLogicException
-    {
+    public void deleteMascota(Long idCliente, Long mascotaId) throws BusinessLogicException {
         MascotaEntity old = getMascota(idCliente, mascotaId);
-        if (old == null) 
-        {
+        if (old == null) {
             throw new BusinessLogicException("La mascota con id = " + mascotaId + " no esta asociada al cliente con id = " + idCliente);
         }
         persistence.delete(old.getId());

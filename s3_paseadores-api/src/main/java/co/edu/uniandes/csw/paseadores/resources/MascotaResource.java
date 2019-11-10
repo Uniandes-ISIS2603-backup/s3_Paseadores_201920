@@ -54,16 +54,11 @@ public class MascotaResource {
      */
     @POST
     public MascotaDTO createMascota(MascotaDTO mascota, @PathParam("clientesId") Long clienteId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "AuthorResource createAuthor: input: {0}", mascota);
-
         MascotaEntity entidad = mascotaLogic.createMascota(clienteId, mascota.toEntity());
         if (entidad == null) {
-            LOGGER.log(Level.INFO, "=========================NUKALAA))");
         }
-        LOGGER.log(Level.INFO, "=========================SALIENDDDDDDDDDDDOOOOOOOOOOOOOOOOOOOOO");
-
         MascotaDTO mascotaDTO = new MascotaDTO(entidad);
-        return mascota;
+        return mascotaDTO;
     }
 
     /**
