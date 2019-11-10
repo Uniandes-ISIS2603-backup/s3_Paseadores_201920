@@ -1,16 +1,3 @@
-delete from CalificacionEntity; --listo
-delete from ClienteEntity; --listo
-delete from ComentarioEntity; --listo
-delete from ContratoEntity; --listo
-delete from FormaPagoEntity; --listo
-delete from FranjaHorariaEntity; --listo
-delete from MascotaEntity; --listo
-delete from PagoEntity; --listo
-delete from PaseadorEntity; --listo
-delete from TarjetaCreditoEntity; --listo
-delete from ZonaEntity; --listo
-delete from MascotaEntity_ContratoEntity;
-delete from ZonaEntity_PaseadorEntity;
 
 -- Tabla Zona
 insert into ZonaEntity (id, infoZona) values (1, 'Usaquen');
