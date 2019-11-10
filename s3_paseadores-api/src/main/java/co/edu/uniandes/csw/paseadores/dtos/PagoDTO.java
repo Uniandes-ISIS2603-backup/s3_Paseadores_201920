@@ -25,6 +25,9 @@ public class PagoDTO {
         this.valorServicio = pago.getValorServicio();
         this.id = pago.getId();
     }
+    public PagoDTO(){
+        
+    }
 
     //Métodos
     /**

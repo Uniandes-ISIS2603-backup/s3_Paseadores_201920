@@ -17,6 +17,10 @@ public class FormaPagoDTO {
     private double capacidadPago;
     private Long id;
     
+    public FormaPagoDTO(){
+        
+    }
+    
     public FormaPagoDTO(FormaPagoEntity formaPago)
     {
         if( formaPago != null ){

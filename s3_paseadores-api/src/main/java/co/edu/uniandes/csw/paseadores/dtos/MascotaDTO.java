@@ -27,8 +27,7 @@ public class MascotaDTO implements Serializable
      */
     public MascotaDTO(MascotaEntity mascotaEntity) 
     {
-        if (mascotaEntity != null) 
-        {
+        
             this.id = mascotaEntity.getId();
             this.nombre = mascotaEntity.getNombre();
             this.infoMascota = mascotaEntity.getInfoMascota();
@@ -40,9 +39,12 @@ public class MascotaDTO implements Serializable
             {
                 this.cliente = null;
             }
-        }
     }
     
+    public MascotaDTO(){
+        
+    }
+            
      /**
      * Método para transformar del DTO a una entidad.
      *

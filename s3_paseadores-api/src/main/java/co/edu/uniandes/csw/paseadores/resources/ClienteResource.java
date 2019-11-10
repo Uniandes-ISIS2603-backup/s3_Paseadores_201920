@@ -24,6 +24,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  *
@@ -34,6 +36,8 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class ClienteResource {
+    
+    private static final Logger LOGGER = Logger.getLogger(ClienteResource.class.getName());
     
     @Inject
     private ClienteLogic clienteLogic;
