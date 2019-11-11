@@ -155,6 +155,19 @@ public class ContratoResource {
         }
         return ComentarioResource.class;
     }
+    
+    /**
+     *
+     * @param contratoId
+     * @return
+     */
+    @Path("{contratoId: \\d+}/calificaciones")
+    public Class<CalificacionResource> getCalificacionResource(@PathParam("contratoId") Long contratoId) {
+        if (contratoLogic.getContrato(contratoId) == null) {
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+        }
+        return CalificacionResource.class;
+    }
 
     @Path("{contratoId: \\d+}/pagos")
     public Class<PagoResource> getPagoResource(@PathParam("contratoId") Long contratoId) {

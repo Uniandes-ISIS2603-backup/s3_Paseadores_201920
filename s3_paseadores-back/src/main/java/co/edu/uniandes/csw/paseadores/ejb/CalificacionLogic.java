@@ -7,9 +7,12 @@ package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
+import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -27,6 +30,9 @@ public class CalificacionLogic {
 
     @Inject
     private ContratoPersistence contratoPersistence;
+    
+    @Inject
+    private PaseadorPersistence paseadorPersistence;
 
     /**
      * Crea una calificacion según la que llega por parametro y comprueba las
@@ -43,9 +49,20 @@ public class CalificacionLogic {
 
         }
         ContratoEntity contrato = contratoPersistence.find(idContrato);
-        calificacion.setContrato(contrato);
-        calificacion.setPaseador(contrato.getPaseador());
+        if (contrato.getCalificacion() != null) {
+            throw new BusinessLogicException("El contrato ya tiene una calificación.");
+        }
         calificacion = persistence.create(calificacion);
+        contrato.setCalificacion(calificacion);
+        PaseadorEntity paseador = contrato.getPaseador();
+        List<CalificacionEntity> calificaciones = paseador.getCalificaciones();
+        if( calificaciones == null ){
+            calificaciones = new ArrayList<>();
+        }
+        calificaciones.add(calificacion);
+        paseador.setCalificaciones(calificaciones);
+        contratoPersistence.update(contrato);
+        paseadorPersistence.update(paseador);
         return calificacion;
     }
 
@@ -101,11 +118,7 @@ public class CalificacionLogic {
             throw new BusinessLogicException("La calificación esta fuera de los valores limites [0...5]");
 
         }
-        ContratoEntity contratoActual = contratoPersistence.find(idContrato);
-        calificacionEntity.setContrato(contratoActual);
-        calificacionEntity.setPaseador(contratoActual.getPaseador());
         CalificacionEntity newCalificacionEntity = persistence.update(calificacionEntity);
-
         return newCalificacionEntity;
     }
 
@@ -119,8 +132,8 @@ public class CalificacionLogic {
     public void deleteCalificacion(Long idPaseador, Long calificacionId) throws BusinessLogicException {
         CalificacionEntity antigua = getCalificacion(idPaseador, calificacionId);
         if (antigua == null) {
-            throw new BusinessLogicException("La calificacion con el id " + calificacionId + " no esta asociada al paseador con id "+idPaseador);
-        } 
+            throw new BusinessLogicException("La calificacion con el id " + calificacionId + " no esta asociada al paseador con id " + idPaseador);
+        }
         persistence.delete(calificacionId);
     }
 

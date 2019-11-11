@@ -34,7 +34,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
         
-class CalificacionResource {
+public class CalificacionResource {
     
     @Inject
     private CalificacionLogic calificacionLogic;
@@ -87,7 +87,7 @@ class CalificacionResource {
     @GET
     public List<CalificacionDTO> getCalificaciones(@PathParam("paseadoresId") Long paseadoresId) {
 
-        List<CalificacionDTO> listaDTOs = listEntity2DTO(calificacionLogic.getCalificacionesPorPaseador(paseadoresId));
+        List<CalificacionDTO> listaDTOs = listEntity2DTO(calificacionLogic.getCalificaciones());
         return listaDTOs;
     }
     
@@ -115,9 +115,7 @@ class CalificacionResource {
     @Path("{calificacionId: \\d+}")
     public CalificacionDTO updateCalificacion(@PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
 
-        if (!calificacionId.equals(calificacion.getId())) {
-            throw new BusinessLogicException("Los ids del Calificacion no coinciden.");
-        }
+        calificacion.setId(paseadoresId);
         CalificacionEntity entity = calificacionLogic.getCalificacion(paseadoresId, calificacionId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);

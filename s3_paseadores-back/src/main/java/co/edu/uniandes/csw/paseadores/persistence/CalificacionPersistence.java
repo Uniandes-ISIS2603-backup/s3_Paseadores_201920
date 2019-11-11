@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.paseadores.persistence;
 
 
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
+import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -23,6 +25,9 @@ public class CalificacionPersistence
     @PersistenceContext (unitName = "paseadoresPU")
     protected EntityManager em;
     
+    @Inject
+    private PaseadorPersistence paseadorPersistence;
+    
     public CalificacionEntity create(CalificacionEntity p)
     {
         em.persist(p);
@@ -31,8 +36,7 @@ public class CalificacionPersistence
     
     public CalificacionEntity findCalificacion (Long idPaseador, Long idCalificacion)
     {
-        TypedQuery<CalificacionEntity> q = em.createQuery("select p from CalificacionEntity p where (p.paseador.id = :idPaseador) and (p.id = :idCalificacion)", CalificacionEntity.class);
-        q.setParameter("idPaseador", idPaseador);
+        TypedQuery<CalificacionEntity> q = em.createQuery("select p from CalificacionEntity p where (p.id = :idCalificacion)", CalificacionEntity.class);
         q.setParameter("idCalificacion", idCalificacion);
         List<CalificacionEntity> results = q.getResultList();
         CalificacionEntity calificacion = null;
@@ -53,9 +57,13 @@ public class CalificacionPersistence
     
     public List<CalificacionEntity> findAllPorPaseador (Long idPaseador)
     {
-        TypedQuery<CalificacionEntity> q = em.createQuery("select p from CalificacionEntity p where (p.paseador.id = :idPaseador)", CalificacionEntity.class);
-        q.setParameter("idPaseador", idPaseador);
-        return q.getResultList();
+        PaseadorEntity paseador = paseadorPersistence.find(idPaseador);
+        if( paseador != null ){
+            return paseador.getCalificaciones();
+        }
+        else{
+            return null;
+        }
     }
     
     public List<CalificacionEntity> findAll()
