@@ -1,0 +1,586 @@
+{
+	"info": {
+		"_postman_id": "a96072bb-8e6b-49c4-9e4b-94150957d667",
+		"name": "FormaPagoResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crea un cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a920c164-4750-4538-972b-84bf3cf51b12",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_cliente_fp\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"samuel\",\n\t\"correo\": \"correo@\",\n\t\"contrasena\": \"hola\",\n\t\"infoContacto\": \"noinfo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una forma de pago 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17cf9c58-bcd1-45a7-9520-0c0cedcf817f",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"id_formaPago_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": 20000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una forma de pago 2 (Valor negativo - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d08a2c5d-0016-467e-94e1-392efa848ff0",
+						"exec": [
+							"tests[\"Debe generar error\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": -20000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una forma de pago 3 (Cliente inexistente - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "870b7cd8-02d5-4784-be28-d4d77f815b90",
+						"exec": [
+							"tests[\"Debe generar error\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": 20000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/0/formasPago",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"0",
+						"formasPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una forma de pago 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfec428c-a4b9-4983-afe1-662f798e1a53",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"id_formaPago_p2\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": 25000.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene todas las formas de pago de un Cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene una forma de pago 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago",
+						"{{id_formaPago_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene una forma de pago 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago",
+						"{{id_formaPago_p2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtiene una forma de pago 3 (Cliente no existe - debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"exec": [
+							"tests[\"no genera error\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/0/formasPago/{{id_formaPago_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"0",
+						"formasPago",
+						"{{id_formaPago_p2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualiza una forma pago 1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": 150.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago",
+						"{{id_formaPago_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualiza una forma pago 2 (Valor negativo - genera error)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4d40c1a-f3e2-42ec-9e39-b3747b43c666",
+						"exec": [
+							"tests[\"debe generar error\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"capacidadPago\": -150.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_fp}}",
+						"formasPago",
+						"{{id_formaPago_p2}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
