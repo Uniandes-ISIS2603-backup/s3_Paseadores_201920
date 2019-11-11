@@ -101,7 +101,9 @@ public class ClienteLogicTest {
         newEntity.setCorreo("hola@hotmail.com");
         ClienteEntity result = clienteLogic.createCliente(newEntity);
         Assert.assertNotNull(result);     
-        
+        newEntity.setMascotas(new ArrayList());
+        newEntity.setContratos(new ArrayList());
+        newEntity.setFormasPago(new ArrayList());
         ClienteEntity entity = em.find( ClienteEntity.class , result.getId());
         Assert.assertEquals(result.getNombre(), entity.getNombre());
     }

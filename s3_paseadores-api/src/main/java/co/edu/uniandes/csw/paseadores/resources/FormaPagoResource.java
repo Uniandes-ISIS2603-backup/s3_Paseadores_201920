@@ -6,17 +6,10 @@
 package co.edu.uniandes.csw.paseadores.resources;
 
 
-import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
-import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.dtos.FormaPagoDTO;
 import co.edu.uniandes.csw.paseadores.dtos.PagoDTO;
-import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
 import co.edu.uniandes.csw.paseadores.ejb.FormaPagoLogic;
-import co.edu.uniandes.csw.paseadores.ejb.PagoLogic;
-import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
-import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
-import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +46,7 @@ public class FormaPagoResource {
      * base de datos.
      *
      * @param formaPago {@link PagoDTO} - EL pago que se desea guardar.
-     * @param clientesId
-     * @param idCliente
+     * @param clientesId - cliente
      * @return JSON {@link FormaPagoDTO} - El pago guardado con el atributo id
      * autogenerado.
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
