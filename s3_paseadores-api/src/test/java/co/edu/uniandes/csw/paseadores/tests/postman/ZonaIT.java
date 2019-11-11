@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.paseadores.tests.postman;
 
 import co.edu.uniandes.csw.paseadores.dtos.ClienteDTO;
+import co.edu.uniandes.csw.paseadores.dtos.ZonaDTO;
 import co.edu.uniandes.csw.paseadores.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.paseadores.resources.ClienteResource;
+import co.edu.uniandes.csw.paseadores.resources.ZonaResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +28,9 @@ import org.junit.runner.RunWith;
  * @author Santiago Bolaños Vega
  */
 @RunWith(Arquillian.class)
-public class ClienteIT {
+public class ZonaIT {
 
-    private final static String COLLECTION = "ClienteResourceTests.postman_collection";
+    private final static String COLLECTION = "ZonaResourceTests.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -38,8 +40,8 @@ public class ClienteIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(ClienteResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(ClienteDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(ZonaResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(ZonaDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
