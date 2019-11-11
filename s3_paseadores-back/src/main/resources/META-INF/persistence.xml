@@ -14,7 +14,6 @@
         <class>co.edu.uniandes.csw.paseadores.entities.PagoEntity</class>
         <class>co.edu.uniandes.csw.paseadores.entities.PaseadorEntity</class>
         <class>co.edu.uniandes.csw.paseadores.entities.ZonaEntity</class>
-        <jta-data-source>java:app/jdbc/paseadores</jta-data-source>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>        
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
