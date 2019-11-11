@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
+import java.io.Serializable;
 
 /**
  * Clase que modela el DTO para Calificacion
@@ -13,9 +14,10 @@ import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
  */
 
 
-public class CalificacionDTO {
+public class CalificacionDTO implements Serializable
+{
     //atributos
-    private int Calificacion;
+    private Integer Calificacion;
     private Long id;
     
     //constructor vacio
@@ -29,7 +31,7 @@ public class CalificacionDTO {
     }
     //setters de calificacion e id
     
-    public void setCalificacion(int Calificacion) {
+    public void setCalificacion(Integer Calificacion) {
         this.Calificacion = Calificacion;
     }
 
@@ -41,7 +43,7 @@ public class CalificacionDTO {
     /**
     *@return Calificacion
     */
-    public int getCalificacion() {
+    public Integer getCalificacion() {
         return Calificacion;
     }
     /**

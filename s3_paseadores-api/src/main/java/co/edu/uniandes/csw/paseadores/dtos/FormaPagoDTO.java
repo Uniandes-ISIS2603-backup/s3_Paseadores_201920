@@ -6,15 +6,17 @@
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
+import java.io.Serializable;
 
 /**
  * Clase que modela el DTO para FormaPago
  * @author Mario Hurtado
  */
-public class FormaPagoDTO {
+public class FormaPagoDTO implements Serializable
+{
     
     //Atributos 
-    private double capacidadPago;
+    private Double capacidadPago;
     private Long id;
     
     public FormaPagoDTO(){
@@ -32,14 +34,14 @@ public class FormaPagoDTO {
     /**
      * @return the capacidadPago
      */
-    public double getCapacidadPago() {
+    public Double getCapacidadPago() {
         return capacidadPago;
     }
 
     /**
      * @param capacidadPago the capacidadPago to set
      */
-    public void setCapacidadPago(double capacidadPago) {
+    public void setCapacidadPago(Double capacidadPago) {
         this.capacidadPago = capacidadPago;
     }
 

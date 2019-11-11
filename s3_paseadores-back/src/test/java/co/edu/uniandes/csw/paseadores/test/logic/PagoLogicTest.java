@@ -135,7 +135,7 @@ public class PagoLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createPagoValorServicioNegativo() throws BusinessLogicException {
         PagoEntity pago = factory.manufacturePojo(PagoEntity.class);
-        pago.setValorServicio(-2000);
+        pago.setValorServicio(-2000.0);
         PagoEntity result = pagoLogic.createPago(contratos.get(0).getId() , pago  );
     }
 

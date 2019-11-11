@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.adapters.DateAdapter;
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
+import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -15,7 +16,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * @author Santiago Bolaños
  */
-public class FranjaHorariaDTO {
+public class FranjaHorariaDTO implements Serializable
+{
     
     //===================================================
     // Atributos

@@ -22,12 +22,12 @@ public class PagoEntity extends BaseEntity implements Serializable {
     /**
      * Costo del servicio que presta el paseador.
      */
-    private double valorServicio;
+    private Double valorServicio;
     
     /**
      * Boolean que indica si ya se pagó el servicio.
      */
-    private  boolean pagoRealizado;
+    private  Boolean pagoRealizado;
     
     @PodamExclude
     @ManyToOne
@@ -39,19 +39,19 @@ public class PagoEntity extends BaseEntity implements Serializable {
     
     //Métodos
 
-    public double getValorServicio() {
+    public Double getValorServicio() {
         return valorServicio;
     }
 
-    public void setValorServicio(double valorServicio) {
+    public void setValorServicio(Double valorServicio) {
         this.valorServicio = valorServicio;
     }
 
-    public boolean getPagoRealizado() {
+    public Boolean getPagoRealizado() {
         return pagoRealizado;
     }
 
-    public void setPagoRealizado(boolean pagoRealizado) {
+    public void setPagoRealizado(Boolean pagoRealizado) {
         this.pagoRealizado = pagoRealizado;
     }
 

@@ -34,19 +34,19 @@ public class FormaPagoEntity extends BaseEntity implements Serializable{
     /**
      * Capacidad de pago del usuario.
      */
-    protected double capacidadPago;
+    protected Double capacidadPago;
     
     /**
      * Retorna la capacidad de pago del usuario.
      * @return Capacidad de pago del cliente.
      */
-    public double getCapacidadPago(){
+    public Double getCapacidadPago(){
         return capacidadPago;
     }
     
     
     
-    public void setCapacidadPago(double pPago){
+    public void setCapacidadPago(Double pPago){
         this.capacidadPago = pPago;
     }
 

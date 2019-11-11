@@ -56,7 +56,7 @@ public class ComentarioDTO implements Serializable {
             
         }
         
-         public long getId() {
+         public Long getId() {
         	
         	return id;
         	

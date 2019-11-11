@@ -6,18 +6,20 @@
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
+import java.io.Serializable;
 
 /**
  * Clase que modela el DTO de Pago
  *
  * @author Mario Hurtado
  */
-public class PagoDTO {
+public class PagoDTO implements Serializable
+{
 
     //Atributos
-    private double valorServicio;
+    private Double valorServicio;
 
-    private boolean pagoRealizado;
+    private Boolean pagoRealizado;
 
     private Long id;
 
@@ -43,28 +45,28 @@ public class PagoDTO {
     /**
      * @return the valorServicio
      */
-    public double getValorServicio() {
+    public Double getValorServicio() {
         return valorServicio;
     }
 
     /**
      * @param valorServicio the valorServicio to set
      */
-    public void setValorServicio(double valorServicio) {
+    public void setValorServicio(Double valorServicio) {
         this.valorServicio = valorServicio;
     }
 
     /**
      * @return the pagoRealizado
      */
-    public boolean isPagoRealizado() {
+    public Boolean isPagoRealizado() {
         return pagoRealizado;
     }
 
     /**
      * @param pagoRealizado the pagoRealizado to set
      */
-    public void setPagoRealizado(boolean pagoRealizado) {
+    public void setPagoRealizado(Boolean pagoRealizado) {
         this.pagoRealizado = pagoRealizado;
     }
 
