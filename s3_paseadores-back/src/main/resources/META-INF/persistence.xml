@@ -4,17 +4,8 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="paseadoresPU" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>co.edu.uniandes.csw.paseadores.entities.CalificacionEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.ClienteEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.ComentarioEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.ContratoEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.MascotaEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.PagoEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.PaseadorEntity</class>
-        <class>co.edu.uniandes.csw.paseadores.entities.ZonaEntity</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>        
+        <jta-data-source>java:app/jdbc/paseadores</jta-data-source>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>        
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
