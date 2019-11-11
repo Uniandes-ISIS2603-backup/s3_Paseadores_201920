@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
+import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
+import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -21,6 +23,9 @@ public class ContratoLogic {
 
     @Inject
     private ContratoPersistence persistence;
+
+    @Inject
+    private PagoPersistence pagoPersistence;
 
     public ContratoEntity createContrato(ContratoEntity contrato) throws BusinessLogicException {
 
@@ -86,6 +91,10 @@ public class ContratoLogic {
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      */
     public ContratoEntity updateContrato(Long contratoId, ContratoEntity contrato) throws BusinessLogicException {
+        ContratoEntity contratoAntiguo = getContrato(contratoId);
+        if( contratoAntiguo != null && contratoAntiguo.getPago() != null ){
+            contrato.setPago(contratoAntiguo.getPago());
+        }
         if (contrato.getValorServicio() == null || contrato.getValorServicio() <= 0) {
             throw new BusinessLogicException("El valor del contrato no es válido o no se ha definido");
         }
@@ -104,10 +113,7 @@ public class ContratoLogic {
         if (contrato.getMascotas() == null || contrato.getMascotas().isEmpty()) {
             throw new BusinessLogicException("El contrato no dispone de mascota(s)");
         }
-        if (contrato.getPago() == null) {
-            throw new BusinessLogicException("El contrato no tiene creado un pago y su metodo de pago");
-        }
-
+        
         ContratoEntity newContratoEntity = persistence.update(contrato);
         return newContratoEntity;
     }

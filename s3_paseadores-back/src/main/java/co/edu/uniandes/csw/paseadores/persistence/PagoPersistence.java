@@ -39,8 +39,7 @@ public class PagoPersistence {
 
     public PagoEntity find(Long idContrato, Long idPago) 
     {
-        TypedQuery<PagoEntity> q = em.createQuery("select p from PagoEntity p where (p.contrato.id = :idContrato) and (p.id = :idPago)", PagoEntity.class);
-        q.setParameter("idContrato", idContrato);
+        TypedQuery<PagoEntity> q = em.createQuery("select p from PagoEntity p where (p.id = :idPago)", PagoEntity.class);
         q.setParameter("idPago", idPago);
         List<PagoEntity> results = q.getResultList();
         PagoEntity pago = null;

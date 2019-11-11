@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "2d84b047-a856-4df7-a393-862c863d498b",
-		"name": "FormaPagoResourceTest",
+		"_postman_id": "68d972ac-c9d1-4759-aec4-38f153b0499e",
+		"name": "ContratoResourceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -14,7 +14,7 @@
 						"id": "a920c164-4750-4538-972b-84bf3cf51b12",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"id_cliente_fp\",data.id)"
+							"postman.setGlobalVariable(\"id_cliente_p\",data.id)"
 						],
 						"type": "text/javascript"
 					}
@@ -56,16 +56,15 @@
 			"response": []
 		},
 		{
-			"name": "Crea una forma de pago 1",
+			"name": "Crear una formaPago",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "17cf9c58-bcd1-45a7-9520-0c0cedcf817f",
+						"id": "0578a67e-6bc8-44cf-a5e7-ca3c35d2bdf4",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"tests[\"no genera error\"] = responseCode.code === 200;",
-							"postman.setGlobalVariable(\"id_formaPago_p\",data.id)"
+							"postman.setGlobalVariable(\"id_forma_pago\", data.id )"
 						],
 						"type": "text/javascript"
 					}
@@ -91,7 +90,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_p}}/formasPago",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -101,7 +100,7 @@
 						"s3_paseadores-api",
 						"api",
 						"clientes",
-						"{{id_cliente_fp}}",
+						"{{id_cliente_p}}",
 						"formasPago"
 					]
 				}
@@ -109,15 +108,15 @@
 			"response": []
 		},
 		{
-			"name": "Crear una forma de pago 2 (Valor negativo - debe fallar)",
+			"name": "Crea un paseador",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "d08a2c5d-0016-467e-94e1-392efa848ff0",
+						"id": "fa0367b7-4827-4bf2-84bf-5801f9ac80de",
 						"exec": [
-							"tests[\"Debe generar error\"] = responseCode.code === 412;",
-							""
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_paseador_p\",data.id)"
 						],
 						"type": "text/javascript"
 					}
@@ -135,7 +134,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"capacidadPago\": -20000.0\n}",
+					"raw": "{\n\t\"nombre\": \"Santiago\",\n\t\"correo\":\"santiago@\",\n\t\"contrasena\": \"holaaa\",\n\t\"infoContacto\": \"Llama\",\n\t\"foto\": \"sinfoto\",\n\t\"precio\": 2200.0 ,\n\t\"ganancias\": 2000.0 ,\n\t\"infoAdicional\": \"sjskjsdl\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -143,7 +142,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -152,24 +151,22 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago"
+						"paseadores"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crea una forma de pago 3 (Cliente inexistente - debe fallar)",
+			"name": "Crea una mascota 1",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "870b7cd8-02d5-4784-be28-d4d77f815b90",
+						"id": "d531ea6d-ed93-4602-9418-3f5f949c96b9",
 						"exec": [
-							"tests[\"Debe generar error\"] = responseCode.code === 412;",
-							""
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_mascota1_p\",data.id)"
 						],
 						"type": "text/javascript"
 					}
@@ -187,7 +184,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"capacidadPago\": 20000.0\n}",
+					"raw": "{\n\t\"nombre\": \"KKK\",\n\t\"infoMascota\": \"beaglee\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -195,7 +192,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/0/formasPago",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_p}}/mascotas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -205,24 +202,76 @@
 						"s3_paseadores-api",
 						"api",
 						"clientes",
-						"0",
-						"formasPago"
+						"{{id_cliente_p}}",
+						"mascotas"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crea una forma de pago 4",
+			"name": "Crea una mascota 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "bfec428c-a4b9-4983-afe1-662f798e1a53",
+						"id": "45885544-96c3-4a0f-89a7-6707172978aa",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_mascota2_p\",data.id)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Django\",\n\t\"infoMascota\": \"beaglee\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_p}}/mascotas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes",
+						"{{id_cliente_p}}",
+						"mascotas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea una zona 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b0e9db3-70ea-47d5-800e-02785a2a9fa0",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"tests[\"no genera error\"] = responseCode.code === 200;",
-							"postman.setGlobalVariable(\"id_formaPago_p2\",data.id)"
+							"postman.setGlobalVariable(\"id_zona_1\",data.id)"
 						],
 						"type": "text/javascript"
 					}
@@ -240,7 +289,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"capacidadPago\": 25000.0\n}",
+					"raw": "{\r\n        \"infoZona\": \"Chapinero\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -248,7 +297,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/zonas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -257,45 +306,146 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago"
+						"zonas"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtiene todas las formas de pago de un Cliente",
+			"name": "Crea una franja",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"id": "87b94d53-aba1-4725-b21e-76a763a83b38",
 						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"franja1\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"inicio\": \"1927-03-03T00:00:00-05:00\",\n\t\"fin\": \"1927-03-03T00:00:00-06:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_p}}/franjas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"paseadores",
+						"{{id_paseador_p}}",
+						"franjas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un contrato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0578a67e-6bc8-44cf-a5e7-ca3c35d2bdf4",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"id_contrato\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"valorServicio\": 2000.0,\n\t\"satisfactorio\": false,\n\t\"finalizado\": false,\n\t\"franja\":{\n    \t\"id\": {{franja1}}\n\t\t},\n\t\"cliente\": {\n    \t\"id\": {{id_cliente_p}}\n\t\t},\n\t\"zona\": {\n    \t\"id\": {{id_zona_1}}\n\t\t},\n\t\"paseador\":{\n\t    \"id\": {{id_paseador_p}}\n\t\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"contratos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0578a67e-6bc8-44cf-a5e7-ca3c35d2bdf4",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
 							"tests[\"no genera error\"] = responseCode.code === 200;",
-							""
+							"postman.setGlobalVariable(\"id_pago_p\",data.id)",
+							"console.log(data.id);"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n\t\"valorServicio\": 2500.0,\n\t\"pagoRealizado\": false,\n\t\"formaPago\":{\n\t\t\"id\": {{id_forma_pago}}\n\t}\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -303,7 +453,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}/pagos",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -312,53 +462,35 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago"
+						"contratos",
+						"{{id_contrato}}",
+						"pagos"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtiene una forma de pago 1",
+			"name": "Obtener todos los contratos",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"id": "f7f8fd49-acc5-44ca-933a-87e1afa9b2c3",
 						"exec": [
-							"tests[\"no genera error\"] = responseCode.code === 200;",
-							""
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
+							"tests[\"Cuenta de clientes\"] = data.length >= 1;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
+				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -367,54 +499,33 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago",
-						"{{id_formaPago_p}}"
+						"contratos"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtiene una forma de pago 2",
+			"name": "Obtener un contrato",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"id": "f7f8fd49-acc5-44ca-933a-87e1afa9b2c3",
 						"exec": [
-							"tests[\"no genera error\"] = responseCode.code === 200;",
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;",
 							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
+				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -423,54 +534,34 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago",
-						"{{id_formaPago_p2}}"
+						"contratos",
+						"{{id_contrato}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtiene una forma de pago 3 (Cliente no existe - debe fallar)",
+			"name": "Obtener un contrato que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
+						"id": "f7f8fd49-acc5-44ca-933a-87e1afa9b2c3",
 						"exec": [
-							"tests[\"no genera error\"] = responseCode.code === 412;",
+							"tests[\"No se deberia obtener un cliente con un id que no existe\"] = responseCode.code === 404;",
+							"",
 							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
+				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/0/formasPago/{{id_formaPago_p2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -479,17 +570,28 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"0",
-						"formasPago",
-						"{{id_formaPago_p2}}"
+						"contratos",
+						"0"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Actualiza una forma pago 1",
+			"name": "Actualizar un contrato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7f8fd49-acc5-44ca-933a-87e1afa9b2c3",
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -502,7 +604,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"capacidadPago\": 150.0\n}",
+					"raw": "{\n\t\"valorServicio\": 4000.0,\n\t\"satisfactorio\": true,\n\t\"finalizado\": false,\n\t\"franja\":{\n    \t\"id\": {{franja1}}\n\t\t},\n\t\"cliente\": {\n    \t\"id\": {{id_cliente_p}}\n\t\t},\n\t\"zona\": {\n    \t\"id\": {{id_zona_1}}\n\t\t},\n\t\"paseador\":{\n\t    \"id\": {{id_paseador_p}}\n\t\t},\n\t\"mascotas\":[\n\t\t{\n\t\t\t\"id\": {{id_mascota1_p}}\n\t\t},\n\t\t{\n\t\t\t\"id\": {{id_mascota2_p}}\n\t\t}]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -510,7 +612,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -519,30 +621,15 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago",
-						"{{id_formaPago_p}}"
+						"contratos",
+						"{{id_contrato}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Actualiza una forma pago 2 (Valor negativo - genera error)",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e4d40c1a-f3e2-42ec-9e39-b3747b43c666",
-						"exec": [
-							"tests[\"debe generar error\"] = responseCode.code === 412;",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "Actualiza el pago del comentario",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -555,7 +642,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"capacidadPago\": -150.0\n}",
+					"raw": "{\r\n    \"formaPago\": {\r\n        \"id\": {{id_forma_pago}}\r\n    },\r\n    \"id\": {{id_pago_p}},\r\n    \"pagoRealizado\": true,\r\n    \"valorServicio\": 2500.0\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -563,7 +650,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}/pagos/{{id_pago_p}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -572,63 +659,10 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago",
-						"{{id_formaPago_p2}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Elimina una forma de pago 1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "5b16cd3e-bd1f-467b-b421-c7c404c96d4a",
-						"exec": [
-							"tests[\"no genera error\"] = responseCode.code === 204;",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_fp}}/formasPago/{{id_formaPago_p}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_paseadores-api",
-						"api",
-						"clientes",
-						"{{id_cliente_fp}}",
-						"formasPago",
-						"{{id_formaPago_p}}"
+						"contratos",
+						"{{id_contrato}}",
+						"pagos",
+						"{{id_pago_p}}"
 					]
 				}
 			},

@@ -88,14 +88,14 @@ public class ContratoResource {
      */
     @GET
     @Path("{contratoId: \\d+}")
-    public ContratoDTO getContrato(@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
+    public ContratoDetailDTO getContrato(@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
 
         ContratoEntity entity = contratoLogic.getContrato(contratoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/contratos/" + contratoId + " no existe.", 404);
         }
-        ContratoDTO contratoDTO = new ContratoDTO(entity);
-        return contratoDTO;
+        ContratoDetailDTO contratoDetailDTO = new ContratoDetailDTO(entity);
+        return contratoDetailDTO;
     }
 
     /**
@@ -106,10 +106,10 @@ public class ContratoResource {
      * paseador. Si no hay nunguno retorna una lista vacía.
      */
     @GET
-    public List<ContratoDTO> getContratos() {
+    public List<ContratoDetailDTO> getContratos() {
 
-        List<ContratoDTO> listaDTOs = listEntity2DTO(contratoLogic.getContratos());
-        return listaDTOs;
+        List<ContratoDetailDTO> listaDetailDTOs = listEntity2DTO(contratoLogic.getContratos());
+        return listaDetailDTOs;
     }
 
     /**
@@ -117,10 +117,10 @@ public class ContratoResource {
      *
      * @return la lista de contratos en forma DTO (json)
      */
-    private List<ContratoDTO> listEntity2DTO(List<ContratoEntity> entityList) {
-        List<ContratoDTO> list = new ArrayList<ContratoDTO>();
+    private List<ContratoDetailDTO> listEntity2DTO(List<ContratoEntity> entityList) {
+        List<ContratoDetailDTO> list = new ArrayList<ContratoDetailDTO>();
         for (ContratoEntity entity : entityList) {
-            list.add(new ContratoDTO(entity));
+            list.add(new ContratoDetailDTO(entity));
         }
         return list;
     }
@@ -137,9 +137,7 @@ public class ContratoResource {
     @Path("{contratoId: \\d+}")
     public ContratoDetailDTO updateContrato(@PathParam("contratoId") Long contratoId, ContratoDetailDTO contrato) throws BusinessLogicException {
 
-        if (contratoId == (contrato.toEntity().getId())) {
-            throw new BusinessLogicException("Los ids del Contrato no coinciden.");
-        }
+        contrato.setId(contratoId);
         ContratoEntity entity = contratoLogic.getContrato(contratoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/contratos/" + contratoId + " no existe.", 404);

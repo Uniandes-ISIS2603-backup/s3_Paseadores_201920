@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.paseadores.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,7 +28,7 @@ public class FormaPagoEntity extends BaseEntity implements Serializable{
     private ClienteEntity cliente;
     
     @PodamExclude
-    @OneToMany(mappedBy="formaPago")
+    @OneToMany(mappedBy="formaPago" , cascade = CascadeType.PERSIST)
     private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
     
     /**

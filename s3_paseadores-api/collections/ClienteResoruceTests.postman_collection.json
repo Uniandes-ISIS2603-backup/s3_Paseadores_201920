@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "81f85a66-4f3f-46fd-a14b-fdc24a8787d8",
-		"name": "FranjaHorariaTest",
+		"_postman_id": "9e6f4c79-687a-422a-9764-c740c4432e6c",
+		"name": "ClienteResoruceTests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crea un paseador 1",
+			"name": "Crea un cliente 1",
 			"event": [
 				{
 					"listen": "test",
@@ -14,7 +14,7 @@
 						"id": "c31b02d6-d728-4ae9-91b7-26e154039231",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"id_paseador_franja\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -28,13 +28,13 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": 2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +42,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -51,68 +51,14 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores"
+						"clientes"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crea una franja 1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c31b02d6-d728-4ae9-91b7-26e154039231",
-						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"franja1\",data.id);",
-							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
-							"console.log(data.id);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\t\n\t\"inicio\": \"1927-03-03T00:00:00-05:00\",\n\t\"fin\": \"1927-03-03T00:00:00-06:00\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_paseadores-api",
-						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crea una franja 2",
+			"name": "Crea un cliente 2",
 			"event": [
 				{
 					"listen": "test",
@@ -120,7 +66,7 @@
 						"id": "29f8046d-fe3b-4bef-a676-f86fb024a138",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"franja2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -134,13 +80,13 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"inicio\": \"1927-03-03T00:00:00-07:00\",\n\t\"fin\": \"1927-03-03T00:00:00-08:00\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Nicolas Garcia\",\n\t\"correo\": \"nicolas@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -148,7 +94,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -157,16 +103,114 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas"
+						"clientes"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos las franjas",
+			"name": "Crea un cliente 3 (Correo incorrecto - Debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "072e0582-5149-4c1b-aaf8-a8499a54d219",
+						"exec": [
+							"tests[\"No genera error en el Post\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"danielhotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un cliente 4 (Nombre alfanumerico - Debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d72c167-e3b8-4bf2-a87b-56c48d88237d",
+						"exec": [
+							"tests[\"No genera error en el Post\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"nombre\": \"88888\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los clientes",
 			"event": [
 				{
 					"listen": "test",
@@ -185,7 +229,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -194,16 +238,14 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas"
+						"clientes"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener una franja",
+			"name": "Obtener un cliente",
 			"event": [
 				{
 					"listen": "test",
@@ -222,7 +264,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -231,24 +273,22 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas",
-						"{{franja1}}"
+						"clientes",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener una franja que no existe Copy Copy",
+			"name": "Obtener un cliente que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "d60a9947-97db-49e5-a102-d13c0f91118f",
 						"exec": [
-							"tests[\"No se deberia obtener un cliente con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No se deberia obtener un cliente con un id que no existe\"] = responseCode.code === 412;",
 							""
 						],
 						"type": "text/javascript"
@@ -259,7 +299,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -268,9 +308,7 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas",
+						"clientes",
 						"0"
 					]
 				}
@@ -278,7 +316,7 @@
 			"response": []
 		},
 		{
-			"name": "Editar una franja",
+			"name": "Editar un cliente",
 			"event": [
 				{
 					"listen": "test",
@@ -305,7 +343,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"inicio\": \"1927-05-03T00:00:00-05:00\",\n\t\"fin\": \"1927-06-03T00:00:00-06:00\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Andres Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -313,7 +351,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -322,24 +360,22 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas",
-						"{{franja1}}"
+						"clientes",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Editar una franja que no existe",
+			"name": "Editar un cliente que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "d4fc71b2-8e53-4949-ba61-644be68db45e",
 						"exec": [
-							"tests[\"No se deberia actualizar una franja con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No se deberia actualizar un autor con id que no existe\"] = responseCode.code === 412;",
 							""
 						],
 						"type": "text/javascript"
@@ -352,13 +388,13 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"inicio\": \"1927-05-03T00:00:00-05:00\",\n\t\"fin\": \"1927-06-03T00:00:00-06:00\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Andres Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -366,7 +402,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/2324234",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -375,17 +411,15 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas",
-						"0"
+						"clientes",
+						"2324234"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar una franja",
+			"name": "Borrar un cliente",
 			"event": [
 				{
 					"listen": "test",
@@ -402,7 +436,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -411,24 +445,22 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas",
-						"{{franja1}}"
+						"clientes",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar una franja que no existe",
+			"name": "Borrar un cliente que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "f4e1f1fb-159b-4be4-9669-59c029f9a8bb",
 						"exec": [
-							"tests[\"No se deberia borrar un cliente con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No se deberia borrar un cliente con un id que no existe\"] = responseCode.code === 412;",
 							""
 						],
 						"type": "text/javascript"
@@ -439,7 +471,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -448,9 +480,7 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"paseadores",
-						"{{id_paseador_franja}}",
-						"franjas",
+						"clientes",
 						"0"
 					]
 				}

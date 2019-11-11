@@ -54,8 +54,9 @@ public class PagoLogic {
         if (contrato.getPago() != null) {
             throw new BusinessLogicException("El contrato ya tiene un pago asociado");
         }
-        pago.setContrato(contrato);
         pago = persistence.create(pago);
+        contrato.setPago(pago);
+        contratoPersistence.update(contrato);
         return pago;
     }
 
@@ -98,8 +99,6 @@ public class PagoLogic {
         if (pagoEntity.getFormaPago() == null) {
             throw new BusinessLogicException("El pago debe tener una forma de pago");
         }
-        ContratoEntity contrato = contratoPersistence.find(idContrato);
-        pagoEntity.setContrato(contrato);
         PagoEntity nuevaEntidad = persistence.update(pagoEntity);
         return nuevaEntidad;
     }

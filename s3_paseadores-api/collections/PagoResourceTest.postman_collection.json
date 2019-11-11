@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7c41644d-08b5-44c7-94a1-ef3f6bfe9fba",
+		"_postman_id": "e0b105ac-eb6c-4057-895d-7168a787136b",
 		"name": "PagoResourceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -915,42 +915,6 @@
 						"{{id_contrato_p2}}",
 						"pagos",
 						"0"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Elimina un pago",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "9e90f839-f6f0-4ea9-b8b7-75679b8b3b56",
-						"exec": [
-							"tests[\"no genera error\"] = responseCode.code ===204;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato_p}}/pagos/{{id_pago_p}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_paseadores-api",
-						"api",
-						"contratos",
-						"{{id_contrato_p}}",
-						"pagos",
-						"{{id_pago_p}}"
 					]
 				}
 			},

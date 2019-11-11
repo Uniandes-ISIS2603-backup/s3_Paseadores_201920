@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "501f52bb-a47e-4839-a68b-1833d5323d4d",
-		"name": "MascotaTest",
+		"_postman_id": "692a419e-e759-47de-aa36-2ad18b5ed761",
+		"name": "PaseadorResorceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crea un cliente 1",
+			"name": "Crea un paseador 1",
 			"event": [
 				{
 					"listen": "test",
@@ -14,58 +14,7 @@
 						"id": "c31b02d6-d728-4ae9-91b7-26e154039231",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"id_cliente_mascotas\",data.id);",
-							"console.log(data.id);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_paseadores-api",
-						"api",
-						"clientes"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crea una mascota 1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c31b02d6-d728-4ae9-91b7-26e154039231",
-						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"mascota1\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -85,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"Milo\",\n\t\"infoMascota\": \"Golden\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": 2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -93,7 +42,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -102,16 +51,14 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas"
+						"paseadores"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crea una mascota 2",
+			"name": "Crea un paseador 2",
 			"event": [
 				{
 					"listen": "test",
@@ -119,7 +66,7 @@
 						"id": "29f8046d-fe3b-4bef-a676-f86fb024a138",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"mascota2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_a2\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -133,13 +80,13 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"Milo\",\n\t\"infoMascota\": \"Golden\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Andres Garcia\",\n\t\"correo\": \"Andres@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": 2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,7 +94,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -156,16 +103,64 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas"
+						"paseadores"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crea una mascota 3 (Nombre alfanumerico - Debe fallar)",
+			"name": "Crea un paseador 3 (Precio incorrecto - Debe fallar)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "072e0582-5149-4c1b-aaf8-a8499a54d219",
+						"exec": [
+							"tests[\"No genera error en el Post\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": -2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_paseadores-api",
+						"api",
+						"paseadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crea un paseador 4 (Nombre alfanumerico - Debe fallar)",
 			"event": [
 				{
 					"listen": "test",
@@ -191,7 +186,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"8\",\n\t\"infoMascota\": \"Golden\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"999\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": 2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -199,7 +194,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -208,16 +203,14 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas"
+						"paseadores"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener todos las mascotas",
+			"name": "Obtener todos los paseadores",
 			"event": [
 				{
 					"listen": "test",
@@ -236,7 +229,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -245,16 +238,14 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas"
+						"paseadores"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener una mascota",
+			"name": "Obtener un paseador",
 			"event": [
 				{
 					"listen": "test",
@@ -273,7 +264,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas/{{mascota1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -282,17 +273,15 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas",
-						"{{mascota1}}"
+						"paseadores",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener una mascota que no existe Copy",
+			"name": "Obtener un paseador que no existe",
 			"event": [
 				{
 					"listen": "test",
@@ -310,7 +299,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -319,9 +308,7 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas",
+						"paseadores",
 						"0"
 					]
 				}
@@ -329,7 +316,7 @@
 			"response": []
 		},
 		{
-			"name": "Editar una mascota",
+			"name": "Editar un paseador",
 			"event": [
 				{
 					"listen": "test",
@@ -356,7 +343,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"Canela\",\n\t\"infoMascota\": \"Golden\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Felipe Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": 2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -364,7 +351,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas/{{mascota2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -373,24 +360,22 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas",
-						"{{mascota2}}"
+						"paseadores",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Editar una mascota que no existe",
+			"name": "Editar un paseador que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "d4fc71b2-8e53-4949-ba61-644be68db45e",
 						"exec": [
-							"tests[\"No se deberia actualizar una mascota con id que no existe\"] = responseCode.code === 412;",
+							"tests[\"No se deberia actualizar un autor con id que no existe\"] = responseCode.code === 412;",
 							""
 						],
 						"type": "text/javascript"
@@ -409,7 +394,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"nombre\": \"Canela\",\n\t\"infoMascota\": \"Golden\"\n}",
+					"raw": "{\t\n\t\"nombre\": \"Daniel Garcia\",\n\t\"correo\": \"daniel@hotmail.com\",\n\t\"contrasena\": \"onceonce\",\n\t\"infoContacto\": \"Llamame\",\n\t\"foto\": \"Sin foto\",\n\t\"precio\": 2000.0,\n\t\"ganancias\": 2000.0,\n\t\"infoAdicional\": \"Ninguna info\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -417,7 +402,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/2324234",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -426,17 +411,15 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas",
-						"0"
+						"paseadores",
+						"2324234"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar una mascota",
+			"name": "Borrar un paseador",
 			"event": [
 				{
 					"listen": "test",
@@ -453,7 +436,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas/{{mascota1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{new_id_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -462,17 +445,15 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas",
-						"{{mascota1}}"
+						"paseadores",
+						"{{new_id_a}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar una mascota que no existe",
+			"name": "Borrar un paseador que no existe",
 			"event": [
 				{
 					"listen": "test",
@@ -490,7 +471,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/clientes/{{id_cliente_mascotas}}/mascotas/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -499,9 +480,7 @@
 					"path": [
 						"s3_paseadores-api",
 						"api",
-						"clientes",
-						"{{id_cliente_mascotas}}",
-						"mascotas",
+						"paseadores",
 						"0"
 					]
 				}
