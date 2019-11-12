@@ -3,7 +3,16 @@
   <persistence-unit name="paseadoresPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
-    
+    <class>co.edu.uniandes.csw.paseadores.entities.CalificacionEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.ClienteEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.ComentarioEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.ContratoEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.MascotaEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.PagoEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.PaseadorEntity</class>
+    <class>co.edu.uniandes.csw.paseadores.entities.ZonaEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
