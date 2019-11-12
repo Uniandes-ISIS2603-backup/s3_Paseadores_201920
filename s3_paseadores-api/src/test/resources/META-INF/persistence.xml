@@ -13,6 +13,7 @@
     <class>co.edu.uniandes.csw.paseadores.entities.PagoEntity</class>
     <class>co.edu.uniandes.csw.paseadores.entities.PaseadorEntity</class>
     <class>co.edu.uniandes.csw.paseadores.entities.ZonaEntity</class>
+    
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
