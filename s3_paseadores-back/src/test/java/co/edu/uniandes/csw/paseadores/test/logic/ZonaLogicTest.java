@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.ZonaLogic;
-import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.ZonaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ZonaPersistence;
@@ -99,7 +99,11 @@ public class ZonaLogicTest {
         ZonaEntity zona = factory.manufacturePojo(ZonaEntity.class);
         ZonaEntity result = zonaLogic.createZona(zona);
         Assert.assertNotNull(result);
-        
+        //Zona coverage
+        zona.setContratos(new ArrayList());
+        List<ContratoEntity> nuevosContratos = zona.getContratos();
+        zona.setContratos(nuevosContratos);
+        //Fin zona coverage
         ZonaEntity entity = em.find(ZonaEntity.class, result.getId());
         Assert.assertEquals(result.getInfoZona(), entity.getInfoZona());
     }

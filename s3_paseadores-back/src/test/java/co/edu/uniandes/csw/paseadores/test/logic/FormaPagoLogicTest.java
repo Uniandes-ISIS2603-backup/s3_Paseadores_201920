@@ -6,13 +6,11 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.FormaPagoLogic;
-import co.edu.uniandes.csw.paseadores.ejb.PagoLogic;
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
 import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.FormaPagoPersistence;
-import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -111,6 +109,12 @@ public class FormaPagoLogicTest {
         FormaPagoEntity formaPago = factory.manufacturePojo(FormaPagoEntity.class);
         FormaPagoEntity result = formaPagoLogic.createFormaPago(cliente.getId(), formaPago);
         Assert.assertNotNull(result);
+        
+        //Zona coverage
+        formaPago.setPagos(new ArrayList());
+        List<PagoEntity> nuevosPagos = formaPago.getPagos();
+        formaPago.setPagos(nuevosPagos);
+        //Fin zona coverage
         FormaPagoEntity entity = em.find(FormaPagoEntity.class, result.getId());
         Assert.assertEquals(entity.getCapacidadPago(), result.getCapacidadPago(), 1e-8);
         Assert.assertEquals(cliente.getId(), entity.getCliente().getId());

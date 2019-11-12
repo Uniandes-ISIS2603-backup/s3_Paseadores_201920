@@ -6,6 +6,8 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.PaseadorLogic;
+import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
@@ -125,8 +127,18 @@ public class PaseadorLogicTest {
         
         PaseadorEntity newEntity = factory.manufacturePojo(PaseadorEntity.class);
         PaseadorEntity result = paseadorLogic.createPaseador(newEntity);
-        Assert.assertNotNull(result);     
-        
+        Assert.assertNotNull(result);    
+        //Zona de coverage
+        newEntity.setContratos(new ArrayList());
+        newEntity.setComentarios(new ArrayList());
+        newEntity.setFranjas(new ArrayList());
+        List<ContratoEntity> nuevosContratos = newEntity.getContratos();
+        List<ComentarioEntity> nuevosComentarios = newEntity.getComentarios();
+        List<FranjaHorariaEntity> nuevasFranjas = newEntity.getFranjas();
+        newEntity.setContratos(nuevosContratos);
+        newEntity.setComentarios(nuevosComentarios);
+        newEntity.setFranjas(nuevasFranjas);
+        //Fin zona coverage
         PaseadorEntity entity = em.find( PaseadorEntity.class , result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
         

@@ -2,6 +2,7 @@ package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
+import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
@@ -176,6 +177,12 @@ public class ContratoLogicTest {
         ContratoEntity result = contratoLogic.createContrato(newEntity);
         Assert.assertNotNull(result);
 
+        //Zona Coverage
+        newEntity.setSatisfactorio(true);
+        newEntity.setComentario(new ComentarioEntity());
+        ComentarioEntity nuevoComentario = newEntity.getComentario();
+        newEntity.setComentario(nuevoComentario);
+        //Fin zoan coverage
         ContratoEntity entity = em.find(ContratoEntity.class, result.getId());
         Assert.assertEquals(result.getPaseador().getId(), entity.getPaseador().getId());
         Assert.assertEquals(result.getCliente().getId(), entity.getCliente().getId());

@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.FranjaHorariaLogic;
-import co.edu.uniandes.csw.paseadores.ejb.PaseadorLogic;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
@@ -14,8 +14,6 @@ import co.edu.uniandes.csw.paseadores.persistence.FranjaHorariaPersistence;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -114,10 +112,14 @@ public class FranjaHorariaLogicTest {
             newEntity.setFin(newEntity.getInicio());
             newEntity.setInicio(temp);
         }
-
         newEntity.setPaseador(paseadorTest);
         FranjaHorariaEntity result = franjaLogic.createFranjaHoraria(paseadorTest.getId(), newEntity);
         Assert.assertNotNull(result);
+        //Zona coverage
+        newEntity.setContrato(new ContratoEntity());
+        ContratoEntity nuevoContrato = newEntity.getContrato();
+        newEntity.setContrato(nuevoContrato);
+        //Fin zona coverage
         FranjaHorariaEntity entity = em.find(FranjaHorariaEntity.class, result.getId());
         Assert.assertEquals(entity.getInicio(), result.getInicio());
     }

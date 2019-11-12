@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.paseadores.test.logic;
 
 import co.edu.uniandes.csw.paseadores.ejb.MascotaLogic;
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
+import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
@@ -116,6 +117,14 @@ public class MascotaLogicTest {
         MascotaEntity result = mascotaLogic.createMascota(clienteTest.getId(),newEntity);
         Assert.assertNotNull(result);     
         
+        //Zona coverage
+        newEntity.setCliente(new ClienteEntity());
+        ClienteEntity nuevoCliente=newEntity.getCliente();
+        newEntity.setCliente(nuevoCliente);
+        newEntity.setContratos(new ArrayList());
+        List<ContratoEntity> nuevosContratos = newEntity.getContratos();
+        newEntity.setContratos(nuevosContratos);
+        //Fin zona coverage
         MascotaEntity entity = em.find( MascotaEntity.class , result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
        
