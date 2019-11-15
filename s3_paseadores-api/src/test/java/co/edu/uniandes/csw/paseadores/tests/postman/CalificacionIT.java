@@ -1,14 +1,12 @@
+package co.edu.uniandes.csw.paseadores.tests.postman;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.paseadores.tests.postman;
-
-import co.edu.uniandes.csw.paseadores.dtos.CalificacionDTO;
-import co.edu.uniandes.csw.paseadores.dtos.ClienteDTO;
+import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
 import co.edu.uniandes.csw.paseadores.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.paseadores.resources.CalificacionResource;
 import co.edu.uniandes.csw.paseadores.resources.ClienteResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
@@ -25,12 +23,13 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Santiago Bolaños Vega
+ * @author Santiagoooo
  */
 @RunWith(Arquillian.class)
-public class CalificacionIT {
-
-    private final static String COLLECTION = "CalificacionResourceTests.postman_collection";
+public class CalificacionIT
+{
+    
+    private static final String COLLECTION = "CortoResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -40,9 +39,10 @@ public class CalificacionIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(CalificacionResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(CalificacionDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(ComentarioDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
+                .addPackage(ClienteResource.class.getPackage())
+                
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // El archivo beans.xml es necesario para injeccion de dependencias.
@@ -58,12 +58,14 @@ public class CalificacionIT {
         PostmanTestBuilder tp = new PostmanTestBuilder();
         tp.setTestWithoutLogin(COLLECTION, "Entorno-IT.postman_environment");
         String desiredResult = "0";
+        if(tp.getIterations_failed()!=null)
         Assert.assertEquals("Error en Iterations de: " + COLLECTION, desiredResult, tp.getIterations_failed());
-
+        if(tp.getRequests_failed()!=null)
         Assert.assertEquals("Error en Requests de: " + COLLECTION, desiredResult, tp.getRequests_failed());
-
+        if(tp.getTest_scripts_failed()!=null)
         Assert.assertEquals("Error en Test-Scripts de: " + COLLECTION, desiredResult, tp.getTest_scripts_failed());
-
+        if(tp.getAssertions_failed()!=null)
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
     }
+
 }
