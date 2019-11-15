@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 public class CalificacionIT
 {
     
-    private static final String COLLECTION = "CortoResourceTest.postman_collection";
+    private static final String COLLECTION = "CalificacionResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

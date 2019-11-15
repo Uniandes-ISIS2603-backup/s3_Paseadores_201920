@@ -5,10 +5,8 @@
  */
 package co.edu.uniandes.csw.paseadores.tests.postman;
 
-import co.edu.uniandes.csw.paseadores.dtos.ClienteDTO;
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.paseadores.resources.ClienteResource;
 import co.edu.uniandes.csw.paseadores.resources.ContratoResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
@@ -30,7 +28,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ContratoIT {
 
-    private final static String COLLECTION = "ContratoResourceTests.postman_collection";
+    private final static String COLLECTION = "ContratoResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
