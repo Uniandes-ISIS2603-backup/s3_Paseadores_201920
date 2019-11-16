@@ -445,7 +445,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"valorServicio\": 2500.0,\n\t\"pagoRealizado\": false,\n\t\"formaPago\":{\n\t\t\"id\": {{id_forma_pago}}\n\t}\n}",
+					"raw": "{\n\t\"calificacion\": 3,\n\t\"contrato\":{\n\t\t\"id\": {{id_contrato}}\n\t}\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -453,7 +453,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}/pagos",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}/calificaciones",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -464,7 +464,7 @@
 						"api",
 						"contratos",
 						"{{id_contrato}}",
-						"pagos"
+						"calificaciones"
 					]
 				}
 			},
@@ -527,7 +527,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/contratos/{{id_contrato}}/calificaciones",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -537,7 +537,8 @@
 						"s3_paseadores-api",
 						"api",
 						"contratos",
-						"{{id_contrato}}"
+						"{{id_contrato}}",
+						"calificaciones"
 					]
 				}
 			},
