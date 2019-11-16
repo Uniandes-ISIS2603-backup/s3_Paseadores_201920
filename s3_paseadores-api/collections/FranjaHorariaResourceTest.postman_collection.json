@@ -66,7 +66,7 @@
 						"id": "c31b02d6-d728-4ae9-91b7-26e154039231",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"franja1\",data.id);",
+							"postman.setGlobalVariable(\"franja_a\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -120,7 +120,7 @@
 						"id": "29f8046d-fe3b-4bef-a676-f86fb024a138",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"franja2\",data.id);",
+							"postman.setGlobalVariable(\"franja_b\",data.id);",
 							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -222,7 +222,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -234,7 +234,7 @@
 						"paseadores",
 						"{{id_paseador_franja}}",
 						"franjas",
-						"{{franja1}}"
+						"{{franja_a}}"
 					]
 				}
 			},
@@ -313,7 +313,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -325,7 +325,7 @@
 						"paseadores",
 						"{{id_paseador_franja}}",
 						"franjas",
-						"{{franja1}}"
+						"{{franja_a}}"
 					]
 				}
 			},
@@ -402,7 +402,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja1}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_paseadores-api/api/paseadores/{{id_paseador_franja}}/franjas/{{franja_a}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -414,7 +414,7 @@
 						"paseadores",
 						"{{id_paseador_franja}}",
 						"franjas",
-						"{{franja1}}"
+						"{{franja_a}}"
 					]
 				}
 			},
