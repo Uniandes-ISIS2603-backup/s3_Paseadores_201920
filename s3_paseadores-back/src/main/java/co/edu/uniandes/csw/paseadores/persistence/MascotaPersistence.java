@@ -48,11 +48,7 @@ public class MascotaPersistence {
         q.setParameter("idmascota", idMascota);
         List<MascotaEntity> results = q.getResultList();
         MascotaEntity mascota = null;
-        if (results == null) {
-            mascota = null;
-        } else if (results.isEmpty()) {
-            mascota = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty()) {
             mascota = results.get(0);
         }
         return mascota;

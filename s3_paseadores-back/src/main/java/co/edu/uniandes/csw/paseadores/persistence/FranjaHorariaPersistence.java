@@ -48,11 +48,7 @@ public class FranjaHorariaPersistence {
         q.setParameter("franjaId", franjaId);
         List<FranjaHorariaEntity> results = q.getResultList();
         FranjaHorariaEntity franja = null;
-        if (results == null) {
-            franja = null;
-        } else if (results.isEmpty()) {
-            franja = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty()) {
             franja = results.get(0);
         }
         return franja;

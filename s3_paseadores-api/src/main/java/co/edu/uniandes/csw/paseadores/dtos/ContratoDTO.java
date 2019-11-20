@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
@@ -11,35 +6,74 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * DTO que representa un contrato.
  *
  * @author Nicolas Potes Garcia
  */
 public class ContratoDTO implements Serializable {
 
-    //Atributos:
+    /**
+     * Atributos.
+     */
+    
+    /**
+     * Valor del servicio.
+     */
     private Double valorServicio;
 
+    /**
+     * Servicio satisfacotrio.
+     */
     private Boolean satisfactorio;
 
+    /**
+     * Contrato finalizado.
+     */
     private Boolean finalizado;
 
+    /**
+     * Paseador.
+     */
     private PaseadorDTO paseador;
 
+    /**
+     * Cliente.
+     */
     private ClienteDTO cliente;
 
+    /**
+     * Franja horaria del contrato.
+     */
     private FranjaHorariaDTO franja;
 
+    /**
+     * Zona del contrato.
+     */
     private ZonaDTO zona;
 
+    /**
+     * Pago asociado.
+     */
     private PagoDTO pago;
 
+    /**
+     * Comentario del contrato.
+     */
     private ComentarioDTO comentario;
 
+    /**
+     * Calififcación del servicio.
+     */
     private CalificacionDTO calificacion;
 
+    /**
+     * Id del contrato.
+     */
     private Long id;
 
-    //Constructor de contrato vacío
+    /**
+     * Constructor por defecto.
+     */
     public ContratoDTO() {
 
     }
@@ -106,7 +140,6 @@ public class ContratoDTO implements Serializable {
      * Convierte un objeto ContratoDTO a ContratoEntity.
      *
      * @return Nuevo objeto ContratoEntity.
-     *
      */
     public ContratoEntity toEntity() {
         ContratoEntity contratoEntity = new ContratoEntity();
@@ -146,126 +179,209 @@ public class ContratoDTO implements Serializable {
         return contratoEntity;
     }
 
-    //Metodos
+    /**
+     * Retorna el Id
+     *
+     * @return id.
+     */
     public Long getId() {
-
         return id;
-
     }
 
+    /**
+     * Modifica el id
+     *
+     * @param pId
+     */
     public void setId(Long pId) {
-
         id = pId;
-
     }
 
-    //Setters y getters
+    /**
+     * Indica si fanizalizo
+     *
+     * @return finalizado.
+     */
     public Boolean getFinalizado() {
-
         return finalizado;
-
     }
 
+    /**
+     * Modifica el paseador.
+     *
+     * @param paseador
+     */
     public void setPaseador(PaseadorDTO paseador) {
         this.paseador = paseador;
     }
 
+    /**
+     * Modifica el cliente.
+     *
+     * @param cliente
+     */
     public void setCliente(ClienteDTO cliente) {
         this.cliente = cliente;
     }
 
+    /**
+     * Modifica la franfa.
+     *
+     * @param franja
+     */
     public void setFranja(FranjaHorariaDTO franja) {
         this.franja = franja;
     }
 
+    /**
+     * Modifica la zona.
+     *
+     * @param zona
+     */
     public void setZona(ZonaDTO zona) {
         this.zona = zona;
     }
 
+    /**
+     * Modifica el pago.
+     *
+     * @param pago
+     */
     public void setPago(PagoDTO pago) {
         this.pago = pago;
     }
 
+    /**
+     * Modifica el comentario.
+     *
+     * @param comentario
+     */
     public void setComentario(ComentarioDTO comentario) {
         this.comentario = comentario;
     }
 
+    /**
+     * Modifica la calificacion.
+     *
+     * @param calificacion
+     */
     public void setCalificacion(CalificacionDTO calificacion) {
         this.calificacion = calificacion;
     }
-    
-    
 
+    /**
+     * Modifica el estado de finalización.
+     *
+     * @param pFinalizado
+     */
     public void setFinalizado(Boolean pFinalizado) {
-
         finalizado = pFinalizado;
-
     }
 
+    /**
+     * Retorna el valor del servicio.
+     *
+     * @return valorServicio.
+     */
     public Double getValorServicio() {
-
         return valorServicio;
-
     }
 
+    /**
+     * Modifica el valor del servicio.
+     *
+     * @param pValorServicio
+     */
     public void setValorServicio(Double pValorServicio) {
-
         valorServicio = pValorServicio;
-
     }
 
+    /**
+     * Indica si fue satisfactorio el servicio.
+     *
+     * @return satisfactoro.
+     */
     public Boolean getSatisfactorio() {
-
         return satisfactorio;
-
     }
 
+    /**
+     * Modifica satisfactorio.
+     *
+     * @param pSatisfactorio
+     */
     public void setSatisfactorio(Boolean pSatisfactorio) {
-
         satisfactorio = pSatisfactorio;
-
     }
 
+    /**
+     * Retorna el cliente.
+     *
+     * @return cliente
+     */
     public ClienteDTO getCliente() {
-
         return cliente;
-
     }
 
+    /**
+     * Retorna el paseador
+     *
+     * @return paseador.
+     */
     public PaseadorDTO getPaseador() {
-
         return paseador;
-
     }
 
+    /**
+     * Retorna la zona.
+     *
+     * @return zona.
+     */
     public ZonaDTO getZona() {
-
         return zona;
-
     }
 
+    /**
+     * Retorna el pago.
+     *
+     * @return pago.
+     */
     public PagoDTO getPago() {
-
         return pago;
-
     }
 
+    /**
+     * Retorna el comentario.
+     *
+     * @return comentario.
+     */
     public ComentarioDTO getComentario() {
-
         return comentario;
-
     }
 
+    /**
+     * Retorna la calificación.
+     *
+     * @return calificación.
+     */
     public CalificacionDTO getCalificacion() {
-
         return calificacion;
-
     }
 
+    /**
+     * Retorna la franja.
+     *
+     * @return franja
+     */
     public FranjaHorariaDTO getFranja() {
         return franja;
     }
-    
+
+    /**
+     * Convierte el DTO a String
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

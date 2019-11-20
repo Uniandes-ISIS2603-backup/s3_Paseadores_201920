@@ -54,11 +54,7 @@ public class PagoPersistence {
         q.setParameter("idPago", idPago);
         List<PagoEntity> results = q.getResultList();
         PagoEntity pago = null;
-        if (results == null) {
-            pago = null;
-        } else if (results.isEmpty()) {
-            pago = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty()) {
             pago = results.get(0);
         }
         return pago;

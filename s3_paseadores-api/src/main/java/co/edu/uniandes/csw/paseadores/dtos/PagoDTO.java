@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
@@ -13,36 +8,58 @@ import java.io.Serializable;
  *
  * @author Mario Hurtado
  */
-public class PagoDTO implements Serializable
-{
+public class PagoDTO implements Serializable {
 
-    //Atributos
+    /**
+     * Atributos.
+     */
+
+    /**
+     * Valor del servicio.
+     */
     private Double valorServicio;
 
+    /**
+     * Pago realizado.
+     */
     private Boolean pagoRealizado;
 
+    /**
+     * Id del pago.
+     */
     private Long id;
 
+    /**
+     * Forma de pago.
+     */
     private FormaPagoDTO formaPago;
 
-    //Constructor
+    /**
+     * Contructor a partir de una entidad.
+     *
+     * @param pago Entidad.
+     */
     public PagoDTO(PagoEntity pago) {
         if (pago != null) {
             this.pagoRealizado = pago.getPagoRealizado();
             this.valorServicio = pago.getValorServicio();
             this.id = pago.getId();
-            if( pago.getFormaPago() != null ){
+            if (pago.getFormaPago() != null) {
                 this.formaPago = new FormaPagoDTO(pago.getFormaPago());
             }
         }
     }
 
+    /**
+     * Constructor por defecto.
+     */
     public PagoDTO() {
 
     }
 
-    //Métodos
     /**
+     * Retorna el valor del servicio.
+     *
      * @return the valorServicio
      */
     public Double getValorServicio() {
@@ -50,6 +67,8 @@ public class PagoDTO implements Serializable
     }
 
     /**
+     * Modifica el valor del servicio.
+     *
      * @param valorServicio the valorServicio to set
      */
     public void setValorServicio(Double valorServicio) {
@@ -57,6 +76,8 @@ public class PagoDTO implements Serializable
     }
 
     /**
+     * Indica si el pago se realizó.
+     *
      * @return the pagoRealizado
      */
     public Boolean isPagoRealizado() {
@@ -64,6 +85,8 @@ public class PagoDTO implements Serializable
     }
 
     /**
+     * Modifica pago realizado.
+     *
      * @param pagoRealizado the pagoRealizado to set
      */
     public void setPagoRealizado(Boolean pagoRealizado) {
@@ -71,6 +94,8 @@ public class PagoDTO implements Serializable
     }
 
     /**
+     * Retorna el id.
+     *
      * @return the id
      */
     public Long getId() {
@@ -78,22 +103,37 @@ public class PagoDTO implements Serializable
     }
 
     /**
+     * Modifica el Id.
+     *
      * @param id the id to set
      */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Retorna la forma de pago.
+     *
+     * @return fomraPago.
+     */
     public FormaPagoDTO getFormaPago() {
         return formaPago;
     }
 
+    /**
+     * Modifica la fomra de pago.
+     *
+     * @param formaPago
+     */
     public void setFormaPago(FormaPagoDTO formaPago) {
         this.formaPago = formaPago;
     }
-    
-    
 
+    /**
+     * Convierte el DTO en una entidad.
+     *
+     * @return entidad.
+     */
     public PagoEntity toEntity() {
         PagoEntity entity = new PagoEntity();
         entity.setPagoRealizado(this.isPagoRealizado());

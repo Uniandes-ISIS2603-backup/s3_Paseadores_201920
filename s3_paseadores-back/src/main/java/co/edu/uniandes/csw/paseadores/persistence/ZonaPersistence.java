@@ -55,20 +55,20 @@ public class ZonaPersistence {
     /**
      * Actualiza la información de una zona.
      *
-     * @param ZonaEntity zona actualizada.
+     * @param zonaEntity zona actualizada.
      * @return Información persistida.
      */
-    public ZonaEntity update(ZonaEntity ZonaEntity) {
-        return em.merge(ZonaEntity);
+    public ZonaEntity update(ZonaEntity zonaEntity) {
+        return em.merge(zonaEntity);
     }
 
     /**
      * Elimina una zona.
      *
-     * @param ZonaId Id de la zona a eliminar.
+     * @param zonaId Id de la zona a eliminar.
      */
-    public void delete(Long ZonaId) {
-        ZonaEntity authorEntity = em.find(ZonaEntity.class, ZonaId);
+    public void delete(Long zonaId) {
+        ZonaEntity authorEntity = em.find(ZonaEntity.class, zonaId);
         em.remove(authorEntity);
     }
 }

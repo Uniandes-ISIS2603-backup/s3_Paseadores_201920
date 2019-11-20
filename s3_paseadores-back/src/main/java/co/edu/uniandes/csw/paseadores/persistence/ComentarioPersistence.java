@@ -46,11 +46,7 @@ public class ComentarioPersistence {
         q.setParameter("idComentario", idComentario);
         List<ComentarioEntity> results = q.getResultList();
         ComentarioEntity comentario = null;
-        if (results == null) {
-            comentario = null;
-        } else if (results.isEmpty()) {
-            comentario = null;
-        } else if (results.size() >= 1) {
+        if ( results != null && !results.isEmpty() ) {
             comentario = results.get(0);
         }
         return comentario;

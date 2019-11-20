@@ -46,9 +46,9 @@ public class DateStrategy implements AttributeStrategy<Date> {
        Calendar c = Calendar.getInstance();
         try {
             r = SecureRandom.getInstanceStrong();
-            int MAX_YEAR = 9999;
+            int maxYear = 9999;
         c.set(Calendar.YEAR, r.nextInt(
-                MAX_YEAR - c.getActualMinimum(Calendar.YEAR) + 1)
+                maxYear - c.getActualMinimum(Calendar.YEAR) + 1)
                 + c.getActualMinimum(Calendar.YEAR));
         c.set(Calendar.DAY_OF_YEAR, r.nextInt(
                 c.getActualMaximum(Calendar.DAY_OF_YEAR) - c.getActualMinimum(Calendar.DAY_OF_YEAR) + 1)

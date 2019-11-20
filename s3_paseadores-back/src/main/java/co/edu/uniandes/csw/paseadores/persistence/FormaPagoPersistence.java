@@ -55,11 +55,7 @@ public class FormaPagoPersistence {
         q.setParameter("idFormaPago", idFormaPago);
         List<FormaPagoEntity> results = q.getResultList();
         FormaPagoEntity formaPago = null;
-        if (results == null) {
-            formaPago = null;
-        } else if (results.isEmpty()) {
-            formaPago = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty()) {
             formaPago = results.get(0);
         }
         return formaPago;
