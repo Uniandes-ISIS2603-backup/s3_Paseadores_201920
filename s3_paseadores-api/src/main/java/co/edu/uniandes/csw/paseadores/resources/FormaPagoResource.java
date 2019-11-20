@@ -71,7 +71,7 @@ public class FormaPagoResource {
     @Path("{formaPagoId: \\d+}")
     public void deletePago(@PathParam("formaPagoId") Long formaPagoId, @PathParam("clientesId") Long clientesId) throws BusinessLogicException 
     {
-        if (formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId) == null) {
+        if (formaPagoLogic.getFormaPago(clientesId, formaPagoId) == null) {
             throw new WebApplicationException("El recurso /formasPago/" + formaPagoId + " no existe.", 404);
         }
         
@@ -94,7 +94,7 @@ public class FormaPagoResource {
     @Path("{formaPagoId: \\d+}")
     public FormaPagoDTO getFormaPago(@PathParam("formaPagoId") Long formaPagoId, @PathParam("clientesId") Long clientesId) throws BusinessLogicException {
     	
-        FormaPagoEntity entity = formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId);
+        FormaPagoEntity entity = formaPagoLogic.getFormaPago(clientesId, formaPagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/formasPago/" + formaPagoId + " no existe.", 404);
         }
@@ -143,7 +143,7 @@ public class FormaPagoResource {
         if (formaPagoId.equals(formaPago.getId())) {
             throw new BusinessLogicException("Los Id´s de la forma de pago no coinciden.");
         }
-        FormaPagoEntity entity = formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId);
+        FormaPagoEntity entity = formaPagoLogic.getFormaPago(clientesId, formaPagoId);
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/formasPago/" + formaPagoId + " no existe.", 404);
 

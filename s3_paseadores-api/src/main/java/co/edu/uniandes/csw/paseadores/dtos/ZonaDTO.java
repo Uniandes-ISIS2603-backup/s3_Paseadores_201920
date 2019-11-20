@@ -7,10 +7,6 @@ package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.ZonaEntity;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

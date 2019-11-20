@@ -75,7 +75,7 @@ public class ClienteResource {
         if( clienteLogic.getCliente(clientesId) == null ){
             throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
         }
-        ClienteDetailDTO dto = new ClienteDetailDTO(clienteLogic.updateCliente(clientesId, cliente.toEntity()));
+        ClienteDetailDTO dto = new ClienteDetailDTO(clienteLogic.updateCliente( cliente.toEntity()));
         return dto;
     }
     

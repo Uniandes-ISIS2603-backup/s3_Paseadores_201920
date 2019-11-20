@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * @author Daniel Garcia
  */
-public class PaseadorDTO implements Serializable
-{
+public class PaseadorDTO implements Serializable {
+
     private Long id;
     private String nombre;
     private String correo;
@@ -24,44 +24,39 @@ public class PaseadorDTO implements Serializable
     private Double ganancias;
     private String infoAdicional;
 
-    
     /**
      * Constructor por defecto
      */
-    public PaseadorDTO()
-    {
-        
+    public PaseadorDTO() {
+
     }
-    
+
     /**
      * Constructor a partir de la entidad
      *
      * @param paseador La entidad del paseador
      */
-    public PaseadorDTO(PaseadorEntity paseador)
-    {
-       if(paseador != null)
-       {
-            this.id=paseador.getId();
+    public PaseadorDTO(PaseadorEntity paseador) {
+        if (paseador != null) {
+            this.id = paseador.getId();
             this.nombre = paseador.getNombre();
-            this.correo=paseador.getCorreo();
-            this.contrasena=paseador.getContrasena();
-            this.infoContacto=paseador.getInfoContacto();
-            this.foto=paseador.getFoto();
-            this.precio=paseador.getPrecio();
-            this.ganancias=paseador.getGanancias();
-            this.infoAdicional=paseador.getInfoAdicional();
-       }
+            this.correo = paseador.getCorreo();
+            this.contrasena = paseador.getContrasena();
+            this.infoContacto = paseador.getInfoContacto();
+            this.foto = paseador.getFoto();
+            this.precio = paseador.getPrecio();
+            this.ganancias = paseador.getGanancias();
+            this.infoAdicional = paseador.getInfoAdicional();
+        }
     }
-    
-     /**
+
+    /**
      * Método para transformar el DTO a una entidad.
      *
      * @return La entidad del paseador asociado.
      */
-    public PaseadorEntity toEntity()
-    {
-        PaseadorEntity nuevoPaseador=new PaseadorEntity();
+    public PaseadorEntity toEntity() {
+        PaseadorEntity nuevoPaseador = new PaseadorEntity();
         nuevoPaseador.setId(this.id);
         nuevoPaseador.setNombre(this.nombre);
         nuevoPaseador.setCorreo(this.correo);
@@ -71,10 +66,10 @@ public class PaseadorDTO implements Serializable
         nuevoPaseador.setPrecio(this.precio);
         nuevoPaseador.setGanancias(this.ganancias);
         nuevoPaseador.setInfoAdicional(this.infoAdicional);
-        
+
         return nuevoPaseador;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -146,7 +141,5 @@ public class PaseadorDTO implements Serializable
     public void setInfoAdicional(String infoAdicional) {
         this.infoAdicional = infoAdicional;
     }
-    
-    
-    
+
 }

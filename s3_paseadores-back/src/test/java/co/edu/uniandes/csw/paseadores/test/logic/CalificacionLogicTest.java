@@ -36,32 +36,32 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 
 public class CalificacionLogicTest {
-
+    
     private PodamFactory factory = new PodamFactoryImpl();
-
+    
     @Inject
     private CalificacionLogic calificacionLogic;
-
+    
     @PersistenceContext
     private EntityManager em;
-
+    
     @Inject
     UserTransaction utx;
-
+    
     private ArrayList<CalificacionEntity> data = new ArrayList<>();
-
+    
     private ArrayList<ContratoEntity> contratos = new ArrayList<>();
-
+    
     private ArrayList<PaseadorEntity> paseadores = new ArrayList<>();
-
+    
     private ArrayList<ClienteEntity> clientes = new ArrayList<>();
-
+    
     private ContratoEntity contratoTest;
-
+    
     private PaseadorEntity paseadorTest;
-
+    
     private ClienteEntity clienteTest;
-
+    
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -71,7 +71,7 @@ public class CalificacionLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
+    
     @Before
     public void configTest() {
         try {
@@ -113,7 +113,7 @@ public class CalificacionLogicTest {
         contratoTest.setPaseador(paseadorTest);
         contratoTest.setCliente(clienteTest);
         em.persist(contratoTest);
-
+        
         for (int i = 0; i < 3; ++i) {
             ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
             em.persist(cliente);
@@ -133,7 +133,7 @@ public class CalificacionLogicTest {
             paseadores.add(paseador);
         }
     }
-
+    
     @Test
     public void createCalificacion() throws BusinessLogicException {
         CalificacionEntity calificacion = factory.manufacturePojo(CalificacionEntity.class);
@@ -142,16 +142,17 @@ public class CalificacionLogicTest {
         Assert.assertNotNull(result);
         Assert.assertEquals(result.getCalificacion(), calificacion.getCalificacion());
     }
-
+    
     @Test
     public void getCalificacionTest() throws BusinessLogicException {
         CalificacionEntity calificacion = data.get(0);
         CalificacionEntity result = calificacionLogic.getCalificacion(calificacion.getPaseador().getId(), calificacion.getId());
         Assert.assertNotNull(result);
+        Assert.assertEquals(calificacion.getCalificacion(), result.getCalificacion());
+        Assert.assertEquals(calificacion.getContrato().getId(), calificacion.getContrato().getId());
         Assert.assertEquals(calificacion.getPaseador().getId(), result.getPaseador().getId());
-        Assert.assertEquals(calificacion.getContrato().getId(), result.getContrato().getId());
     }
-
+    
     @Test
     public void getCalificacionesTest() {
         List<CalificacionEntity> calificaciones = calificacionLogic.getCalificaciones();
@@ -167,7 +168,7 @@ public class CalificacionLogicTest {
             Assert.assertTrue(found);
         }
     }
-
+    
     @Test
     public void updateCalificacionTest() throws BusinessLogicException {
         CalificacionEntity calificacion = data.get(0);
@@ -179,7 +180,7 @@ public class CalificacionLogicTest {
         Assert.assertNotNull(resp);
         Assert.assertEquals(pojoCalificacion.getCalificacion(), resp.getCalificacion());
     }
-
+    
     @Test
     public void deleteCalificacionTest() throws BusinessLogicException {
         CalificacionEntity calificacion = data.get(0);

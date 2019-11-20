@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
@@ -15,18 +10,34 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
+ * Logica de una forma de pago.
  *
  * @author Mario Hurtado
  */
 @Stateless
 public class FormaPagoLogic {
 
+    /**
+     * Persistencia de la forma de pago.
+     */
     @Inject
     private FormaPagoPersistence persistence;
 
+    /**
+     * Persistencia de los clientes.
+     */
     @Inject
     private ClientePersistence clientePersistence;
 
+    /**
+     * Crea una nueva forma de apgo.
+     *
+     * @param idCliente. Id del cliente.
+     * @param formaPago. Informaci[on de la forma de pago.
+     * @return Forma de pago creada.
+     * @throws BusinessLogicException Si la forma de pago no cumple con las
+     * reglas de negocio.
+     */
     public FormaPagoEntity createFormaPago(Long idCliente, FormaPagoEntity formaPago) throws BusinessLogicException {
 
         ClienteEntity cliente = clientePersistence.find(idCliente);
@@ -47,8 +58,23 @@ public class FormaPagoLogic {
      * @param idFormaPago
      * @return Instancia de FormaPagoEntity con los datos consultados.
      */
-    public FormaPagoEntity getFormaPagoPorCliente(Long idCliente, Long idFormaPago) {
+    public FormaPagoEntity getFormaPago(Long idCliente, Long idFormaPago) {
         return persistence.find(idCliente, idFormaPago);
+    }
+
+    /**
+     * Retorna todas las formas de pago asociada a un cliente partícular.
+     *
+     * @param idCliente Id del cliente.
+     * @return Formas de pago.
+     * @throws BusinessLogicException Si el cliente no existe.
+     */
+    public List<FormaPagoEntity> getFormasPagoCliente(Long idCliente) throws BusinessLogicException {
+        ClienteEntity cliente = clientePersistence.find(idCliente);
+        if (cliente == null) {
+            throw new BusinessLogicException("No hay un cliente con el id " + idCliente);
+        }
+        return cliente.getFormasPago();
     }
 
     /**
@@ -57,8 +83,7 @@ public class FormaPagoLogic {
      * @return Colección de objetos de FomraPagoEntity.
      */
     public List<FormaPagoEntity> getFormasPago() {
-        List<FormaPagoEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -78,9 +103,7 @@ public class FormaPagoLogic {
             throw new BusinessLogicException("La capacidad debe ser mayor a 0");
         }
         formaPago.setCliente(cliente);
-        FormaPagoEntity nuevaFormaEntidad = persistence.update(formaPago);
-
-        return nuevaFormaEntidad;
+        return persistence.update(formaPago);
     }
 
     /**
@@ -92,7 +115,7 @@ public class FormaPagoLogic {
      *
      */
     public void deleteFormaPago(Long idCliente, Long formaPagoId) throws BusinessLogicException {
-        FormaPagoEntity formaPagoAntigua = getFormaPagoPorCliente(idCliente, formaPagoId);
+        FormaPagoEntity formaPagoAntigua = getFormaPago(idCliente, formaPagoId);
         if (formaPagoAntigua == null) {
             throw new BusinessLogicException("El cliente " + idCliente + " no tiene una forma de pago " + formaPagoId);
         }

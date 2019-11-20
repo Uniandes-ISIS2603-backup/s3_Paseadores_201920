@@ -1,27 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
+ * Lógica de un paseador.
  *
  * @author Daniel García
  */
 @Stateless
 public class PaseadorLogic {
 
+    /**
+     * Persistencia de un paseador.
+     */
     @Inject
     private PaseadorPersistence persistence;
 
@@ -82,8 +79,7 @@ public class PaseadorLogic {
      * @return Colección de objetos de PaseadorEntity.
      */
     public List<PaseadorEntity> getPaseadores() {
-        List<PaseadorEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -100,17 +96,17 @@ public class PaseadorLogic {
         if (paseadorEntity.getCorreo() == null || paseadorEntity.getCorreo().equals("") || NumberUtils.isCreatable(paseadorEntity.getCorreo())) {
             throw new BusinessLogicException("El correo del paseador es nulo o tiene un formato incorrecto");
         }
-        if (paseadorEntity.getContrasena() == null || paseadorEntity.getContrasena().equals("")) {
-            throw new BusinessLogicException("La contrasena del paseador es nulo o tiene un formato incorrecto");
-        }
-        if (paseadorEntity.getFoto() == null || paseadorEntity.getFoto().equals("") || NumberUtils.isCreatable(paseadorEntity.getFoto())) {
-            throw new BusinessLogicException("La foto del paseador es nulo o tiene un formato incorrecto");
-        }
         if (paseadorEntity.getInfoContacto() == null || paseadorEntity.getInfoContacto().equals("")) {
             throw new BusinessLogicException("La informacion de contacto del paseador es nulo o tiene un formato incorrecto");
         }
         if (paseadorEntity.getPrecio() == null || paseadorEntity.getPrecio() <= 0) {
             throw new BusinessLogicException("El precio del paseador es nulo");
+        }
+        if (paseadorEntity.getContrasena() == null || paseadorEntity.getContrasena().equals("")) {
+            throw new BusinessLogicException("La contrasena del paseador es nulo o tiene un formato incorrecto");
+        }
+        if (paseadorEntity.getFoto() == null || paseadorEntity.getFoto().equals("") || NumberUtils.isCreatable(paseadorEntity.getFoto())) {
+            throw new BusinessLogicException("La foto del paseador es nulo o tiene un formato incorrecto");
         }
         if (paseadorEntity.getGanancias() == null || paseadorEntity.getGanancias() < 0) {
             throw new BusinessLogicException("Las ganancias del paseador son nulo");
@@ -118,8 +114,7 @@ public class PaseadorLogic {
         if (paseadorEntity.getInfoAdicional() == null) {
             throw new BusinessLogicException("La informacion adicional del paseador es nulo");
         }
-        PaseadorEntity newPaseadorEntity = persistence.update(paseadorEntity);
-        return newPaseadorEntity;
+        return persistence.update(paseadorEntity);
     }
 
     /**
@@ -129,8 +124,7 @@ public class PaseadorLogic {
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      *
      */
-    public void deletePaseador(Long paseadorId) throws BusinessLogicException 
-    {
+    public void deletePaseador(Long paseadorId) throws BusinessLogicException {
         PaseadorEntity paseador = persistence.find(paseadorId);
         if (paseador.getContratos() != null && !paseador.getContratos().isEmpty()) {
             throw new BusinessLogicException("El paseador todavia tiene contratos");

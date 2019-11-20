@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
@@ -12,25 +7,33 @@ import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- * clase que define la logica de la calificacion
+ * Clase que define la logica de la calificacion
  *
  * @author Juan Vergara
  */
 @Stateless
 public class CalificacionLogic {
 
+    /**
+     * Persistencia de la calificacion.
+     */
     @Inject
     private CalificacionPersistence persistence;
 
+    /**
+     * Persistencia del contrato.
+     */
     @Inject
     private ContratoPersistence contratoPersistence;
-    
+
+    /**
+     * Persistencia del paseador.
+     */
     @Inject
     private PaseadorPersistence paseadorPersistence;
 
@@ -46,23 +49,15 @@ public class CalificacionLogic {
     public CalificacionEntity createCalificacion(Long idContrato, CalificacionEntity calificacion) throws BusinessLogicException {
         if (calificacion.getCalificacion() > 5 || calificacion.getCalificacion() < 0) {
             throw new BusinessLogicException("La calificación esta fuera de los valores limites [0...5]");
-
         }
         ContratoEntity contrato = contratoPersistence.find(idContrato);
         if (contrato.getCalificacion() != null) {
             throw new BusinessLogicException("El contrato ya tiene una calificación.");
         }
-        calificacion = persistence.create(calificacion);
-        contrato.setCalificacion(calificacion);
         PaseadorEntity paseador = contrato.getPaseador();
-        List<CalificacionEntity> calificaciones = paseador.getCalificaciones();
-        if( calificaciones == null ){
-            calificaciones = new ArrayList<>();
-        }
-        calificaciones.add(calificacion);
-        paseador.setCalificaciones(calificaciones);
-        contratoPersistence.update(contrato);
-        paseadorPersistence.update(paseador);
+        calificacion.setContrato(contrato);
+        calificacion.setPaseador(paseador);
+        calificacion = persistence.create(calificacion);
         return calificacion;
     }
 
@@ -88,8 +83,7 @@ public class CalificacionLogic {
      * @return lista
      */
     public List<CalificacionEntity> getCalificaciones() {
-        List<CalificacionEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -99,8 +93,8 @@ public class CalificacionLogic {
      * @return lista
      */
     public List<CalificacionEntity> getCalificacionesPorPaseador(Long idPaseador) {
-        List<CalificacionEntity> lista = persistence.findAllPorPaseador(idPaseador);
-        return lista;
+        PaseadorEntity paseador = paseadorPersistence.find(idPaseador);
+        return paseador.getCalificaciones();
     }
 
     /**
@@ -112,20 +106,22 @@ public class CalificacionLogic {
      * @return newCalificacionEntitty
      * @throws BusinessLogicException
      */
-    public CalificacionEntity updateCalificacion(Long idContrato, CalificacionEntity calificacionEntity) throws BusinessLogicException {
-
+    public CalificacionEntity updateCalificacion( Long idContrato , CalificacionEntity calificacionEntity) throws BusinessLogicException {
         if (calificacionEntity.getCalificacion() > 5 || calificacionEntity.getCalificacion() < 0) {
             throw new BusinessLogicException("La calificación esta fuera de los valores limites [0...5]");
-
         }
-        CalificacionEntity newCalificacionEntity = persistence.update(calificacionEntity);
-        return newCalificacionEntity;
+        ContratoEntity contrato = contratoPersistence.find(idContrato);
+        if ( contrato == null || contrato.getCalificacion() != null) {
+            throw new BusinessLogicException("No se puede agregar");
+        }
+        calificacionEntity.setContrato(contrato);
+        return persistence.update(calificacionEntity);
     }
 
     /**
      * Elimina la calificacion asociada al id dado
      *
-     * @param idContrato
+     * @param idPaseador
      * @param calificacionId
      * @throws BusinessLogicException
      */

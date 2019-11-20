@@ -155,7 +155,7 @@ public class FranjaHorariaLogicTest {
 
     @Test
     public void getFranjasTest() {
-        List<FranjaHorariaEntity> franjas = franjaLogic.getFranjas(paseadorTest.getId());
+        List<FranjaHorariaEntity> franjas = franjaLogic.getFranjasPaseador(paseadorTest.getId());
         Assert.assertEquals(data.size(), franjas.size());
         for (FranjaHorariaEntity franja : franjas) {
             boolean found = false;

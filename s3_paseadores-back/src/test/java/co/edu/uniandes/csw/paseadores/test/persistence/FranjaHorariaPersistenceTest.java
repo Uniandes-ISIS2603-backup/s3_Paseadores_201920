@@ -126,18 +126,6 @@ public class FranjaHorariaPersistenceTest {
     }
 
     /**
-     * Prueba para encontrar una franja.
-     */
-    @Test
-    public void findPorPaseadorTest() {
-        List<FranjaHorariaEntity> list = fhp.findAllPorPaseador(paseadorTest.getId());
-        Assert.assertEquals(data.size(), list.size());
-        for (FranjaHorariaEntity f : list) {
-            Assert.assertEquals(f.getPaseador().getId(), paseadorTest.getId());
-        }
-    }
-
-    /**
      * Prueba para actualizar una franja.
      */
     @Test

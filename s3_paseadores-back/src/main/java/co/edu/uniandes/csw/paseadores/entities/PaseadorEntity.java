@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
@@ -14,173 +9,331 @@ import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
+ * Entidad que representa un paseador.
  *
  * @author Daniel García
  */
 @Entity
-public class PaseadorEntity extends BaseEntity implements Serializable
-{
-    //Atributos propios de la clase
-    
-    private String foto;
-    
-    private Double precio;
-    
-    private Double ganancias;
-        
-    private String infoAdicional;
-    
-    //Atributos Heredados
-    
-    private String nombre;
-    
-    private String correo;
-    
-    private String contrasena;
-    
-    private String infoContacto;
-    
-    
-    //Relaciones
-            
-    //Relacion Paseadores - FranjasHorarias
-    @PodamExclude
-    @OneToMany(mappedBy = "paseador")
-    private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
-    
-    //Relacion Paseadores - Comentarios
-    @PodamExclude
-    @OneToMany(mappedBy = "paseador")
-    private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();
-    
-    //Relacion Paseadores - Calificaciones
-    @PodamExclude
-    @OneToMany(mappedBy = "paseador")
-    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+public class PaseadorEntity extends BaseEntity implements Serializable {
 
-    //Relacion Paseadores - Zonas
+    /**
+     * Atributos.
+     */
+
+    /**
+     * Nombre del paseador.
+     */
+    private String nombre;
+
+    /**
+     * Correo del paseador.
+     */
+    private String correo;
+
+    /**
+     * Contraseña del paseador.
+     */
+    private String contrasena;
+
+    /**
+     * Información de contacto del paseador.
+     */
+    private String infoContacto;
+
+    /**
+     * Foto del paseador.
+     */
+    private String foto;
+
+    /**
+     * Tarifa del paseador.
+     */
+    private Double precio;
+
+    /**
+     * Ganancias del paseador.
+     */
+    private Double ganancias;
+
+    /**
+     * Información adicional del paseador.
+     */
+    private String infoAdicional;
+
+    /**
+     * Relaciones.
+     */
+    
+    /**
+     * Franjas ofrecidas por el paseador.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<FranjaHorariaEntity> franjas = new ArrayList<>();
+
+    /**
+     * Comentarios que se le han hecho al paseador.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
+
+    /**
+     * Calificaciones que se le han hecho al paseador.
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "paseador")
+    private List<CalificacionEntity> calificaciones = new ArrayList<>();
+
+    /**
+     * Zonas en donde el paseador ofrece sus servicios.
+     */
     @PodamExclude
     @ManyToMany(mappedBy = "paseadores")
-    private List<ZonaEntity> zonas = new ArrayList<ZonaEntity>();
-    
-    //Relacion Paseadores - Contratos
+    private List<ZonaEntity> zonas = new ArrayList<>();
+
+    /**
+     * Contratos que ha tenido el paseador.
+     */
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratos = new ArrayList<>();
 
+    /**
+     * Métodos.
+     */
+    
+    /**
+     * Retorna los contratos del paseador.
+     *
+     * @return contratos.
+     */
     public List<ContratoEntity> getContratos() {
         return contratos;
     }
 
+    /**
+     * Modifica los contratos del paseador.
+     *
+     * @param contratos
+     */
     public void setContratos(List<ContratoEntity> contratos) {
         this.contratos = contratos;
     }
- 
-    //Get Zonas
+
+    /**
+     * Obtiene las zonas donde trabaja el paseador.
+     *
+     * @return xoans
+     */
     public List<ZonaEntity> getZonas() {
         return zonas;
     }
-    //Set Zonas
+
+    /**
+     * Modifica el conjunto de zonas en el cual trabaja el paseador.
+     *
+     * @param zonas
+     */
     public void setZonas(List<ZonaEntity> zonas) {
         this.zonas = zonas;
     }
-    
-    //Get Calificaciones
+
+    /**
+     * Retorna las calififcaciones del paseador.
+     *
+     * @return calificaciones.
+     */
     public List<CalificacionEntity> getCalificaciones() {
         return calificaciones;
     }
-    //Set Calificaciones
+
+    /**
+     * Modifica las calificaciones.
+     *
+     * @param calificaciones
+     */
     public void setCalificaciones(List<CalificacionEntity> calificaciones) {
         this.calificaciones = calificaciones;
     }
 
-    //Get Comentarios
+    /**
+     * Obtiene los comentarios.
+     *
+     * @return comentarios.
+     */
     public List<ComentarioEntity> getComentarios() {
         return comentarios;
     }
-    //Set Comentarios
+
+    /**
+     * Modifica los comentarios del paseador.
+     *
+     * @param comentarios
+     */
     public void setComentarios(List<ComentarioEntity> comentarios) {
         this.comentarios = comentarios;
     }
-    
-    //Get InfoAdicional
-    public String getInfoAdicional() 
-    {
+
+    /**
+     * Obtiene la infomración adicional del apseador.
+     *
+     * @return infoAdicional.
+     */
+    public String getInfoAdicional() {
         return infoAdicional;
     }
-    //Set InfoAdicional
-    public void setInfoAdicional(String infoAdicional) 
-    {
+
+    /**
+     * Modifica la informacion adicional del paseador.
+     *
+     * @param infoAdicional
+     */
+    public void setInfoAdicional(String infoAdicional) {
         this.infoAdicional = infoAdicional;
     }
-    //Set Foto
-    public void setFoto(String pFoto)
-    {
-        foto=pFoto;
+
+    /**
+     * Modifica la foto del paseador.
+     *
+     * @param pFoto
+     */
+    public void setFoto(String pFoto) {
+        foto = pFoto;
     }
-    //Get Foto
-    public String getFoto()
-    {
+
+    /**
+     * Retorna la foto del paseador.
+     *
+     * @return foto.
+     */
+    public String getFoto() {
         return foto;
     }
-    //Set Precio
-    public void setPrecio(Double dPrecio)
-    {
-        precio=dPrecio;
+
+    /**
+     * Modifica la tarifa del paseador.
+     *
+     * @param dPrecio
+     */
+    public void setPrecio(Double dPrecio) {
+        precio = dPrecio;
     }
-    //Get Precio
-    public Double getPrecio()
-    {
+
+    /**
+     * Retorna la tarifa del paseador.
+     *
+     * @return precio.
+     */
+    public Double getPrecio() {
         return precio;
     }
-     //Set Ganancias
-    public void setGanancias(Double pGanancias)
-    {
-        ganancias=pGanancias;
+
+    /**
+     * Modifica las ganancias del paseador.
+     *
+     * @param pGanancias
+     */
+    public void setGanancias(Double pGanancias) {
+        ganancias = pGanancias;
     }
-    //Get Ganancias
-    public Double getGanancias()
-    {
+
+    /**
+     * Obtiene las ganancias del paseador.
+     *
+     * @return ganancias.
+     */
+    public Double getGanancias() {
         return ganancias;
-    }    
-    //Get nombre
+    }
+
+    /**
+     * Retorna el nombre del paseaodr.
+     *
+     * @return nombre.
+     */
     public String getNombre() {
         return nombre;
     }
-    //Set nombre
+
+    /**
+     * Modifica el nombre del paseador.
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    //Get Correo
+
+    /**
+     * Retorna el correo del paseador.
+     *
+     * @return correo
+     */
     public String getCorreo() {
         return correo;
     }
-    //Set Correo
+
+    /**
+     * Modifica el correo.
+     *
+     * @param correo
+     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    //Get Contraseña
+
+    /**
+     * Retorna la contraseña del paseador.
+     *
+     * @return contrasena
+     */
     public String getContrasena() {
         return contrasena;
     }
-    //Set Contraseña
+
+    /**
+     * Modifica la contraseña del paseador
+     *
+     * @param contrasena
+     */
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    //Get infoContacto
+
+    /**
+     * Retorna la infomración de contacto del paseador.
+     *
+     * @return infoContacto.
+     */
     public String getInfoContacto() {
         return infoContacto;
     }
-    //Set infoContacto
+
+    /**
+     * Modifica la infomración de contacto del paseador.
+     *
+     * @param infoContacto
+     */
     public void setInfoContacto(String infoContacto) {
         this.infoContacto = infoContacto;
     }
-    
-    public List<FranjaHorariaEntity> getFranjas(){
+
+    /**
+     * Obtiene las franjas ofrecidas por el paseeador.
+     *
+     * @return franjas
+     */
+    public List<FranjaHorariaEntity> getFranjas() {
         return franjas;
     }
-    
-    public void setFranjas(List<FranjaHorariaEntity> franjas ){
+
+    /**
+     * Modifica las franjas ofrecidas por el paseador.
+     *
+     * @param franjas
+     */
+    public void setFranjas(List<FranjaHorariaEntity> franjas) {
         this.franjas = franjas;
     }
 }

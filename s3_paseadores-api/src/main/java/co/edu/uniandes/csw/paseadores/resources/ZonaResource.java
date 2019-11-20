@@ -121,7 +121,7 @@ public class ZonaResource {
             throw new WebApplicationException("El recurso " + "/zonas/" + zonaId + " no existe.", 404);
 
         }
-        ZonaDTO zonaDTO = new ZonaDTO(zonaLogic.updateZona(zonaId, zona.toEntity()));
+        ZonaDTO zonaDTO = new ZonaDTO(zonaLogic.updateZona(zona.toEntity()));
         return zonaDTO; 
    }
     

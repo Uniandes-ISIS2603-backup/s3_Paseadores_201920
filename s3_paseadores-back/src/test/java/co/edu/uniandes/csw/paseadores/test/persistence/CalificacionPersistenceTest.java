@@ -152,15 +152,6 @@ public class CalificacionPersistenceTest {
     }
 
     @Test
-    public void getAllCalificacionPorPaseadorTest() {
-        List<CalificacionEntity> list = cp.findAllPorPaseador(paseadorTest.getId());
-        Assert.assertEquals(data.size(), list.size());
-        for (CalificacionEntity c : list) {
-            Assert.assertEquals(c.getPaseador().getId(), paseadorTest.getId());
-        }
-    }
-
-    @Test
     public void updateCalificacionTest() {
         CalificacionEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
