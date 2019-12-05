@@ -55,7 +55,7 @@ public class PaseadorResource
     public PaseadorDTO createPaseador(PaseadorDTO paseador) throws BusinessLogicException 
     {
         LOGGER.log(Level.INFO, "AuthorResource createPaseador: input: {0}", paseador);
-        PaseadorDTO paseadorDTO = new PaseadorDTO(paseadorLogic.createPaseador(paseador.toEntity()));;
+        PaseadorDTO paseadorDTO = new PaseadorDTO(paseadorLogic.createPaseador(paseador.toEntity()));
         LOGGER.log(Level.INFO, "AuthorResource createPaseador: output: {0}", paseadorDTO);
         return paseadorDTO;
     }
@@ -89,7 +89,7 @@ public class PaseadorResource
         LOGGER.log(Level.INFO, "PaseadorResource getPaseador: input: {0}", paseadoresId);
         PaseadorEntity paseadorEntity = paseadorLogic.getPaseador(paseadoresId);
         if (paseadorEntity == null) {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+            throw new WebApplicationException("El dato /paseadores/" + paseadoresId + " no se encuentra.", 404);
         }
         PaseadorDetailDTO detailDTO = new PaseadorDetailDTO(paseadorEntity);
         LOGGER.log(Level.INFO, "PaseadorResource getPaseador: output: {0}", detailDTO);
@@ -114,7 +114,7 @@ public class PaseadorResource
         LOGGER.log(Level.INFO, "PaseadorResource updatePaseador: input: paseadoresId: {0} , paseador: {1}", new Object[]{paseadoresId, paseador});
         paseador.setId(paseadoresId);
         if (paseadorLogic.getPaseador(paseadoresId) == null) {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+            throw new WebApplicationException("El registro /paseadores/" + paseadoresId + " no se encontró.", 404);
         }
         PaseadorDetailDTO detailDTO = new PaseadorDetailDTO(paseadorLogic.updatePaseador(paseadoresId, paseador.toEntity()));
         LOGGER.log(Level.INFO, "PaseadorResource updatePaseador: output: {0}", detailDTO);
@@ -135,7 +135,7 @@ public class PaseadorResource
     public void deletePaseador(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "PaseadorResource deletePaseador: input: {0}", paseadoresId);
         if (paseadorLogic.getPaseador(paseadoresId) == null) {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no fue encontrado.", 404);
         }
         paseadorLogic.deletePaseador(paseadoresId);
         LOGGER.info("PaseadorResource deletePaseador: output: void");
@@ -157,52 +157,11 @@ public class PaseadorResource
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+            throw new WebApplicationException("El dato /paseadores/" + paseadoresId + " no está en la base de datos.", 404);
         }
         return CalificacionResource.class;
     }
-    /**
-     * Conexión con el servicio de comentarios para un paseador.
-     * {@link ComentarioResource}
-     *
-     * Este método conecta la ruta de /paseadores con las rutas de /comentarios que
-     * dependen del paseador, es una redirección al servicio que maneja el segmento
-     * de la URL que se encarga de las comentarios.
-     *
-     * @param paseadoresId El ID del paseador con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de comentarios para ese paseador en particular.
-     */
-//    @Path("{paseadoresId: \\d+}/comentarios")
-//    public Class<ComentarioResource> getComentarioResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
-//    {
-//        if (paseadorLogic.getPaseador(paseadoresId) == null) 
-//        {
-//            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
-//        }
-//        return ComentarioResource.class;
-//    }
-     /**
-     * Conexión con el servicio de contratos para un paseador.
-     * {@link ContratoResource}
-     *
-     * Este método conecta la ruta de /paseadores con las rutas de /contratos que
-     * dependen del paseador, es una redirección al servicio que maneja el segmento
-     * de la URL que se encarga de las contratos.
-     *
-     * @param paseadoresId El ID del paseador con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de contratos para ese paseador en particular.
-     */
-//    @Path("{paseadoresId: \\d+}/contratos")
-//    public Class<ContratoResource> getContratoResource(@PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException 
-//    {
-//        if (paseadorLogic.getPaseador(paseadoresId) == null) 
-//        {
-//            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
-//        }
-//        return ContratoResource.class;
-//    }
+    
      /**
      * Conexión con el servicio de franjas para un paseador.
      * {@link FranjaHorariaResource}
@@ -220,7 +179,7 @@ public class PaseadorResource
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+            throw new WebApplicationException("El registro o tupla /paseadores/" + paseadoresId + " no se encuentra.", 404);
         }
         return FranjaHorariaResource.class;
     }
@@ -241,7 +200,7 @@ public class PaseadorResource
     {
         if (paseadorLogic.getPaseador(paseadoresId) == null) 
         {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + " no existe.", 404);
+            throw new WebApplicationException("El dato o registro /paseadores/" + paseadoresId + " no existe.", 404);
         }
         return ZonaResource.class;
     }

@@ -45,8 +45,7 @@ public class ZonaResource {
      */
     @POST
     public ZonaDTO createZona(ZonaDTO zona) throws BusinessLogicException{
-        ZonaDTO zonaDTO = new ZonaDTO(zonaLogic.createZona(zona.toEntity()));
-        return zonaDTO;
+        return new ZonaDTO(zonaLogic.createZona(zona.toEntity()));
     }
     /**
      * Borra la zona con el id relacionado
@@ -57,7 +56,7 @@ public class ZonaResource {
     @Path("{zonaId: \\d+}")
     public void deleteZona (@PathParam("zonaId") Long zonaId) throws BusinessLogicException{
         if( zonaLogic.getZona(zonaId)==null){
-           throw new WebApplicationException("El recurso /zonas/" + zonaId + " no existe.", 404);
+           throw new WebApplicationException("El recurso /zonas/" + zonaId + " no existe en la base de datos.", 404);
         }
         
         zonaLogic.deleteZona(zonaId);
@@ -75,10 +74,9 @@ public class ZonaResource {
     	
         ZonaEntity entity = zonaLogic.getZona(zonaId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/zonas/" + zonaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso " + "/zonas/" + zonaId + " no se encuentra.", 404);
         }
-        ZonaDTO zonaDTO = new ZonaDTO(entity);
-        return zonaDTO;
+        return new ZonaDTO(entity);
     }
     /**
      * Regresa todas las zonas existentes
@@ -87,8 +85,7 @@ public class ZonaResource {
     @GET
     public List<ZonaDTO> getZonas() {
 
-        List<ZonaDTO> listaDTOs = listEntity2DTO(zonaLogic.getZonas());
-        return listaDTOs;
+        return listEntity2DTO(zonaLogic.getZonas());
     }
     
 
@@ -98,7 +95,7 @@ public class ZonaResource {
      * @return list
      */
     private List<ZonaDTO> listEntity2DTO(List<ZonaEntity> entityList) {
-        List<ZonaDTO> list = new ArrayList<ZonaDTO>();
+        List<ZonaDTO> list = new ArrayList<>();
         for (ZonaEntity entity : entityList) {
             list.add(new ZonaDTO(entity));
         }
@@ -118,11 +115,10 @@ public class ZonaResource {
         zona.setId(zonaId);
         ZonaEntity entity = zonaLogic.getZona(zonaId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/zonas/" + zonaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso " + "/zonas/" + zonaId + " no fue encontrado.", 404);
 
         }
-        ZonaDTO zonaDTO = new ZonaDTO(zonaLogic.updateZona(zonaId, zona.toEntity()));
-        return zonaDTO; 
+        return new ZonaDTO(zonaLogic.updateZona(zonaId, zona.toEntity()));
    }
     
 }
