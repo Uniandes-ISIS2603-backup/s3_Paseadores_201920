@@ -11,13 +11,11 @@ import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -55,10 +53,11 @@ public class MascotaResource {
     @POST
     public MascotaDTO createMascota(MascotaDTO mascota, @PathParam("clientesId") Long clienteId) throws BusinessLogicException {
         MascotaEntity entidad = mascotaLogic.createMascota(clienteId, mascota.toEntity());
-        if (entidad == null) {
+        if (entidad == null) 
+        {
+            throw new BusinessLogicException("No se pudo crear");
         }
-        MascotaDTO mascotaDTO = new MascotaDTO(entidad);
-        return mascotaDTO;
+        return new MascotaDTO(entidad);
     }
 
     /**
@@ -91,7 +90,7 @@ public class MascotaResource {
         LOGGER.log(Level.INFO, "MascotaResource getMascota: input: {0}", mascotasId);
         MascotaEntity mascotaEntity = mascotaLogic.getMascota(clienteId, mascotasId);
         if (mascotaEntity == null) {
-            throw new WebApplicationException("El recurso /mascotas/" + mascotasId + " no existe.", 404);
+            throw new WebApplicationException("El dato /mascotas/" + mascotasId + " no se encuentra.", 404);
         }
         MascotaDTO detailDTO = new MascotaDTO(mascotaEntity);
         LOGGER.log(Level.INFO, "MascotaResource getMascota: output: {0}", detailDTO);
@@ -121,7 +120,7 @@ public class MascotaResource {
         }
         MascotaEntity entity = mascotaLogic.getMascota(clienteId, mascotasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /clientes/" + clienteId + "/comentarios/" + mascotasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso o tupla /clientes/" + clienteId + "/comentarios/" + mascotasId + " no se encontro.", 404);
 
         }
         MascotaDTO mascotaDTO = new MascotaDTO(mascotaLogic.updateMascota(mascotasId, mascota.toEntity()));
@@ -143,7 +142,7 @@ public class MascotaResource {
     @Path("{mascotasId: \\d+}")
     public void deleteMascota(@PathParam("mascotasId") Long mascotasId, @PathParam("clientesId") Long clienteId) throws BusinessLogicException {
         if (mascotaLogic.getMascota(clienteId, mascotasId) == null) {
-            throw new WebApplicationException("El recurso /clientes/" + clienteId + "/mascotas/" + mascotasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /clientes/" + clienteId + "/mascotas/" + mascotasId + " no fue encontrado.", 404);
         }
         mascotaLogic.deleteMascota(clienteId, mascotasId);
     }
