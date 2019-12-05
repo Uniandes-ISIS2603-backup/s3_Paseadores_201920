@@ -5,9 +5,7 @@
  */
 package co.edu.uniandes.csw.paseadores.resources;
 import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
-import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.ejb.ComentarioLogic;
-import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
 import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -19,7 +17,6 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
-//import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -53,8 +50,7 @@ public class ComentarioResource {
      */
      @POST
     public ComentarioDTO createComentario(ComentarioDTO comentario,@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
-        ComentarioDTO comentarioDTO = new ComentarioDTO(comentarioLogic.createComentario(comentario.toEntity(), contratoId));
-        return comentarioDTO;
+        return new ComentarioDTO(comentarioLogic.createComentario(comentario.toEntity(), contratoId));
     }
     
     
@@ -74,7 +70,7 @@ public class ComentarioResource {
     public void deleteComentario(@PathParam("comentarioId") Long comentarioId, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException {
     	
         if (comentarioLogic.getComentario(comentarioId, paseadoresId) == null) {
-            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El dato /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no esta disponible.", 404);
         }
         
         comentarioLogic.deleteComentario(comentarioId, paseadoresId);
@@ -98,10 +94,9 @@ public class ComentarioResource {
     	
         ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, paseadoresId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El registro /paseador/" + paseadoresId + "/comentario/" + comentarioId + " no se encuentra.", 404);
         }
-        ComentarioDTO comentarioDTO = new ComentarioDTO(entity);
-        return comentarioDTO;
+        return new ComentarioDTO(entity);
     }
     
     
@@ -115,8 +110,7 @@ public class ComentarioResource {
     @GET
     public List<ComentarioDTO> getComentarios(@PathParam("paseadorId") Long paseadorId) {
 
-        List<ComentarioDTO> listaDTOs = listEntity2DTO(comentarioLogic.getComentariosPorPaseador(paseadorId));
-        return listaDTOs;
+        return listEntity2DTO(comentarioLogic.getComentariosPorPaseador(paseadorId));
     }
     
     
@@ -126,7 +120,7 @@ public class ComentarioResource {
      * @return la lista de comentarios en forma DTO (json)
      */
     private List<ComentarioDTO> listEntity2DTO(List<ComentarioEntity> entityList) {
-        List<ComentarioDTO> list = new ArrayList<ComentarioDTO>();
+        List<ComentarioDTO> list = new ArrayList<>();
         for (ComentarioEntity entity : entityList) {
             list.add(new ComentarioDTO(entity));
         }
@@ -146,11 +140,10 @@ public class ComentarioResource {
         }
         ComentarioEntity entity = comentarioLogic.getComentario(comentarioId, paseadoresId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/comentarios/" + comentarioId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /paseador/" + paseadoresId + "/coment/" + comentarioId + " no existe.", 404);
 
         }
-        ComentarioDTO comentarioDTO = new ComentarioDTO(comentarioLogic.updateComentario(comentarioId, comentario.toEntity()));
-        return comentarioDTO;
+        return new ComentarioDTO(comentarioLogic.updateComentario(comentarioId, comentario.toEntity()));
 
     }
     

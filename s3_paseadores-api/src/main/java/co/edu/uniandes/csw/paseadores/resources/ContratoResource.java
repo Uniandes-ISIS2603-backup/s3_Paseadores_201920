@@ -5,11 +5,9 @@
  */
 package co.edu.uniandes.csw.paseadores.resources;
 
-import co.edu.uniandes.csw.paseadores.dtos.ComentarioDTO;
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDTO;
 import co.edu.uniandes.csw.paseadores.dtos.ContratoDetailDTO;
 import co.edu.uniandes.csw.paseadores.ejb.ContratoLogic;
-import co.edu.uniandes.csw.paseadores.entities.ComentarioEntity;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -53,8 +51,7 @@ public class ContratoResource {
     @POST
     public ContratoDTO createContrato(ContratoDTO contrato) throws BusinessLogicException {
         
-        ContratoDTO contratoDTO = new ContratoDTO(contratoLogic.createContrato(contrato.toEntity()));
-        return contratoDTO;
+        return new ContratoDTO(contratoLogic.createContrato(contrato.toEntity()));
     }
 
     /**
@@ -71,7 +68,7 @@ public class ContratoResource {
     public void deletContrato(@PathParam("contratoId") Long contratoId) throws BusinessLogicException {
 
         if (contratoLogic.getContrato(contratoId) == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no se logrpo encontrar.", 404);
         }
 
         contratoLogic.deleteContrato(contratoId);
@@ -92,10 +89,9 @@ public class ContratoResource {
 
         ContratoEntity entity = contratoLogic.getContrato(contratoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/contratos/" + contratoId + " no existe.", 404);
+            throw new WebApplicationException("El dato " + "/contratos/" + contratoId + " no existe.", 404);
         }
-        ContratoDetailDTO contratoDetailDTO = new ContratoDetailDTO(entity);
-        return contratoDetailDTO;
+        return new ContratoDetailDTO(entity);
     }
 
     /**
@@ -108,8 +104,7 @@ public class ContratoResource {
     @GET
     public List<ContratoDetailDTO> getContratos() {
 
-        List<ContratoDetailDTO> listaDetailDTOs = listEntity2DTO(contratoLogic.getContratos());
-        return listaDetailDTOs;
+        return listEntity2DTO(contratoLogic.getContratos());
     }
 
     /**
@@ -118,7 +113,7 @@ public class ContratoResource {
      * @return la lista de contratos en forma DTO (json)
      */
     private List<ContratoDetailDTO> listEntity2DTO(List<ContratoEntity> entityList) {
-        List<ContratoDetailDTO> list = new ArrayList<ContratoDetailDTO>();
+        List<ContratoDetailDTO> list = new ArrayList<>();
         for (ContratoEntity entity : entityList) {
             list.add(new ContratoDetailDTO(entity));
         }
@@ -140,18 +135,17 @@ public class ContratoResource {
         contrato.setId(contratoId);
         ContratoEntity entity = contratoLogic.getContrato(contratoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/contratos/" + contratoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso o tupla " + "/contratos/" + contratoId + " no se encuentra.", 404);
 
         }
-        ContratoDetailDTO contratoDetailDTO = new ContratoDetailDTO(contratoLogic.updateContrato(contratoId, contrato.toEntity()));
-        return contratoDetailDTO;
+        return new ContratoDetailDTO(contratoLogic.updateContrato(contratoId, contrato.toEntity()));
 
     }
 
     @Path("{contratoId: \\d+}/comentarios")
     public Class<ComentarioResource> getComentarioResource(@PathParam("contratoId") Long contratoId) {
         if (contratoLogic.getContrato(contratoId) == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+            throw new WebApplicationException("El dato /contratos/" + contratoId + " no fue encontrado.", 404);
         }
         return ComentarioResource.class;
     }
@@ -164,7 +158,7 @@ public class ContratoResource {
     @Path("{contratoId: \\d+}/calificaciones")
     public Class<CalificacionResource> getCalificacionResource(@PathParam("contratoId") Long contratoId) {
         if (contratoLogic.getContrato(contratoId) == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso o tupla /contratos/" + contratoId + " no fue encontrado.", 404);
         }
         return CalificacionResource.class;
     }
@@ -172,7 +166,7 @@ public class ContratoResource {
     @Path("{contratoId: \\d+}/pagos")
     public Class<PagoResource> getPagoResource(@PathParam("contratoId") Long contratoId) {
         if (contratoLogic.getContrato(contratoId) == null) {
-            throw new WebApplicationException("El recurso /contratos/" + contratoId + " no existe.", 404);
+            throw new WebApplicationException("El dato /contratos/" + contratoId + " no se encontro.", 404);
         }
         return PagoResource.class;
     }
