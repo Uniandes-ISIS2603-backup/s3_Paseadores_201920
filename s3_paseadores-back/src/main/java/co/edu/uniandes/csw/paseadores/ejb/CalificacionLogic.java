@@ -110,7 +110,7 @@ public class CalificacionLogic {
      * @return newCalificacionEntitty
      * @throws BusinessLogicException
      */
-    public CalificacionEntity updateCalificacion(CalificacionEntity calificacionEntity) throws BusinessLogicException {
+    public CalificacionEntity updateCalificacion(Long idContrato, CalificacionEntity calificacionEntity) throws BusinessLogicException {
 
         if (calificacionEntity.getCalificacion() > 5 || calificacionEntity.getCalificacion() < 0) {
             throw new BusinessLogicException("La calificación esta fuera de los valores limites [0...5]");
