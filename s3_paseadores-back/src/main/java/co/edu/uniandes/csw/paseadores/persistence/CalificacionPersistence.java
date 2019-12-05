@@ -55,7 +55,7 @@ public class CalificacionPersistence
             return paseador.getCalificaciones();
         }
         else{
-            return new ArrayList<CalificacionEntity>();
+            return new ArrayList<>();
         }
     }
     

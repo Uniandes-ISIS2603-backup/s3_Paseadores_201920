@@ -66,7 +66,7 @@ public class ClienteResource {
         
         cliente.setId(clientesId);
         if( clienteLogic.getCliente(clientesId) == null ){
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no fue encontrado.", 404);
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no fue hallado.", 404);
         }
         return new ClienteDetailDTO(clienteLogic.updateCliente(clientesId, cliente.toEntity()));
     }
@@ -75,7 +75,7 @@ public class ClienteResource {
     @Path("{clientesId: \\d+}")
     public void deleteCliente(@PathParam("clientesId") Long clientesId) throws BusinessLogicException{
         if( clienteLogic.getCliente(clientesId) == null ){
-            throw new WebApplicationException("El registro /clientes/" + clientesId + " no fue encontrado.", 404);
+            throw new WebApplicationException("El registro /clientes/" + clientesId + " no fue recabado.", 404);
         }
         clienteLogic.deleteCliente(clientesId);
     }

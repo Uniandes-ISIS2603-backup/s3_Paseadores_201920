@@ -24,7 +24,7 @@ public class ZonaLogic {
 
     public ZonaEntity createZona(ZonaEntity zona) throws BusinessLogicException {
         if (zona.getInfoZona() == null || zona.getInfoZona().replace(" ", "").isEmpty()) {
-                throw new BusinessLogicException("La información de la zona esta vacia");
+                throw new BusinessLogicException("La información de la zona es nula");
         } 
         zona = persistence.create(zona);
         return zona;
@@ -47,7 +47,7 @@ public class ZonaLogic {
                 throw new BusinessLogicException("La información de la zona esta vacia");
             }
         } else {
-            throw new BusinessLogicException("La información de la zona esta vacia");
+            throw new BusinessLogicException("La información de la zona no se encuentra");
         }
         return persistence.update(zona);
     }

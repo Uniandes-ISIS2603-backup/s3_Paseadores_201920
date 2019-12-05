@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.paseadores.persistence;
 
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
