@@ -24,7 +24,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import java.util.logging.Logger;
 
 /**
  *
@@ -47,8 +46,7 @@ public class ClienteResource {
     
     @GET
     public List<ClienteDetailDTO> getClientes(){
-        List<ClienteDetailDTO> lista = listEntity2DTO(clienteLogic.getClientes());
-        return lista;
+        return listEntity2DTO(clienteLogic.getClientes());
     }
     
     @GET
@@ -57,10 +55,9 @@ public class ClienteResource {
     {
         ClienteEntity entity = clienteLogic.getCliente(clientesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException("El dato /cliente/" + clientesId + " no se encuentra.", 404);
         }
-        ClienteDetailDTO dto = new ClienteDetailDTO(entity);
-        return dto;
+        return new ClienteDetailDTO(entity);
     }
     
     @PUT
@@ -69,17 +66,16 @@ public class ClienteResource {
         
         cliente.setId(clientesId);
         if( clienteLogic.getCliente(clientesId) == null ){
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no fue encontrado.", 404);
         }
-        ClienteDetailDTO dto = new ClienteDetailDTO(clienteLogic.updateCliente(clientesId, cliente.toEntity()));
-        return dto;
+        return new ClienteDetailDTO(clienteLogic.updateCliente(clientesId, cliente.toEntity()));
     }
     
     @DELETE
     @Path("{clientesId: \\d+}")
     public void deleteCliente(@PathParam("clientesId") Long clientesId) throws BusinessLogicException{
         if( clienteLogic.getCliente(clientesId) == null ){
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException("El registro /clientes/" + clientesId + " no fue encontrado.", 404);
         }
         clienteLogic.deleteCliente(clientesId);
     }
@@ -110,7 +106,7 @@ public class ClienteResource {
     {
         if (clienteLogic.getCliente(clientesId) == null) 
         {
-            throw new WebApplicationException("El recurso /paseadores/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException("El dato /paseadores/" + clientesId + " no se encontro.", 404);
         }
         return MascotaResource.class;
     }
@@ -120,7 +116,7 @@ public class ClienteResource {
     {
         if (clienteLogic.getCliente(clientesId) == null) 
         {
-            throw new WebApplicationException("El recurso /paseadores/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso o la tupla /paseadores/" + clientesId + " no fue encontrado.", 404);
         }
         return FormaPagoResource.class;
     }

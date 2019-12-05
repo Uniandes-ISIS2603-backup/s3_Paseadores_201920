@@ -58,7 +58,7 @@ public class CalificacionResource {
     @Path("{calificacionId: \\d+}")
     public void deleteCalificacion (@PathParam("calificacionId") Long calificacionId, @PathParam("paseadoresId") Long paseadoresId) throws BusinessLogicException{
         if( calificacionLogic.getCalificacion(paseadoresId, calificacionId)==null){
-           throw new WebApplicationException("El recurso /calificacions/" + calificacionId + " no existe.", 404);
+           throw new WebApplicationException("El recurso /calificacions/" + calificacionId + " no se encuentra.", 404);
         }        
         calificacionLogic.deleteCalificacion(paseadoresId, calificacionId);        
     }
@@ -74,7 +74,7 @@ public class CalificacionResource {
     	
         CalificacionEntity entity = calificacionLogic.getCalificacion(paseadoresId, calificacionId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
+            throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no fue encontrado.", 404);
         }
         return new CalificacionDTO(entity);
     }
