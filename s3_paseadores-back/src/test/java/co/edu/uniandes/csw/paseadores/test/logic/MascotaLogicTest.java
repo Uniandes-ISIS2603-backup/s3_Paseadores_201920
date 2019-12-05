@@ -180,7 +180,7 @@ public class MascotaLogicTest {
     @Test
     public void getMascotasTest() throws BusinessLogicException 
     {
-        List<MascotaEntity> list = mascotaLogic.getMascotasCliente(clienteTest.getId());
+        List<MascotaEntity> list = mascotaLogic.getMascotas(clienteTest.getId());
         Assert.assertEquals(data.size(), list.size());
         for (MascotaEntity entity : list) 
         {

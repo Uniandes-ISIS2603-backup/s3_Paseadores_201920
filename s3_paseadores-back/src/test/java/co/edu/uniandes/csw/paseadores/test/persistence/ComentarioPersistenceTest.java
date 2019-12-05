@@ -145,9 +145,18 @@ public class ComentarioPersistenceTest {
     @Test
     public void getComentarioPorPaseadorTest() {
         ComentarioEntity entity = data.get(0);
-        ComentarioEntity newEntity = cp.findComentario(paseadorTest.getId(), entity.getId());
+        ComentarioEntity newEntity = cp.find(paseadorTest.getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getInfoComentario(), newEntity.getInfoComentario());
+    }
+
+    @Test
+    public void getAllCalificacionPorPaseadorTest() {
+        List<ComentarioEntity> list = cp.findAllPorPaseador(paseadorTest.getId());
+        Assert.assertEquals(data.size(), list.size());
+        for (ComentarioEntity c : list) {
+            Assert.assertEquals(c.getPaseador().getId(), paseadorTest.getId());
+        }
     }
 
     @Test

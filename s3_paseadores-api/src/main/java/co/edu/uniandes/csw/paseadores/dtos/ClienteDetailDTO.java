@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
@@ -16,9 +21,9 @@ import java.util.List;
  */
 public class ClienteDetailDTO extends ClienteDTO implements Serializable{
     
-    /**
-     * Relaciones.
-     */
+    //===================================================
+    // Relaciones
+    //===================================================
     
     /**
      * Contratos del cliente
@@ -34,6 +39,10 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
      * Formas de pago del cliente
      */
     private List<FormaPagoDTO> formasPago;
+    
+    //===================================================
+    // Constructores DTO y Entidad
+    //===================================================
     
     /**
      * Constructor por defecto.
@@ -79,7 +88,6 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
      * @return 
      * @return. La entidad del cliente.
      */
-    @Override
     public ClienteEntity toEntity(){
         ClienteEntity cliente = super.toEntity();
         if(contratos != null ){
@@ -105,6 +113,10 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
         }
         return cliente;
     }
+    
+    //===================================================
+    // GETTERS  
+    //===================================================
 
     /**
      * Retorna los contratos del cliente
@@ -132,6 +144,10 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
     public List<FormaPagoDTO> getFormasPago(){
         return formasPago;
     }
+    
+    //===================================================
+    // SETTERS
+    //===================================================
 
     /**
      * Modifica los contratos del cliente
@@ -159,4 +175,8 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
     public void setFormasPago(List<FormaPagoDTO> formasPago) {
         this.formasPago = formasPago;
     }
+    
+    
+    
+    
 }

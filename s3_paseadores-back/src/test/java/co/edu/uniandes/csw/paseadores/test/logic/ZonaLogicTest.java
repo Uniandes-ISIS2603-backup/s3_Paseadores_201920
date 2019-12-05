@@ -137,7 +137,7 @@ public class ZonaLogicTest {
         ZonaEntity zona = data.get(0);
         ZonaEntity pojoEntity = factory.manufacturePojo(ZonaEntity.class);
         pojoEntity.setId(zona.getId());
-        zonaLogic.updateZona(pojoEntity);
+        zonaLogic.updateZona(pojoEntity.getId(), pojoEntity);
         ZonaEntity resp = em.find(ZonaEntity.class, zona.getId());
         Assert.assertEquals(pojoEntity.getInfoZona(), resp.getInfoZona());
     }

@@ -71,7 +71,7 @@ public class MascotaResource {
     @GET
     public List<MascotaDTO> getMascotas(@PathParam("clientesId") Long clienteId) {
         LOGGER.info("MascotaResource getMascotas: input: void");
-        List<MascotaDTO> listaMascotas = listEntity2DTO(mascotaLogic.getMascotasCliente(clienteId));
+        List<MascotaDTO> listaMascotas = listEntity2DTO(mascotaLogic.getMascotas(clienteId));
         LOGGER.log(Level.INFO, "MascotaResource getMascotas: output: {0}", listaMascotas);
         return listaMascotas;
     }

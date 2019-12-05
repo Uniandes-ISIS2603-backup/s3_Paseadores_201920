@@ -126,7 +126,7 @@ public class FormaPagoLogicTest {
     @Test
     public void getFormaPagoTest() {
         FormaPagoEntity entity = data.get(0);
-        FormaPagoEntity resultEntity = formaPagoLogic.getFormaPago(cliente.getId(), entity.getId());
+        FormaPagoEntity resultEntity = formaPagoLogic.getFormaPagoPorCliente(cliente.getId(), entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
     }

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.dtos;
 
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
@@ -5,86 +10,57 @@ import java.io.Serializable;
 
 /**
  * Clase que modela el DTO para Calificacion
- *
  * @author Juan Esteban Vergara
  */
-public class CalificacionDTO implements Serializable {
 
-    /**
-     * Atributos.
-     */
-    
-    /**
-     * Calificación.
-     */
-    private Integer calificacion;
 
-    /**
-     * Id.
-     */
+public class CalificacionDTO implements Serializable
+{
+    //atributos
+    private Integer Calificacion;
     private Long id;
-
-    /**
-     * Constructor por defecto.
-     */
-    public CalificacionDTO() {
-
+    
+    //constructor vacio
+    public CalificacionDTO(){
+        
+    }
+    //constructor que usa CalificacionEntity para llenar su informacion
+    public CalificacionDTO(CalificacionEntity calificacion){
+        this.Calificacion=calificacion.getCalificacion();
+        this.id=calificacion.getId();
+    }
+    //setters de calificacion e id
+    
+    public void setCalificacion(Integer Calificacion) {
+        this.Calificacion = Calificacion;
     }
 
-    /**
-     * Constructor a partir de una Entidad.
-     *
-     * @param calificacion Entidad.
-     */
-    public CalificacionDTO(CalificacionEntity calificacion) {
-        this.calificacion = calificacion.getCalificacion();
-        this.id = calificacion.getId();
-    }
-
-    /**
-     * Asigna una calififcacion.
-     *
-     * @param calificacion
-     */
-    public void setCalificacion(Integer calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    /**
-     * Asigna el Id.
-     *
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    //getters de calificacion e id
     /**
-     * Retorna la caliificacion.
-     *
-     * @return Calificacion
-     */
+    *@return Calificacion
+    */
     public Integer getCalificacion() {
-        return calificacion;
+        return Calificacion;
     }
-
     /**
-     * Retorna el Id de la calificación.
-     *
+     * 
      * @return id
      */
     public Long getId() {
         return id;
     }
-
+    //metodo toEntity que crea un Entity en base al DTO
     /**
-     * Transforma el DTO en una entidad.
-     *
-     * @return entity
+     * 
+     * @return entity 
      */
-    public CalificacionEntity toEntity() {
+    public CalificacionEntity toEntity(){
         CalificacionEntity entity = new CalificacionEntity();
-        entity.setCalificacion(this.calificacion);
+        entity.setCalificacion(this.Calificacion);
         entity.setId(this.id);
         return entity;
     }

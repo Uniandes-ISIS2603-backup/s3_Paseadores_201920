@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.entities;
 
 import java.io.Serializable;
@@ -9,96 +14,49 @@ import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- * Entidad que representa una zona.
  *
  * @author Juan Vergara
  */
 @Entity
-public class ZonaEntity extends BaseEntity implements Serializable {
-
-    /**
-     * Atributos.
-     */
+public class ZonaEntity extends BaseEntity implements Serializable{
     
-    /**
-     * Nombre de la zona.
-     */
     private String infoZona;
 
-    /**
-     * Relaciones.
+     /**
+     * Relaciones
      */
     
-    /**
-     * Paseadores que trabajan en la zona.
-     */
     @PodamExclude
     @ManyToMany
-    private List<PaseadorEntity> paseadores = new ArrayList<>();
-
-    /**
-     * Paseos realizados en la zona.
-     */
+    private List<PaseadorEntity> paseadores = new ArrayList<PaseadorEntity>();
+    
     @PodamExclude
     @OneToMany(mappedBy = "zona")
-    private List<ContratoEntity> contratos = new ArrayList<>();
-
-    /**
-     * Métodos.
-     */
+    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
     
-    /**
-     * Modifica el nombre de la zona.
-     *
-     * @param infoZona
-     */
     public void setInfoZona(String infoZona) {
         this.infoZona = infoZona;
     }
 
-    /**
-     * Retorna el nombre de la zona.
-     *
-     * @return infoZona.
-     */
     public String getInfoZona() {
         return infoZona;
     }
 
-    /**
-     * Retorna los paseadores de la zona.
-     *
-     * @return paseadores.
-     */
     public List<PaseadorEntity> getPaseadores() {
         return paseadores;
     }
 
-    /**
-     * Modifica los paseadores de la zona.
-     *
-     * @param paseadores
-     */
     public void setPaseadores(List<PaseadorEntity> paseadores) {
         this.paseadores = paseadores;
     }
 
-    /**
-     * Obtiene los paseos de la zona.
-     *
-     * @return contratos.
-     */
     public List<ContratoEntity> getContratos() {
         return contratos;
     }
 
-    /**
-     * Actualiza los paseos de la zona.
-     *
-     * @param contratos
-     */
     public void setContratos(List<ContratoEntity> contratos) {
         this.contratos = contratos;
     }
 
+   
 }

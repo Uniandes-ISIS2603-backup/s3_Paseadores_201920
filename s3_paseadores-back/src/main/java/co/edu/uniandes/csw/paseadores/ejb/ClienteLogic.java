@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
@@ -9,16 +14,12 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- * Lògica de un cliente.
  *
  * @author Santiago Bolaños Vega
  */
 @Stateless
 public class ClienteLogic {
 
-    /**
-     * Persistencia del cliente.
-     */
     @Inject
     private ClientePersistence persistence;
 
@@ -52,7 +53,8 @@ public class ClienteLogic {
      * @return Lista de entidades tipo Cliente.
      */
     public List<ClienteEntity> getClientes() {
-        return persistence.findAll();
+        List<ClienteEntity> lista = persistence.findAll();
+        return lista;
     }
 
     /**
@@ -78,7 +80,7 @@ public class ClienteLogic {
      * @return La entidad del cliente actualizada.
      * @throws BusinessLogicException
      */
-    public ClienteEntity updateCliente( ClienteEntity cliente) throws BusinessLogicException {
+    public ClienteEntity updateCliente(Long clienteId, ClienteEntity cliente) throws BusinessLogicException {
         if (cliente.getNombre() == null || cliente.getNombre().equals("") || NumberUtils.isCreatable(cliente.getNombre())) {
             throw new BusinessLogicException("El nombre del cliente es nulo o tiene un formato incorrecto");
         }
@@ -91,7 +93,8 @@ public class ClienteLogic {
         if (cliente.getInfoContacto() == null || cliente.getInfoContacto().equals("")) {
             throw new BusinessLogicException("La informacion de contacto delcliente es nula o tiene un formato incorrecto");
         }
-        return persistence.update(cliente);
+        ClienteEntity entity = persistence.update(cliente);
+        return entity;
     }
 
     /**
@@ -102,13 +105,16 @@ public class ClienteLogic {
      */
     public void deleteCliente(Long clienteId) throws BusinessLogicException {
         ClienteEntity cliente = persistence.find(clienteId);
-        if (cliente.getContratos() != null && !cliente.getContratos().isEmpty()) {
+        if (cliente.getContratos() != null && !cliente.getContratos().isEmpty()) 
+        {
             throw new BusinessLogicException("El cliente todavia tiene contratos");
         }
-        if (cliente.getMascotas() != null && !cliente.getMascotas().isEmpty()) {
+        if (cliente.getMascotas() != null && !cliente.getMascotas().isEmpty()) 
+        {
             throw new BusinessLogicException("El cliente todavia tiene mascotas");
         }
-        if (cliente.getFormasPago() != null && !cliente.getFormasPago().isEmpty()) {
+        if (cliente.getFormasPago() != null && !cliente.getFormasPago().isEmpty()) 
+        {
             throw new BusinessLogicException("El cliente todavia tiene formas de pago");
         }
         persistence.delete(clienteId);

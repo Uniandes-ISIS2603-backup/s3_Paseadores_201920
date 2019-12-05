@@ -218,7 +218,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setId(cliente.getId());
         pojoEntity.setCorreo("hola@hotmail.com");
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
         ClienteEntity resp = em.find(ClienteEntity.class, cliente.getId());
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
@@ -232,7 +232,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setNombre(null);
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -241,7 +241,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setNombre("");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -250,7 +250,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setNombre("123");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -259,7 +259,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setCorreo(null);
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -268,7 +268,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setCorreo("");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -277,7 +277,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setCorreo("123");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -286,7 +286,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setCorreo("holaaa");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -295,7 +295,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setContrasena(null);
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -304,7 +304,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setContrasena("");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -313,7 +313,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setInfoContacto(null);
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test(expected = BusinessLogicException.class )
@@ -322,7 +322,7 @@ public class ClienteLogicTest {
         ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
         pojoEntity.setInfoContacto("");
         pojoEntity.setId(cliente.getId());
-        clienteLogic.updateCliente( pojoEntity);
+        clienteLogic.updateCliente(pojoEntity.getId(), pojoEntity);
     }
     
     @Test

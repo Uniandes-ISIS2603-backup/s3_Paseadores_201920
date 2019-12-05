@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
@@ -8,9 +13,9 @@ import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- * Lógica de un pago.
  *
  * @author Mario Hurtado
  */
@@ -23,12 +28,10 @@ public class PagoLogic {
     @Inject
     private PagoPersistence persistence;
 
-    /**
-     * Persistencia del contrato.
-     */
     @Inject
     private ContratoPersistence contratoPersistence;
 
+    //Métodos 
     /**
      * Crea el pago a partir de una instacia de PagoEntity
      *
@@ -65,7 +68,8 @@ public class PagoLogic {
      * @return Instancia de PagoEntity con los datos consultados.
      */
     public PagoEntity getPago(Long idContrato, Long pagoId) {
-        return persistence.find(idContrato, pagoId);
+        PagoEntity pagoEntity = persistence.find(idContrato, pagoId);
+        return pagoEntity;
     }
 
     /**
@@ -74,7 +78,10 @@ public class PagoLogic {
      * @return Colección de objetos de PagoEntity.
      */
     public List<PagoEntity> getPagos() {
-        return persistence.findAll();
+
+        List<PagoEntity> lista = persistence.findAll();
+
+        return lista;
     }
 
     /**
@@ -92,7 +99,8 @@ public class PagoLogic {
         if (pagoEntity.getFormaPago() == null) {
             throw new BusinessLogicException("El pago debe tener una forma de pago");
         }
-        return persistence.update(pagoEntity);
+        PagoEntity nuevaEntidad = persistence.update(pagoEntity);
+        return nuevaEntidad;
     }
 
     /**
@@ -103,20 +111,16 @@ public class PagoLogic {
      * @throws co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException
      *
      */
-    public void deletePago(Long pagoId, Long idContrato) throws BusinessLogicException {
+    public void deletePago(Long pagoId , Long idContrato) throws BusinessLogicException {
         PagoEntity pago = getPago(idContrato, pagoId);
-        if (pago == null) {
+        if (pago==null) {
             throw new BusinessLogicException("El pago asociado no existe");
         }
-        if (!pago.getPagoRealizado()) {
+        if (pago.getPagoRealizado() != true) {
             throw new BusinessLogicException("No se puede eliminar el pago porque no se ha realizado");
         }
-        ContratoEntity contrato = contratoPersistence.find(idContrato);
-        if (contrato.getPago() != null) {
-            throw new BusinessLogicException("El contrato ya tiene un pago asociado");
-        }
-        pago.setContrato(contrato);
         persistence.delete(pagoId);
 
     }
+
 }

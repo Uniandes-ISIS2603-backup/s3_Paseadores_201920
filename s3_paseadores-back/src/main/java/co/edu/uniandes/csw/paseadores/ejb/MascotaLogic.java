@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ClienteEntity;
@@ -5,28 +10,22 @@ import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ClientePersistence;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
+import java.util.logging.Logger;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- * Lógica de las mascotas.
  *
  * @author Daniel García
  */
 @Stateless
 public class MascotaLogic {
 
-    /**
-     * Persistencia de las macotas.
-     */
     @Inject
     private MascotaPersistence persistence;
-
-    /**
-     * Persistencia de los cleintes.
-     */
     @Inject
     private ClientePersistence clientePersistence;
 
@@ -38,6 +37,7 @@ public class MascotaLogic {
      * @return Objeto de MascotaEntity con los datos nuevos y su ID.
      * @throws BusinessLogicException si clienteId no es el mismo que tiene el
      * entity.
+     *
      */
     public MascotaEntity createMascota(Long clienteId, MascotaEntity mascota) throws BusinessLogicException {
         ClienteEntity cliente;
@@ -63,9 +63,10 @@ public class MascotaLogic {
      * @param clienteId id del cliente
      * @return Lista de entidades tipo Mascota.
      */
-    public List<MascotaEntity> getMascotasCliente(Long clienteId) {
+    public List<MascotaEntity> getMascotas(Long clienteId) {
         ClienteEntity clienteEntity = clientePersistence.find(clienteId);
-        return clienteEntity.getMascotas();
+        List<MascotaEntity> lista = clienteEntity.getMascotas();
+        return lista;
     }
 
     /**

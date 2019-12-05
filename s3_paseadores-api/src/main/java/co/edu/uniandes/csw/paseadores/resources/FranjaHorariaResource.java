@@ -63,7 +63,7 @@ public class FranjaHorariaResource {
      */
     @GET
     public List<FranjaHorariaDTO> getFranjas(@PathParam("paseadoresId") Long paseadoresId) {
-        List<FranjaHorariaDTO> listaDTOs = listEntity2DTO(franjaLogic.getFranjasPaseador(paseadoresId));
+        List<FranjaHorariaDTO> listaDTOs = listEntity2DTO(franjaLogic.getFranjas(paseadoresId));
         return listaDTOs;
     }
     

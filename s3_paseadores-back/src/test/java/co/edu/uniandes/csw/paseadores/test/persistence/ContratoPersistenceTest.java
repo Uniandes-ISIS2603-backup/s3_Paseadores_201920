@@ -151,6 +151,28 @@ public class ContratoPersistenceTest {
     }
     
     @Test
+    public void getContratosPorClienteTest() 
+    {
+        List<ContratoEntity> list = cp.findAllPorCliente(clientesTest.get(0).getId());
+        Assert.assertEquals(1, list.size());
+        for(ContratoEntity c:list)
+        {
+            Assert.assertEquals(c.getCliente().getId(), clientesTest.get(0).getId());
+        }
+    }
+    
+    @Test
+    public void getContratosPorPaseadorTest() 
+    {
+        List<ContratoEntity> list = cp.findAllPorPaseador(paseadoresTest.get(0).getId());
+        Assert.assertEquals(1, list.size());
+        for(ContratoEntity c:list)
+        {
+            Assert.assertEquals(c.getPaseador().getId(), paseadoresTest.get(0).getId());
+        }
+    }
+
+    @Test
     public void updateContratoTest() 
     {
         ContratoEntity entity = data.get(0);

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
@@ -15,60 +20,39 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class PaseadorPersistence {
 
-    /**
-     * Entity Manager.
-     */
     @PersistenceContext(unitName = "paseadoresPU")
     protected EntityManager em;
 
-    /**
-     * Persiste un nuevo paseador.
-     *
-     * @param paseador Paseador a persistir.
-     * @return Paseador persistido.
-     */
     public PaseadorEntity create(PaseadorEntity paseador) {
         em.persist(paseador);
         return paseador;
     }
 
-    /**
-     * Encuentra un paseador.
-     *
-     * @param idPaseador Id del paseador buscado.
-     * @return Paseador buscado.
-     */
     public PaseadorEntity find(Long idPaseador) {
         return em.find(PaseadorEntity.class, idPaseador);
     }
 
-    /**
-     * Retorna todos los paseadores.
-     *
-     * @return paseadores.
-     */
     public List<PaseadorEntity> findAll() {
         TypedQuery query = em.createQuery("select u from PaseadorEntity u", PaseadorEntity.class);
         return query.getResultList();
     }
 
-    /**
-     * Actualiza la infomración de un paseador.
-     *
-     * @param paseadorEntity Paseador a actualizar.
-     * @return Paseador actualizado.
-     */
     public PaseadorEntity update(PaseadorEntity paseadorEntity) {
+        // LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratoEntity.getId());
+        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
+        la author con los cambios, esto es similar a 
+        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
+         */
         return em.merge(paseadorEntity);
     }
 
-    /**
-     * Elimina un paseador.
-     *
-     * @param paseadorId id del paseador a eliminar.
-     */
     public void delete(Long paseadorId) {
+
+//        LOGGER.log(Level.INFO, "Borrando el author con id={0}", contratoId);
         PaseadorEntity authorEntity = em.find(PaseadorEntity.class, paseadorId);
+        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
+        EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
+        Es similar a "delete from AuthorEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
         em.remove(authorEntity);
     }
 }

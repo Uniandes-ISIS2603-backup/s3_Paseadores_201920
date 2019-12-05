@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ZonaEntity;
@@ -8,86 +13,63 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- * Lógiza de la zona.
  *
  * @author Juan Vergara
  */
 @Stateless
 public class ZonaLogic {
 
-    /**
-     * Persistencia de la zona.
-     */
     @Inject
     private ZonaPersistence persistence;
 
-    /**
-     * Crea una zona.
-     *
-     * @param zona Zona a crear.
-     * @return Zona persistida.
-     * @throws BusinessLogicException Si no se cumplen las reglas de negocio.
-     */
     public ZonaEntity createZona(ZonaEntity zona) throws BusinessLogicException {
-        if (zona.getInfoZona() == null) {
-            throw new BusinessLogicException("Información nula.");
+        if (zona.getInfoZona() != null) {
+            String info = zona.getInfoZona().replace(" ", "");
+            if (info.isEmpty()) {
+                throw new BusinessLogicException("La información de la zona esta vacia");
+            }
+        } else {
+            throw new BusinessLogicException("Lai información de la zona esta vacia");
         }
-        String info = zona.getInfoZona().replace(" ", "");
-        if (info.isEmpty()) {
+        zona = persistence.create(zona);
+        return zona;
+    }
+
+    public ZonaEntity getZona(Long zonaId) 
+    {
+        ZonaEntity zonaEntity = persistence.find(zonaId);
+        return zonaEntity;
+    }
+
+    public List<ZonaEntity> getZonas() 
+    {
+        List<ZonaEntity> lista = persistence.findAll();
+        return lista;
+    }
+
+    public ZonaEntity updateZona(Long zonaId, ZonaEntity zona) throws BusinessLogicException {
+        if (zona.getInfoZona() != null) {
+            String info = zona.getInfoZona().replace(" ", "");
+            if (info.isEmpty()) {
+                throw new BusinessLogicException("La información de la zona esta vacia");
+            }
+        } else {
             throw new BusinessLogicException("La información de la zona esta vacia");
         }
-        return persistence.create(zona);
+        ZonaEntity newZonaEntity = persistence.update(zona);
+
+        return newZonaEntity;
     }
 
-    /**
-     * Obtiene una zona.
-     *
-     * @param zonaId Id de la zona buscada.
-     * @return Zona buscada.
-     */
-    public ZonaEntity getZona(Long zonaId) {
-        return persistence.find(zonaId);
-    }
-
-    /**
-     * Obtiene todas las zonas en el sistema.
-     *
-     * @return Zonas.
-     */
-    public List<ZonaEntity> getZonas() {
-        return persistence.findAll();
-    }
-
-    /**
-     * Actualiza la infomración de una zona.
-     *
-     * @param zona Zona a acutalizar.
-     * @return Zona actualizada.
-     * @throws BusinessLogicException Si no se cumplen las reglas de negocio.
-     */
-    public ZonaEntity updateZona(ZonaEntity zona) throws BusinessLogicException {
-        if (zona.getInfoZona() == null) {
-            throw new BusinessLogicException("Información nula.");
-        }
-        String info = zona.getInfoZona().replace(" ", "");
-        if (info.isEmpty()) {
-            throw new BusinessLogicException("La información de la zona esta vacia");
-        }
-        return persistence.update(zona);
-    }
-
-    /**
-     * Elimina una zona.
-     *
-     * @param zonaId Id de la zona a eliminar
-     * @throws BusinessLogicException Si incumple las reglas de negocio.
-     */
-    public void deleteZona(Long zonaId) throws BusinessLogicException {
+    public void deleteZona(Long zonaId) throws BusinessLogicException 
+    {
         ZonaEntity zona = persistence.find(zonaId);
-        if (zona.getContratos() != null && !zona.getContratos().isEmpty()) {
+        if (zona.getContratos() != null && !zona.getContratos().isEmpty()) 
+        {
             throw new BusinessLogicException("La zona tiene contratos todavia");
         }
-        if (zona.getPaseadores() != null && !zona.getPaseadores().isEmpty()) {
+        if (zona.getPaseadores() != null && !zona.getPaseadores().isEmpty()) 
+        {
             throw new BusinessLogicException("La zona tiene paseadores todavia");
         }
         persistence.delete(zonaId);
