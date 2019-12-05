@@ -7,9 +7,7 @@ package co.edu.uniandes.csw.paseadores.entities;
 
 import co.edu.uniandes.csw.paseadores.podam.DateStrategy;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;

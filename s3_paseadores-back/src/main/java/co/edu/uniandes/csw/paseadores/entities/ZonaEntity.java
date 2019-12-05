@@ -28,11 +28,11 @@ public class ZonaEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @ManyToMany
-    private List<PaseadorEntity> paseadores = new ArrayList<PaseadorEntity>();
+    private List<PaseadorEntity> paseadores = new ArrayList<>();
     
     @PodamExclude
     @OneToMany(mappedBy = "zona")
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratos = new ArrayList<>();
     
     public void setInfoZona(String infoZona) {
         this.infoZona = infoZona;

@@ -6,10 +6,7 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.FormaPagoEntity;
-import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;
@@ -43,11 +40,7 @@ public class FormaPagoPersistence {
         q.setParameter("idFormaPago", idFormaPago);
         List<FormaPagoEntity> results = q.getResultList();
         FormaPagoEntity formaPago = null;
-        if (results == null) {
-            formaPago = null;
-        } else if (results.isEmpty()) {
-            formaPago = null;
-        } else if (results.size() >= 1) {
+        if (results != null && !results.isEmpty() ){
             formaPago = results.get(0);
         }
         return formaPago;

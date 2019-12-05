@@ -13,7 +13,6 @@ import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -68,8 +67,7 @@ public class PagoLogic {
      * @return Instancia de PagoEntity con los datos consultados.
      */
     public PagoEntity getPago(Long idContrato, Long pagoId) {
-        PagoEntity pagoEntity = persistence.find(idContrato, pagoId);
-        return pagoEntity;
+        return persistence.find(idContrato, pagoId);
     }
 
     /**
@@ -78,10 +76,7 @@ public class PagoLogic {
      * @return Colección de objetos de PagoEntity.
      */
     public List<PagoEntity> getPagos() {
-
-        List<PagoEntity> lista = persistence.findAll();
-
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -99,8 +94,7 @@ public class PagoLogic {
         if (pagoEntity.getFormaPago() == null) {
             throw new BusinessLogicException("El pago debe tener una forma de pago");
         }
-        PagoEntity nuevaEntidad = persistence.update(pagoEntity);
-        return nuevaEntidad;
+        return persistence.update(pagoEntity);
     }
 
     /**
@@ -116,7 +110,7 @@ public class PagoLogic {
         if (pago==null) {
             throw new BusinessLogicException("El pago asociado no existe");
         }
-        if (pago.getPagoRealizado() != true) {
+        if (!pago.getPagoRealizado()) {
             throw new BusinessLogicException("No se puede eliminar el pago porque no se ha realizado");
         }
         persistence.delete(pagoId);

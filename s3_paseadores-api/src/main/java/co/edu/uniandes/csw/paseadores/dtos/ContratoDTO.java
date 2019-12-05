@@ -5,18 +5,10 @@
  */
 package co.edu.uniandes.csw.paseadores.dtos;
 
-import co.edu.uniandes.csw.paseadores.adapters.DateAdapter;
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
-import co.edu.uniandes.csw.paseadores.entities.FranjaHorariaEntity;
-import co.edu.uniandes.csw.paseadores.podam.DateStrategy;
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *

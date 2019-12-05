@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.paseadores.ejb;
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
-import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.PagoPersistence;
@@ -60,8 +59,7 @@ public class ContratoLogic {
      * consultado.
      */
     public ContratoEntity getContrato(Long contratoId) {
-        ContratoEntity contratoEntity = persistence.find(contratoId);
-        return contratoEntity;
+        return persistence.find(contratoId);
     }
 
     /**
@@ -70,8 +68,7 @@ public class ContratoLogic {
      * @return Colección de objetos de ContratoEntity.
      */
     public List<ContratoEntity> getContratos() {
-        List<ContratoEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     public List<ContratoEntity> getContratosPorCliente(Long idCliente) {
@@ -113,9 +110,7 @@ public class ContratoLogic {
         if (contrato.getMascotas() == null || contrato.getMascotas().isEmpty()) {
             throw new BusinessLogicException("El contrato no dispone de mascota(s)");
         }
-        
-        ContratoEntity newContratoEntity = persistence.update(contrato);
-        return newContratoEntity;
+        return persistence.update(contrato);
     }
 
     /**

@@ -46,27 +46,27 @@ public class PaseadorEntity extends BaseEntity implements Serializable
     //Relacion Paseadores - FranjasHorarias
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
-    private List<FranjaHorariaEntity> franjas = new ArrayList<FranjaHorariaEntity>();
+    private List<FranjaHorariaEntity> franjas = new ArrayList<>();
     
     //Relacion Paseadores - Comentarios
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
-    private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();
+    private List<ComentarioEntity> comentarios = new ArrayList<>();
     
     //Relacion Paseadores - Calificaciones
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
-    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+    private List<CalificacionEntity> calificaciones = new ArrayList<>();
 
     //Relacion Paseadores - Zonas
     @PodamExclude
     @ManyToMany(mappedBy = "paseadores")
-    private List<ZonaEntity> zonas = new ArrayList<ZonaEntity>();
+    private List<ZonaEntity> zonas = new ArrayList<>();
     
     //Relacion Paseadores - Contratos
     @PodamExclude
     @OneToMany(mappedBy = "paseador")
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratos = new ArrayList< >();
 
     public List<ContratoEntity> getContratos() {
         return contratos;

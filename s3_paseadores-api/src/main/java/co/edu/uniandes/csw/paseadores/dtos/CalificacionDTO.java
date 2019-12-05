@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class CalificacionDTO implements Serializable
 {
     //atributos
-    private Integer Calificacion;
+    private Integer calificacion;
     private Long id;
     
     //constructor vacio
@@ -26,13 +26,13 @@ public class CalificacionDTO implements Serializable
     }
     //constructor que usa CalificacionEntity para llenar su informacion
     public CalificacionDTO(CalificacionEntity calificacion){
-        this.Calificacion=calificacion.getCalificacion();
+        this.calificacion=calificacion.getCalificacion();
         this.id=calificacion.getId();
     }
     //setters de calificacion e id
     
-    public void setCalificacion(Integer Calificacion) {
-        this.Calificacion = Calificacion;
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
     }
 
     public void setId(Long id) {
@@ -44,7 +44,7 @@ public class CalificacionDTO implements Serializable
     *@return Calificacion
     */
     public Integer getCalificacion() {
-        return Calificacion;
+        return calificacion;
     }
     /**
      * 
@@ -60,7 +60,7 @@ public class CalificacionDTO implements Serializable
      */
     public CalificacionEntity toEntity(){
         CalificacionEntity entity = new CalificacionEntity();
-        entity.setCalificacion(this.Calificacion);
+        entity.setCalificacion(this.calificacion);
         entity.setId(this.id);
         return entity;
     }

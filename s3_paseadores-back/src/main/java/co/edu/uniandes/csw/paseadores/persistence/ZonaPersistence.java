@@ -36,12 +36,12 @@ public class ZonaPersistence
         return query.getResultList();
     }
     
-    public ZonaEntity update (ZonaEntity ZonaEntity){
-        return em.merge(ZonaEntity);
+    public ZonaEntity update (ZonaEntity zonaEntity){
+        return em.merge(zonaEntity);
     }
     
-    public void delete(Long ZonaId){
-        ZonaEntity authorEntity = em.find(ZonaEntity.class, ZonaId);
+    public void delete(Long zonaId){
+        ZonaEntity authorEntity = em.find(ZonaEntity.class, zonaId);
         em.remove(authorEntity);
     }
 }

@@ -88,8 +88,7 @@ public class CalificacionLogic {
      * @return lista
      */
     public List<CalificacionEntity> getCalificaciones() {
-        List<CalificacionEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -99,8 +98,7 @@ public class CalificacionLogic {
      * @return lista
      */
     public List<CalificacionEntity> getCalificacionesPorPaseador(Long idPaseador) {
-        List<CalificacionEntity> lista = persistence.findAllPorPaseador(idPaseador);
-        return lista;
+        return persistence.findAllPorPaseador(idPaseador);
     }
 
     /**
@@ -116,10 +114,8 @@ public class CalificacionLogic {
 
         if (calificacionEntity.getCalificacion() > 5 || calificacionEntity.getCalificacion() < 0) {
             throw new BusinessLogicException("La calificación esta fuera de los valores limites [0...5]");
-
         }
-        CalificacionEntity newCalificacionEntity = persistence.update(calificacionEntity);
-        return newCalificacionEntity;
+        return persistence.update(calificacionEntity);
     }
 
     /**

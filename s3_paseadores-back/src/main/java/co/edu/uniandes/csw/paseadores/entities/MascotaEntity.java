@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -35,7 +34,7 @@ public class MascotaEntity extends BaseEntity implements Serializable
     
     @PodamExclude
     @ManyToMany
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratos = new ArrayList<>();
 
     public ClienteEntity getCliente() {
         return cliente;

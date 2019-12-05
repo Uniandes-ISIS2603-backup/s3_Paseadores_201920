@@ -38,21 +38,11 @@ public class PaseadorPersistence {
     }
 
     public PaseadorEntity update(PaseadorEntity paseadorEntity) {
-        // LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratoEntity.getId());
-        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
-        la author con los cambios, esto es similar a 
-        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
-         */
         return em.merge(paseadorEntity);
     }
 
     public void delete(Long paseadorId) {
-
-//        LOGGER.log(Level.INFO, "Borrando el author con id={0}", contratoId);
         PaseadorEntity authorEntity = em.find(PaseadorEntity.class, paseadorId);
-        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
-        EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
-        Es similar a "delete from AuthorEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
         em.remove(authorEntity);
     }
 }

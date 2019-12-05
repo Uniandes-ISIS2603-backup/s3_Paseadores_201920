@@ -7,7 +7,6 @@ import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ComentarioPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.ContratoPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
-import java.sql.Time;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -52,7 +51,7 @@ public class ComentarioLogic {
             throw new BusinessLogicException("La informacion del comentario no puede superar los 300 caracteres");
         }
 
-        if (contratoEntity.getFinalizado() == false) {
+        if (!contratoEntity.getFinalizado()) {
             throw new BusinessLogicException("No se puede realizar un comentario acerca de un servicio que no ha terminado");
         }
 
@@ -88,8 +87,7 @@ public class ComentarioLogic {
      */
     public List<ComentarioEntity> getComentariosPorPaseador(Long paseadorId) {
         PaseadorEntity paseadorEntity = paseadorPersistence.find(paseadorId);
-        List<ComentarioEntity> lista = paseadorEntity.getComentarios();
-        return lista;
+        return paseadorEntity.getComentarios();
     }
     
     public List<ComentarioEntity> getComentarios(){
@@ -123,7 +121,7 @@ public class ComentarioLogic {
         contratoEntity = contratoPersistence.find(contratoId);
         comentarioEntity.setContrato(contratoEntity);
         comentarioEntity.setPaseador(contratoEntity.getPaseador());
-        if (contratoEntity.getFinalizado() == false) {
+        if (!contratoEntity.getFinalizado()) {
             throw new BusinessLogicException("No se puede realizar un comentario acerca de un servicio que no ha terminado");
         }
         

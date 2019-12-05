@@ -25,7 +25,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 /**
  *
@@ -37,16 +36,13 @@ import java.util.logging.Level;
 @RequestScoped
 public class ClienteResource {
     
-    private static final Logger LOGGER = Logger.getLogger(ClienteResource.class.getName());
-    
     @Inject
     private ClienteLogic clienteLogic;
     
     @POST
     public ClienteDTO createCliente(ClienteDTO cliente ) throws BusinessLogicException{
         ClienteEntity entity = clienteLogic.createCliente(cliente.toEntity());
-        ClienteDTO dto = new ClienteDTO(entity);
-        return dto;
+        return new ClienteDTO(entity);
     }
     
     @GET

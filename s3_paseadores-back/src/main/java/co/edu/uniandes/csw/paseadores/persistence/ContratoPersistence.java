@@ -6,10 +6,7 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.ContratoEntity;
-//import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;return
-
 import java.util.List;
-//import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

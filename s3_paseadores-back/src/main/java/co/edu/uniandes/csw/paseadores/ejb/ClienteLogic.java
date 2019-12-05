@@ -53,8 +53,7 @@ public class ClienteLogic {
      * @return Lista de entidades tipo Cliente.
      */
     public List<ClienteEntity> getClientes() {
-        List<ClienteEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -93,8 +92,7 @@ public class ClienteLogic {
         if (cliente.getInfoContacto() == null || cliente.getInfoContacto().equals("")) {
             throw new BusinessLogicException("La informacion de contacto delcliente es nula o tiene un formato incorrecto");
         }
-        ClienteEntity entity = persistence.update(cliente);
-        return entity;
+        return persistence.update(cliente);
     }
 
     /**

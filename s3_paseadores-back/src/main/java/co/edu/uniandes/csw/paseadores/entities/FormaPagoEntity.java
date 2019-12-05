@@ -29,7 +29,7 @@ public class FormaPagoEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToMany(mappedBy="formaPago" , cascade = CascadeType.PERSIST)
-    private List<PagoEntity> pagos = new ArrayList<PagoEntity>();
+    private List<PagoEntity> pagos = new ArrayList<>();
     
     /**
      * Capacidad de pago del usuario.

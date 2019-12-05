@@ -52,21 +52,21 @@ public class ClienteEntity extends BaseEntity implements Serializable{
      */
     @PodamExclude
     @OneToMany(mappedBy = "cliente")
-    private List<MascotaEntity> mascotas = new ArrayList<MascotaEntity>();
+    private List<MascotaEntity> mascotas = new ArrayList<>();
     
     /**
      * Contratos del cliente
      */
     @PodamExclude
     @OneToMany(mappedBy = "cliente")
-    private List<ContratoEntity> contratos = new ArrayList<ContratoEntity>();
+    private List<ContratoEntity> contratos = new ArrayList<>();
     
     /**
      * Formas de pago del cliente
      */
     @PodamExclude
     @OneToMany(mappedBy = "cliente")
-    private List<FormaPagoEntity> formasPago = new ArrayList<FormaPagoEntity>();
+    private List<FormaPagoEntity> formasPago = new ArrayList<>();
 
     
     ///===================================================

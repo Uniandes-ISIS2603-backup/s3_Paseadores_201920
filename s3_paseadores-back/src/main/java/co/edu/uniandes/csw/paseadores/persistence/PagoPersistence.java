@@ -7,8 +7,6 @@ package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.PagoEntity;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
 import javax.persistence.EntityManager;

@@ -10,7 +10,6 @@ package co.edu.uniandes.csw.paseadores.entities;
  * @author Nicolas Potes Garcia
  */
 import java.io.Serializable;
-import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;

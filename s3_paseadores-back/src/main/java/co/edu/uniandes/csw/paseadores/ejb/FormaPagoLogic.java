@@ -57,8 +57,7 @@ public class FormaPagoLogic {
      * @return Colección de objetos de FomraPagoEntity.
      */
     public List<FormaPagoEntity> getFormasPago() {
-        List<FormaPagoEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -78,9 +77,7 @@ public class FormaPagoLogic {
             throw new BusinessLogicException("La capacidad debe ser mayor a 0");
         }
         formaPago.setCliente(cliente);
-        FormaPagoEntity nuevaFormaEntidad = persistence.update(formaPago);
-
-        return nuevaFormaEntidad;
+        return persistence.update(formaPago);
     }
 
     /**

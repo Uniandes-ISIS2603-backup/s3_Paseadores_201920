@@ -6,10 +6,7 @@
 package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
-import java.util.logging.Logger;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,13 +45,7 @@ public class MascotaPersistence
         q.setParameter("idmascota", idMascota);
         List<MascotaEntity> results = q.getResultList();
         MascotaEntity mascota = null;
-        if (results == null) 
-        {
-            mascota = null;
-        } else if (results.isEmpty()) 
-        {
-            mascota = null;
-        } else if (results.size() >= 1) 
+        if ( results != null && !results.isEmpty() ) 
         {
             mascota = results.get(0);
         }

@@ -10,8 +10,6 @@ import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.FranjaHorariaPersistence;
 import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -111,8 +109,7 @@ public class FranjaHorariaLogic {
             throw new BusinessLogicException("La hora final debe ser posterior a la hora inicial.");
         }
         franja.setPaseador(paseador);
-        FranjaHorariaEntity entity = persistence.update(franja);
-        return entity;
+        return persistence.update(franja);
     }
     
     /**

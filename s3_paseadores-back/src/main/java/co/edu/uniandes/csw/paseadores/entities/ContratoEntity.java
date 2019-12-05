@@ -17,7 +17,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 @Entity
@@ -53,7 +52,7 @@ public class ContratoEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @ManyToMany(mappedBy = "contratos")
-    private List<MascotaEntity> mascotas = new ArrayList<MascotaEntity>();
+    private List<MascotaEntity> mascotas = new ArrayList<>();
 
     private Double valorServicio;
 

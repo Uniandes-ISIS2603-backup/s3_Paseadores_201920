@@ -9,8 +9,6 @@ import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.PaseadorPersistence;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -82,8 +80,7 @@ public class PaseadorLogic {
      * @return Colección de objetos de PaseadorEntity.
      */
     public List<PaseadorEntity> getPaseadores() {
-        List<PaseadorEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -118,8 +115,7 @@ public class PaseadorLogic {
         if (paseadorEntity.getInfoAdicional() == null) {
             throw new BusinessLogicException("La informacion adicional del paseador es nulo");
         }
-        PaseadorEntity newPaseadorEntity = persistence.update(paseadorEntity);
-        return newPaseadorEntity;
+        return persistence.update(paseadorEntity);
     }
 
     /**

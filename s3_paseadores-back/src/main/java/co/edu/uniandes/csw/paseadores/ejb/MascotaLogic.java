@@ -10,9 +10,7 @@ import co.edu.uniandes.csw.paseadores.entities.MascotaEntity;
 import co.edu.uniandes.csw.paseadores.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.paseadores.persistence.ClientePersistence;
 import co.edu.uniandes.csw.paseadores.persistence.MascotaPersistence;
-import java.util.logging.Logger;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -65,8 +63,7 @@ public class MascotaLogic {
      */
     public List<MascotaEntity> getMascotas(Long clienteId) {
         ClienteEntity clienteEntity = clientePersistence.find(clienteId);
-        List<MascotaEntity> lista = clienteEntity.getMascotas();
-        return lista;
+        return clienteEntity.getMascotas();
     }
 
     /**

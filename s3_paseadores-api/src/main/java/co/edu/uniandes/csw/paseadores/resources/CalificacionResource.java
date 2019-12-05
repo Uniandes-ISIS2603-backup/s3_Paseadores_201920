@@ -47,8 +47,7 @@ public class CalificacionResource {
      */
     @POST
     public CalificacionDTO createCalificacion(@PathParam("contratoId")Long contratoId, CalificacionDTO calificacion) throws BusinessLogicException{
-        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(contratoId, calificacion.toEntity()));
-        return calificacionDTO;
+        return new CalificacionDTO(calificacionLogic.createCalificacion(contratoId, calificacion.toEntity()));
     }
     /**
      * Borra la calificacion con el id recibido en la URL
@@ -77,8 +76,7 @@ public class CalificacionResource {
         if (entity == null) {
             throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
         }
-        CalificacionDTO calificacionDTO = new CalificacionDTO(entity);
-        return calificacionDTO;
+        return new CalificacionDTO(entity);
     }
     /**
      * Devuelve todas las calificaciones que existen
@@ -86,9 +84,7 @@ public class CalificacionResource {
      */
     @GET
     public List<CalificacionDTO> getCalificaciones(@PathParam("paseadoresId") Long paseadoresId) {
-
-        List<CalificacionDTO> listaDTOs = listEntity2DTO(calificacionLogic.getCalificaciones());
-        return listaDTOs;
+        return listEntity2DTO(calificacionLogic.getCalificaciones());
     }
     
 
@@ -98,7 +94,7 @@ public class CalificacionResource {
      * @return list
      */
     private List<CalificacionDTO> listEntity2DTO(List<CalificacionEntity> entityList) {
-        List<CalificacionDTO> list = new ArrayList<CalificacionDTO>();
+        List<CalificacionDTO> list = new ArrayList<>();
         for (CalificacionEntity entity : entityList) {
             list.add(new CalificacionDTO(entity));
         }
@@ -121,8 +117,7 @@ public class CalificacionResource {
             throw new WebApplicationException("El recurso " + "/calificacions/" + calificacionId + " no existe.", 404);
 
         }
-        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calificacionId, calificacion.toEntity()));
-        return calificacionDTO; 
+        return new CalificacionDTO(calificacionLogic.updateCalificacion(calificacionId, calificacion.toEntity()));
    }
     
 }

@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.paseadores.persistence;
 
 import co.edu.uniandes.csw.paseadores.entities.CalificacionEntity;
 import co.edu.uniandes.csw.paseadores.entities.PaseadorEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -40,15 +41,7 @@ public class CalificacionPersistence
         q.setParameter("idCalificacion", idCalificacion);
         List<CalificacionEntity> results = q.getResultList();
         CalificacionEntity calificacion = null;
-        if (results == null) 
-        {
-            calificacion = null;
-        } 
-        else if (results.isEmpty()) 
-        {
-            calificacion = null;
-        } 
-        else if (results.size() >= 1) 
+        if (results != null && !results.isEmpty()) 
         {
             calificacion = results.get(0);
         }
@@ -62,7 +55,7 @@ public class CalificacionPersistence
             return paseador.getCalificaciones();
         }
         else{
-            return null;
+            return new ArrayList<CalificacionEntity>();
         }
     }
     
@@ -72,14 +65,14 @@ public class CalificacionPersistence
         return query.getResultList();
     }
     
-    public CalificacionEntity update (CalificacionEntity CalificacionEntity)
+    public CalificacionEntity update (CalificacionEntity calificacionEntity)
     {
-        return em.merge(CalificacionEntity);
+        return em.merge(calificacionEntity);
     }
     
-    public void delete(Long CalificacionId)
+    public void delete(Long calificacionId)
     {
-        CalificacionEntity calificacionEntity = em.find(CalificacionEntity.class, CalificacionId);
+        CalificacionEntity calificacionEntity = em.find(CalificacionEntity.class, calificacionId);
         em.remove(calificacionEntity);
     }
 }

@@ -23,28 +23,21 @@ public class ZonaLogic {
     private ZonaPersistence persistence;
 
     public ZonaEntity createZona(ZonaEntity zona) throws BusinessLogicException {
-        if (zona.getInfoZona() != null) {
-            String info = zona.getInfoZona().replace(" ", "");
-            if (info.isEmpty()) {
+        if (zona.getInfoZona() == null || zona.getInfoZona().replace(" ", "").isEmpty()) {
                 throw new BusinessLogicException("La información de la zona esta vacia");
-            }
-        } else {
-            throw new BusinessLogicException("Lai información de la zona esta vacia");
-        }
+        } 
         zona = persistence.create(zona);
         return zona;
     }
 
     public ZonaEntity getZona(Long zonaId) 
     {
-        ZonaEntity zonaEntity = persistence.find(zonaId);
-        return zonaEntity;
+        return persistence.find(zonaId);
     }
 
     public List<ZonaEntity> getZonas() 
     {
-        List<ZonaEntity> lista = persistence.findAll();
-        return lista;
+        return persistence.findAll();
     }
 
     public ZonaEntity updateZona(Long zonaId, ZonaEntity zona) throws BusinessLogicException {
@@ -56,9 +49,7 @@ public class ZonaLogic {
         } else {
             throw new BusinessLogicException("La información de la zona esta vacia");
         }
-        ZonaEntity newZonaEntity = persistence.update(zona);
-
-        return newZonaEntity;
+        return persistence.update(zona);
     }
 
     public void deleteZona(Long zonaId) throws BusinessLogicException 

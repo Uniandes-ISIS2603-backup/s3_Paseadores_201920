@@ -88,6 +88,7 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable{
      * @return 
      * @return. La entidad del cliente.
      */
+    @Override
     public ClienteEntity toEntity(){
         ClienteEntity cliente = super.toEntity();
         if(contratos != null ){
