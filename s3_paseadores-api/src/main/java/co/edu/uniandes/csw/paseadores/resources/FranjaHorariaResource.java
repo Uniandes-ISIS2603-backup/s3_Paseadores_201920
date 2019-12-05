@@ -50,8 +50,7 @@ public class FranjaHorariaResource {
      */
     @POST
     public FranjaHorariaDTO createFranjaHoraria(@PathParam("paseadoresId") Long paseadoresId, FranjaHorariaDTO franja) throws BusinessLogicException {
-       FranjaHorariaDTO nuevaFranjaDTO = new FranjaHorariaDTO(franjaLogic.createFranjaHoraria(paseadoresId, franja.toEntity()));
-        return nuevaFranjaDTO;
+       return new FranjaHorariaDTO(franjaLogic.createFranjaHoraria(paseadoresId, franja.toEntity()));
     }
     
     /**
@@ -63,8 +62,7 @@ public class FranjaHorariaResource {
      */
     @GET
     public List<FranjaHorariaDTO> getFranjas(@PathParam("paseadoresId") Long paseadoresId) {
-        List<FranjaHorariaDTO> listaDTOs = listEntity2DTO(franjaLogic.getFranjas(paseadoresId));
-        return listaDTOs;
+        return listEntity2DTO(franjaLogic.getFranjas(paseadoresId));
     }
     
     /**
@@ -84,10 +82,9 @@ public class FranjaHorariaResource {
     public FranjaHorariaDTO getFranjas(@PathParam("paseadoresId") Long paseadoresId, @PathParam("franjasId") Long franjasId) throws BusinessLogicException {
         FranjaHorariaEntity entity = franjaLogic.getFranja(paseadoresId, franjasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId+ "/franjas/" + franjasId + " no existe.", 404);
+            throw new WebApplicationException("El dato /paseadores/" + paseadoresId+ "/franjas/" + franjasId + " no se encuentra.", 404);
         }
-        FranjaHorariaDTO franjaDTO = new FranjaHorariaDTO(entity);
-        return franjaDTO;
+        return new FranjaHorariaDTO(entity);
     }
     
     /**
@@ -109,11 +106,10 @@ public class FranjaHorariaResource {
         franja.setId(franjasId);
         FranjaHorariaEntity entity = franjaLogic.getFranja(paseadoresId, franjasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + "/franjas/" + franjasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + "/franjas/" + franjasId + " no fue encontrado.", 404);
 
         }
-        FranjaHorariaDTO franjaDTO = new FranjaHorariaDTO(franjaLogic.updateFranja(paseadoresId, franja.toEntity()));
-        return franjaDTO;
+        return new FranjaHorariaDTO(franjaLogic.updateFranja(paseadoresId, franja.toEntity()));
 
     }
     
@@ -132,7 +128,7 @@ public class FranjaHorariaResource {
     public void deleteFranja(@PathParam("paseadoresId") Long paseadoresId, @PathParam("franjasId") Long franjasId) throws BusinessLogicException {
         FranjaHorariaEntity entity = franjaLogic.getFranja(paseadoresId, franjasId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /paseadores/" + paseadoresId + "/franjas/" + franjasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso o tupla /paseadores/" + paseadoresId + "/franjas/" + franjasId + " no existe.", 404);
         }
         franjaLogic.deleteFranja(paseadoresId, franjasId);
     }
@@ -148,7 +144,7 @@ public class FranjaHorariaResource {
      * @return la lista de franjas en forma DTO (json)
      */
     private List<FranjaHorariaDTO> listEntity2DTO(List<FranjaHorariaEntity> entityList) {
-        List<FranjaHorariaDTO> list = new ArrayList<FranjaHorariaDTO>();
+        List<FranjaHorariaDTO> list = new ArrayList<>();
         for (FranjaHorariaEntity entity : entityList) {
             list.add(new FranjaHorariaDTO(entity));
         }

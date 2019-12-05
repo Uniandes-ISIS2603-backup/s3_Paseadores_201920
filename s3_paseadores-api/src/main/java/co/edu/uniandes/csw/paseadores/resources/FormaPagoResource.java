@@ -53,8 +53,7 @@ public class FormaPagoResource {
      */
     @POST
     public FormaPagoDTO createFormaPago(FormaPagoDTO formaPago, @PathParam("clientesId") Long clientesId) throws BusinessLogicException {
-        FormaPagoDTO formaPagoDTO = new FormaPagoDTO(formaPagoLogic.createFormaPago(clientesId, formaPago.toEntity()));
-        return formaPagoDTO;
+        return new FormaPagoDTO(formaPagoLogic.createFormaPago(clientesId, formaPago.toEntity()));
     }
     
       /**
@@ -72,7 +71,7 @@ public class FormaPagoResource {
     public void deletePago(@PathParam("formaPagoId") Long formaPagoId, @PathParam("clientesId") Long clientesId) throws BusinessLogicException 
     {
         if (formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId) == null) {
-            throw new WebApplicationException("El recurso /formasPago/" + formaPagoId + " no existe.", 404);
+            throw new WebApplicationException("El dato /formasPago/" + formaPagoId + " no se encontró.", 404);
         }
         
         formaPagoLogic.deleteFormaPago(clientesId, formaPagoId);
@@ -96,10 +95,9 @@ public class FormaPagoResource {
     	
         FormaPagoEntity entity = formaPagoLogic.getFormaPagoPorCliente(clientesId, formaPagoId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso " + "/formasPago/" + formaPagoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso o la tupla " + "/formasPago/" + formaPagoId + " no se encuentra.", 404);
         }
-        FormaPagoDTO formaPagoDTO = new FormaPagoDTO(entity);
-        return formaPagoDTO;
+        return new FormaPagoDTO(entity);
     }
     
     
@@ -112,8 +110,7 @@ public class FormaPagoResource {
     @GET
     public List<FormaPagoDTO> getFormasPago() {
 
-        List<FormaPagoDTO> listaDTOs = listEntity2DTO(formaPagoLogic.getFormasPago());
-        return listaDTOs;
+        return listEntity2DTO(formaPagoLogic.getFormasPago());
     }
     
     
@@ -123,7 +120,7 @@ public class FormaPagoResource {
      * @return la lista de contratos en forma DTO (json)
      */
     private List<FormaPagoDTO> listEntity2DTO(List<FormaPagoEntity> entityList) {
-        List<FormaPagoDTO> list = new ArrayList<FormaPagoDTO>();
+        List<FormaPagoDTO> list = new ArrayList<>();
         for (FormaPagoEntity entity : entityList) {
             list.add(new FormaPagoDTO(entity));
         }
@@ -148,8 +145,7 @@ public class FormaPagoResource {
             throw new WebApplicationException("El recurso " + "/formasPago/" + formaPagoId + " no existe.", 404);
 
         }
-        FormaPagoDTO formaPagoDTO = new FormaPagoDTO(formaPagoLogic.updateFormaPago(formaPagoId, formaPago.toEntity()));
-        return formaPagoDTO;
+        return new FormaPagoDTO(formaPagoLogic.updateFormaPago(formaPagoId, formaPago.toEntity()));
 
     }
  
